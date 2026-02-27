@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obrigado — Griffus Style</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="contratos/assets/images/icone.png" type="image/x-icon">
+    <style>
+        :root {
+            --pink:      #e91e63;
+            --pink-dark: #c2185b;
+            --pink-soft: #f8bbd0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background: #fafafa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ---- Background blobs ---- */
+        .bg-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.18;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .bg-blob.b1 { width: 500px; height: 500px; background: var(--pink); top: -120px; left: -120px; }
+        .bg-blob.b2 { width: 400px; height: 400px; background: var(--pink-dark); bottom: -80px; right: -80px; }
+        .bg-blob.b3 { width: 300px; height: 300px; background: #f06292; top: 45%; left: 55%; }
+
+        /* ---- Card ---- */
+        .card {
+            position: relative;
+            z-index: 1;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(233,30,99,0.12), 0 4px 16px rgba(0,0,0,0.06);
+            max-width: 520px;
+            width: 90%;
+            text-align: center;
+            overflow: hidden;
+            animation: cardIn 0.7s cubic-bezier(0.34,1.56,0.64,1) both;
+        }
+
+        @keyframes cardIn {
+            from { opacity: 0; transform: translateY(40px) scale(0.95); }
+            to   { opacity: 1; transform: translateY(0)   scale(1); }
+        }
+
+        /* ---- Header ---- */
+        .card-header {
+            background: linear-gradient(135deg, var(--pink-dark) 0%, var(--pink) 60%, #f06292 100%);
+            padding: 36px 30px 30px;
+            position: relative;
+        }
+
+        .card-header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px; left: 0; right: 0;
+            height: 30px;
+            background: #fff;
+            border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+        }
+
+        .card-header img {
+            width: 170px;
+            filter: brightness(0) invert(1);
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* ---- Checkmark ---- */
+        .check-circle {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--pink) 0%, #f06292 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: -40px auto 24px;
+            box-shadow: 0 8px 24px rgba(233,30,99,0.35);
+            position: relative;
+            z-index: 2;
+            animation: checkIn 0.5s 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+        }
+
+        @keyframes checkIn {
+            from { transform: scale(0) rotate(-90deg); opacity: 0; }
+            to   { transform: scale(1) rotate(0deg);   opacity: 1; }
+        }
+
+        .check-circle svg {
+            width: 38px;
+            height: 38px;
+        }
+
+        /* ---- Body ---- */
+        .card-body {
+            padding: 0 36px 40px;
+        }
+
+        .card-body h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--pink-dark);
+            margin-bottom: 10px;
+        }
+
+        .card-body .subtitle {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: #424242;
+            margin-bottom: 16px;
+        }
+
+        .card-body p {
+            font-size: 0.9rem;
+            color: #757575;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        /* Divider */
+        .divider {
+            width: 48px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--pink), #f06292);
+            border-radius: 2px;
+            margin: 0 auto 28px;
+        }
+
+        /* Sparkles floating */
+        .sparkle-row {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 28px;
+        }
+
+        .sparkle-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--pink-soft);
+            animation: sparklePop 1.8s ease-in-out infinite;
+        }
+        .sparkle-dot:nth-child(1) { animation-delay: 0s;    background: var(--pink); }
+        .sparkle-dot:nth-child(2) { animation-delay: 0.25s; background: #f48fb1; }
+        .sparkle-dot:nth-child(3) { animation-delay: 0.5s;  background: var(--pink); width: 12px; height: 12px; }
+        .sparkle-dot:nth-child(4) { animation-delay: 0.25s; background: #f48fb1; }
+        .sparkle-dot:nth-child(5) { animation-delay: 0s;    background: var(--pink); }
+
+        @keyframes sparklePop {
+            0%, 100% { transform: scale(1); }
+            50%       { transform: scale(1.5); }
+        }
+
+        /* Info tag */
+        .info-tag {
+            background: #fce4ec;
+            border: 1px solid var(--pink-soft);
+            border-radius: 10px;
+            padding: 14px 20px;
+            font-size: 0.85rem;
+            color: var(--pink-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .info-tag svg { flex-shrink: 0; width: 20px; height: 20px; }
+
+        /* Footer note */
+        .footer-note {
+            font-size: 0.78rem;
+            color: #bdbdbd;
+        }
+
+        .footer-note strong {
+            color: var(--pink);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-blob b1"></div>
+    <div class="bg-blob b2"></div>
+    <div class="bg-blob b3"></div>
+
+    <div class="card">
+        <div class="card-header">
+            <img src="contratos/assets/images/logo.webp" alt="Griffus Style">
+        </div>
+
+        <div class="card-body">
+            <div class="check-circle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                </svg>
+            </div>
+
+            <h1>Obrigado!</h1>
+            <p class="subtitle">Seus dados foram enviados com sucesso.</p>
+
+            <div class="divider"></div>
+
+            <div class="sparkle-row">
+                <span class="sparkle-dot"></span>
+                <span class="sparkle-dot"></span>
+                <span class="sparkle-dot"></span>
+                <span class="sparkle-dot"></span>
+                <span class="sparkle-dot"></span>
+            </div>
+
+            <p>
+                Recebemos todas as informações.
+            </p>
+
+            <div class="info-tag">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+                <span>Caso tenha dúvidas, entre em contato diretamente com a nossa equipe comercial.</span>
+            </div>
+
+            <p class="footer-note">
+                <strong>Griffus Style S.A.</strong> &mdash; Todos os direitos reservados.
+            </p>
+        </div>
+    </div>
+
+</body>
+</html>

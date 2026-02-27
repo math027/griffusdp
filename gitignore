@@ -1,0 +1,46 @@
+# ──────────────────────────────────────────
+#  GriffusDp — .gitignore
+# ──────────────────────────────────────────
+
+# === Configuração sensível ===
+app/config/database.php
+.env
+.env.*
+!.env.example
+
+# === Dependências (instale via Composer) ===
+app/vendor/
+
+# === Uploads e arquivos gerados em runtime ===
+app/storage/uploads/*
+app/storage/contratos/*
+app/storage/templates/*
+!app/storage/uploads/.gitkeep
+!app/storage/contratos/.gitkeep
+!app/storage/templates/.gitkeep
+
+# === Logs ===
+*.log
+logs/
+error_log
+
+# === Arquivos de sistema ===
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# === IDEs e editores ===
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+nbproject/
+
+# === PHP ===
+*.cache
+*.tmp
+
+# === Node (caso use build de assets) ===
+node_modules/
+npm-debug.log
+yarn-error.log

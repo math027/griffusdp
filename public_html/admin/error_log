@@ -1,0 +1,138 @@
+[20-Feb-2026 09:47:11 America/Fortaleza] PHP Warning:  require_once(/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php): Failed to open stream: No such file or directory in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:47:11 America/Fortaleza] PHP Fatal error:  Uncaught Error: Failed opening required '/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php:20
+Stack trace:
+#0 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:47:13 America/Fortaleza] PHP Warning:  require_once(/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php): Failed to open stream: No such file or directory in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:47:13 America/Fortaleza] PHP Fatal error:  Uncaught Error: Failed opening required '/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php:20
+Stack trace:
+#0 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:47:13 America/Fortaleza] PHP Warning:  require_once(/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php): Failed to open stream: No such file or directory in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:47:13 America/Fortaleza] PHP Fatal error:  Uncaught Error: Failed opening required '/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php:20
+Stack trace:
+#0 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:47:14 America/Fortaleza] PHP Warning:  require_once(/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php): Failed to open stream: No such file or directory in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:47:14 America/Fortaleza] PHP Fatal error:  Uncaught Error: Failed opening required '/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php:20
+Stack trace:
+#0 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:47:22 America/Fortaleza] PHP Warning:  require_once(/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php): Failed to open stream: No such file or directory in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:47:22 America/Fortaleza] PHP Fatal error:  Uncaught Error: Failed opening required '/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php:20
+Stack trace:
+#0 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:48:21 America/Fortaleza] PHP Warning:  require_once(/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php): Failed to open stream: No such file or directory in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:48:21 America/Fortaleza] PHP Fatal error:  Uncaught Error: Failed opening required '/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php:20
+Stack trace:
+#0 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:48:23 America/Fortaleza] PHP Warning:  require_once(/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php): Failed to open stream: No such file or directory in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:48:23 America/Fortaleza] PHP Fatal error:  Uncaught Error: Failed opening required '/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php:20
+Stack trace:
+#0 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:48:23 America/Fortaleza] PHP Warning:  require_once(/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php): Failed to open stream: No such file or directory in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:48:23 America/Fortaleza] PHP Fatal error:  Uncaught Error: Failed opening required '/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php:20
+Stack trace:
+#0 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:48:28 America/Fortaleza] PHP Warning:  require_once(/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php): Failed to open stream: No such file or directory in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:48:28 America/Fortaleza] PHP Fatal error:  Uncaught Error: Failed opening required '/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php:20
+Stack trace:
+#0 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:49:16 America/Fortaleza] PHP Warning:  require_once(/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php): Failed to open stream: No such file or directory in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:49:16 America/Fortaleza] PHP Fatal error:  Uncaught Error: Failed opening required '/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php:20
+Stack trace:
+#0 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:49:49 America/Fortaleza] PHP Warning:  require_once(/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php): Failed to open stream: No such file or directory in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:49:49 America/Fortaleza] PHP Fatal error:  Uncaught Error: Failed opening required '/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php:20
+Stack trace:
+#0 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:51:44 America/Fortaleza] PHP Warning:  require_once(/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php): Failed to open stream: No such file or directory in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:51:44 America/Fortaleza] PHP Fatal error:  Uncaught Error: Failed opening required '/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php:20
+Stack trace:
+#0 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:51:46 America/Fortaleza] PHP Warning:  require_once(/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php): Failed to open stream: No such file or directory in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:51:46 America/Fortaleza] PHP Fatal error:  Uncaught Error: Failed opening required '/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php:20
+Stack trace:
+#0 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:54:02 America/Fortaleza] PHP Warning:  require_once(/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php): Failed to open stream: No such file or directory in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:54:02 America/Fortaleza] PHP Fatal error:  Uncaught Error: Failed opening required '/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php:20
+Stack trace:
+#0 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:54:14 America/Fortaleza] PHP Warning:  require_once(/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php): Failed to open stream: No such file or directory in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:54:14 America/Fortaleza] PHP Fatal error:  Uncaught Error: Failed opening required '/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php:20
+Stack trace:
+#0 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:54:35 America/Fortaleza] PHP Warning:  require_once(/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php): Failed to open stream: No such file or directory in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:54:35 America/Fortaleza] PHP Fatal error:  Uncaught Error: Failed opening required '/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php:20
+Stack trace:
+#0 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:54:39 America/Fortaleza] PHP Warning:  require_once(/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php): Failed to open stream: No such file or directory in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:54:39 America/Fortaleza] PHP Fatal error:  Uncaught Error: Failed opening required '/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php:20
+Stack trace:
+#0 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:58:14 America/Fortaleza] PHP Warning:  require_once(/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php): Failed to open stream: No such file or directory in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:58:14 America/Fortaleza] PHP Fatal error:  Uncaught Error: Failed opening required '/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php:20
+Stack trace:
+#0 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:59:25 America/Fortaleza] PHP Warning:  require_once(/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php): Failed to open stream: No such file or directory in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 09:59:25 America/Fortaleza] PHP Fatal error:  Uncaught Error: Failed opening required '/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php:20
+Stack trace:
+#0 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 10:01:49 America/Fortaleza] PHP Warning:  require_once(/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php): Failed to open stream: No such file or directory in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 10:01:49 America/Fortaleza] PHP Fatal error:  Uncaught Error: Failed opening required '/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php:20
+Stack trace:
+#0 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 10:01:52 America/Fortaleza] PHP Warning:  require_once(/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php): Failed to open stream: No such file or directory in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 10:01:52 America/Fortaleza] PHP Fatal error:  Uncaught Error: Failed opening required '/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php:20
+Stack trace:
+#0 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 12:27:59 America/Fortaleza] PHP Warning:  require_once(/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php): Failed to open stream: No such file or directory in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 12:27:59 America/Fortaleza] PHP Fatal error:  Uncaught Error: Failed opening required '/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php:20
+Stack trace:
+#0 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 12:28:06 America/Fortaleza] PHP Warning:  require_once(/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php): Failed to open stream: No such file or directory in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 12:28:06 America/Fortaleza] PHP Fatal error:  Uncaught Error: Failed opening required '/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php:20
+Stack trace:
+#0 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 12:28:08 America/Fortaleza] PHP Warning:  require_once(/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php): Failed to open stream: No such file or directory in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[20-Feb-2026 12:28:08 America/Fortaleza] PHP Fatal error:  Uncaught Error: Failed opening required '/home1/griffu80/dp.belmax.com.br/public_html/admin/controllers/SelecaoController.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php:20
+Stack trace:
+#0 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 20
+[25-Feb-2026 13:19:30 America/Fortaleza] PHP Fatal error:  Cannot declare class SelecaoController, because the name is already in use in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 4
+[25-Feb-2026 13:19:31 America/Fortaleza] PHP Fatal error:  Cannot declare class SelecaoController, because the name is already in use in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 4
+[26-Feb-2026 09:32:40 America/Fortaleza] PHP Parse error:  syntax error, unexpected token "<", expecting end of file in /home1/griffu80/dp.belmax.com.br/app/controllers/FuncionariosController.php on line 114
+[26-Feb-2026 09:32:41 America/Fortaleza] PHP Parse error:  syntax error, unexpected token "<", expecting end of file in /home1/griffu80/dp.belmax.com.br/app/controllers/FuncionariosController.php on line 114
+[26-Feb-2026 09:32:47 America/Fortaleza] PHP Parse error:  syntax error, unexpected token "<", expecting end of file in /home1/griffu80/dp.belmax.com.br/app/controllers/FuncionariosController.php on line 114
+[26-Feb-2026 09:33:26 America/Fortaleza] PHP Parse error:  syntax error, unexpected token "<", expecting end of file in /home1/griffu80/dp.belmax.com.br/app/controllers/FuncionariosController.php on line 114
+[26-Feb-2026 09:35:12 America/Fortaleza] PHP Parse error:  syntax error, unexpected token "<", expecting end of file in /home1/griffu80/dp.belmax.com.br/app/controllers/FuncionariosController.php on line 114
+[26-Feb-2026 09:35:37 America/Fortaleza] PHP Parse error:  syntax error, unexpected token "<", expecting end of file in /home1/griffu80/dp.belmax.com.br/app/controllers/FuncionariosController.php on line 114
+[26-Feb-2026 09:35:39 America/Fortaleza] PHP Parse error:  syntax error, unexpected token "<", expecting end of file in /home1/griffu80/dp.belmax.com.br/app/controllers/FuncionariosController.php on line 114
+[26-Feb-2026 09:35:50 America/Fortaleza] PHP Parse error:  syntax error, unexpected token "<", expecting end of file in /home1/griffu80/dp.belmax.com.br/app/controllers/FuncionariosController.php on line 114
+[26-Feb-2026 09:36:27 America/Fortaleza] PHP Parse error:  syntax error, unexpected token "<", expecting end of file in /home1/griffu80/dp.belmax.com.br/app/controllers/FuncionariosController.php on line 114
+[26-Feb-2026 09:37:18 America/Fortaleza] PHP Parse error:  syntax error, unexpected token "<", expecting end of file in /home1/griffu80/dp.belmax.com.br/app/controllers/FuncionariosController.php on line 114
+[26-Feb-2026 09:37:19 America/Fortaleza] PHP Parse error:  syntax error, unexpected token "<", expecting end of file in /home1/griffu80/dp.belmax.com.br/app/controllers/FuncionariosController.php on line 114
+[26-Feb-2026 09:39:26 America/Fortaleza] PHP Parse error:  syntax error, unexpected token "<", expecting end of file in /home1/griffu80/dp.belmax.com.br/app/controllers/FuncionariosController.php on line 114
+[26-Feb-2026 09:39:54 America/Fortaleza] PHP Parse error:  syntax error, unexpected token "<", expecting end of file in /home1/griffu80/dp.belmax.com.br/app/controllers/FuncionariosController.php on line 114
+[26-Feb-2026 09:39:56 America/Fortaleza] PHP Parse error:  syntax error, unexpected token "<", expecting end of file in /home1/griffu80/dp.belmax.com.br/app/controllers/FuncionariosController.php on line 114
+[26-Feb-2026 09:39:57 America/Fortaleza] PHP Parse error:  syntax error, unexpected token "<", expecting end of file in /home1/griffu80/dp.belmax.com.br/app/controllers/FuncionariosController.php on line 114
+[26-Feb-2026 09:40:36 America/Fortaleza] PHP Parse error:  syntax error, unexpected token "<", expecting end of file in /home1/griffu80/dp.belmax.com.br/app/controllers/FuncionariosController.php on line 114

@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro Representante - Griffus Style</title>
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+/* ============================================================
+   GRIFFUS — Loading Overlay & Obrigado Page
+   ============================================================ */
+
+/* ---------- Loading Overlay ---------- */
+#griffus-loading-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    background: linear-gradient(160deg, #c2185b 0%, #e91e63 50%, #f06292 100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+}
+
+#griffus-loading-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* Logo pulse */
+.gf-loading-logo {
+    width: 180px;
+    filter: brightness(0) invert(1);
+    animation: gfLogoPulse 2s ease-in-out infinite;
+}
+
+@keyframes gfLogoPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50%       { transform: scale(1.04); opacity: 0.85; }
+}
+
+/* Bubble track */
+.gf-bubble-track {
+    display: flex;
+    gap: 14px;
+    align-items: flex-end;
+}
+
+.gf-bubble {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.9);
+    animation: gfBubble 1.2s ease-in-out infinite;
+}
+
+.gf-bubble:nth-child(1) { animation-delay: 0s; }
+.gf-bubble:nth-child(2) { animation-delay: 0.18s; }
+.gf-bubble:nth-child(3) { animation-delay: 0.36s; }
+.gf-bubble:nth-child(4) { animation-delay: 0.54s; }
+.gf-bubble:nth-child(5) { animation-delay: 0.72s; }
+
+@keyframes gfBubble {
+    0%, 80%, 100% { transform: translateY(0); opacity: 0.5; }
+    40%            { transform: translateY(-18px); opacity: 1; }
+}
+
+/* Progress bar */
+.gf-progress-wrap {
+    width: 240px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.gf-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: #ffffff;
+    border-radius: 999px;
+    animation: gfProgress 2.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes gfProgress {
+    0%   { width: 0%; margin-left: 0; }
+    60%  { width: 80%; margin-left: 0; }
+    100% { width: 0%;  margin-left: 100%; }
+}
+
+/* Text label */
+.gf-loading-label {
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-align: center;
+    opacity: 0.92;
+}
+
+.gf-loading-sublabel {
+    color: rgba(255,255,255,0.75);
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.78rem;
+    text-align: center;
+    margin-top: -24px;
+}
+
+/* Decorative sparkle dots */
+.gf-sparkle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.35);
+    animation: gfSparkle 3s ease-in-out infinite;
+}
+
+.gf-sparkle:nth-child(1)  { top: 12%; left: 18%; animation-delay: 0s;    width: 10px; height: 10px; }
+.gf-sparkle:nth-child(2)  { top: 25%; right: 14%; animation-delay: 0.7s;  width: 6px;  height: 6px; }
+.gf-sparkle:nth-child(3)  { bottom: 20%; left: 22%; animation-delay: 1.2s; width: 8px;  height: 8px; }
+.gf-sparkle:nth-child(4)  { bottom: 30%; right: 20%; animation-delay: 0.4s; width: 12px; height: 12px; }
+.gf-sparkle:nth-child(5)  { top: 55%; left: 8%;   animation-delay: 1.8s;  width: 7px;  height: 7px; }
+.gf-sparkle:nth-child(6)  { top: 40%; right: 7%;  animation-delay: 0.9s;  width: 9px;  height: 9px; }
+
+@keyframes gfSparkle {
+    0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.35; }
+    50%       { transform: scale(1.6) rotate(180deg); opacity: 0.8; }
+}
+
+        /* ============================================================
+           TELA DE SELEÇÃO DE TIPO DE CONTRATO
+           ============================================================ */
+        #telaSelecaoTipo {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fafafa;
+            padding: 1rem;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .selecao-card {
+            background: #fff;
+            width: 100%;
+            max-width: 480px;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .selecao-header {
+            background: linear-gradient(135deg, #e91e63, #c2185b);
+            padding: 40px 30px;
+            text-align: center;
+            color: #fff;
+        }
+        .selecao-logo {
+            width: 120px;
+            filter: brightness(0) invert(1);
+            margin-bottom: 0.5rem;
+        }
+        .selecao-titulo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            letter-spacing: 1px;
+        }
+        .selecao-subtitulo {
+            font-size: 0.95rem;
+            font-weight: 400;
+            margin: 0;
+            opacity: 0.8;
+        }
+        .selecao-body {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .selecao-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 16px 20px;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            color: #444;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        }
+        .selecao-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-color: #ddd;
+            background: #fff;
+        }
+        .selecao-btn__icon {
+            font-size: 1.5rem;
+            margin-right: 16px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+            border-radius: 50%;
+            color: #666;
+            transition: color 0.2s, background 0.2s;
+            flex-shrink: 0;
+        }
+        .selecao-btn:hover .selecao-btn__icon {
+            background: #fce4ec;
+            color: #e91e63;
+        }
+        .selecao-btn__text {
+            display: flex;
+            flex-direction: column;
+        }
+        .selecao-btn__text strong {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+            color: #333;
+            transition: color 0.2s;
+        }
+        .selecao-btn:hover .selecao-btn__text strong {
+            color: #e91e63;
+        }
+        .selecao-btn__text span {
+            font-size: 0.85rem;
+            color: #888;
+        }
+        .selecao-footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.8rem;
+            color: #aaa;
+            border-top: 1px solid #f9f9f9;
+        }
+
+        /* Badge no header do formulário */
+        .header-strip__titles {
+            display: flex;
+            flex-direction: column;
+            gap: .2rem;
+        }
+        .header-strip__titles h2 {
+            font-size: 1.25rem;
+            margin: 0;
+        }
+        .btn-trocar-tipo {
+            background: rgba(255,255,255,.18);
+            border: 1px solid rgba(255,255,255,.4);
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            font-size: .8rem;
+            font-weight: 600;
+            padding: .5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background .2s;
+            white-space: nowrap;
+        }
+        .btn-trocar-tipo:hover { background: rgba(255,255,255,.3); }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="assets/images/icone.png" type="image/x-icon">
+</head>
+
+<body>
+
+    <div id="griffus-loading-overlay">
+        <span class="gf-sparkle"></span>
+        <span class="gf-sparkle"></span>
+        <span class="gf-sparkle"></span>
+        <span class="gf-sparkle"></span>
+        <span class="gf-sparkle"></span>
+        <span class="gf-sparkle"></span>
+
+        <img class="gf-loading-logo" src="assets/images/logo.webp" alt="Griffus Style">
+
+        <div class="gf-bubble-track">
+            <div class="gf-bubble"></div>
+            <div class="gf-bubble"></div>
+            <div class="gf-bubble"></div>
+            <div class="gf-bubble"></div>
+            <div class="gf-bubble"></div>
+        </div>
+
+        <div class="gf-progress-wrap">
+            <div class="gf-progress-bar"></div>
+        </div>
+
+        <span class="gf-loading-label">Enviando seu cadastro...</span>
+        <span class="gf-loading-sublabel">Por favor, aguarde um momento</span>
+    </div>
+
+    <div id="telaSelecaoTipo">
+        <div class="selecao-card">
+            <div class="selecao-header">
+                <img src="assets/images/logo.webp" alt="Logo Griffus" class="selecao-logo">
+                <h2 class="selecao-titulo">Contratos</h2>
+                <p class="selecao-subtitulo">Selecione o tipo de contrato abaixo</p>
+            </div>
+            <div class="selecao-body">
+                <button type="button" class="selecao-btn" onclick="selecionarTipo('RCA')">
+                    <i class="fa-solid fa-file-contract selecao-btn__icon"></i>
+                    <div class="selecao-btn__text">
+                        <strong>RCA</strong>
+                        <span>Representante Comercial Autônomo</span>
+                    </div>
+                </button>
+                <button type="button" class="selecao-btn" onclick="selecionarTipo('PJ')">
+                    <i class="fa-solid fa-building selecao-btn__icon"></i>
+                    <div class="selecao-btn__text">
+                        <strong>PJ</strong>
+                        <span>Promoção de Vendas</span>
+                    </div>
+                </button>
+            </div>
+            <div class="selecao-footer">
+                © 2026 Griffus / Belmax. Todos os direitos reservados.
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container" id="formContainer" style="display:none;">
+        <div class="header-strip">
+            <img src="assets/images/logo.webp" alt="Logo Griffus" class="logo">
+            <div class="header-strip__titles">
+                <h2 id="formTitulo">Cadastro Representantes Comerciais</h2>
+            </div>
+            <button type="button" class="btn-trocar-tipo" onclick="voltarSelecao()">← Trocar tipo</button>
+        </div>
+        <div class="content-body">
+            <form id="formContratos">
+                <input type="hidden" id="tipoContrato" name="tipoContrato">
+
+                <fieldset>
+                    <legend>Dados da Empresa</legend>
+
+                    <div class="form-group">
+                        <label for="razaoSocial">Razão Social</label>
+                        <input type="text" id="razaoSocial" name="razaoSocial" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cnpj">CNPJ</label>
+                        <input type="text" id="cnpj" name="cnpj" placeholder="00.000.000/0000-00" maxlength="18"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cep">CEP</label>
+                        <input type="text" id="cep" name="cep" placeholder="00.000-000" maxlength="10" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="endereco">Endereço</label>
+                        <input type="text" id="endereco" name="endereco" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="numero">Número</label>
+                        <input type="text" id="numero" name="numero" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bairro">Bairro</label>
+                        <input type="text" id="bairro" name="bairro" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cidade">Cidade</label>
+                        <input type="text" id="cidade" name="cidade" required>
+                    </div>
+
+                    <div class="form-group small">
+                        <label for="uf">UF</label>
+                        <input type="text" id="uf" name="uf" maxlength="2" style="text-transform: uppercase;" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="celular">Celular</label>
+                        <input type="tel" id="celular" name="celular" placeholder="(00) 90000-0000" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="emailEmpresa">Email</label>
+                        <input type="email" id="emailEmpresa" name="emailEmpresa" required>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Dados Bancários</legend>
+
+                    <div class="form-group">
+                        <label for="banco">Banco</label>
+                        <input type="text" id="banco" name="banco" placeholder="Nome ou Código" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="agencia">Agência</label>
+                        <input type="text" id="agencia" name="agencia" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="conta">Conta</label>
+                        <input type="text" id="conta" name="conta" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pix">Chave PIX</label>
+                        <input type="text" id="pix" name="pix" required>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Dados do Sócio</legend>
+
+                    <div class="form-group full-width">
+                        <label for="nomeSocio">Nome Completo</label>
+                        <input type="text" id="nomeSocio" name="nomeSocio" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cpf">CPF</label>
+                        <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" maxlength="14" required>
+                        <span id="erro-cpf" style="color:#e53935;font-size:0.8rem;margin-top:3px;display:block;"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rg">RG</label>
+                        <input type="text" id="rg" name="rg" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="orgaoExpedidor">Orgão Expedidor</label>
+                        <input type="text" id="orgaoExpedidor" name="orgaoExpedidor" style="text-transform: uppercase;"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nascimento">Data de Nascimento</label>
+                        <input type="date" id="nascimento" name="nascimento" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nacionalidade">Nacionalidade</label>
+                        <input type="text" id="nacionalidade" name="nacionalidade" value="Brasileiro" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="estadoCivil">Estado Civil</label>
+                        <select id="estadoCivil" name="estadoCivil" required>
+                            <option value="">Selecione...</option>
+                            <option value="solteiro">Solteiro(a)</option>
+                            <option value="casado">Casado(a)</option>
+                            <option value="divorciado">Divorciado(a)</option>
+                            <option value="viuvo">Viúvo(a)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profissao">Profissão</label>
+                        <input type="text" id="profissao" name="profissao" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="emailSocio">Email Pessoal</label>
+                        <input type="email" id="emailSocio" name="emailSocio" required>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Endereço Sócio</legend>
+
+                    <div class="form-group">
+                        <label for="cepSocio">CEP</label>
+                        <input type="text" id="cepSocio" name="cepSocio" maxlength="10" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="enderecoSocio">Endereço</label>
+                        <input type="text" id="enderecoSocio" name="enderecoSocio" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="numeroSocio">Número</label>
+                        <input type="text" id="numeroSocio" name="numeroSocio" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bairroSocio">Bairro</label>
+                        <input type="text" id="bairroSocio" name="bairroSocio" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cidadeSocio">Cidade</label>
+                        <input type="text" id="cidadeSocio" name="cidadeSocio" required>
+                    </div>
+
+                    <div class="form-group small">
+                        <label for="ufSocio">UF</label>
+                        <input type="text" id="ufSocio" name="ufSocio" maxlength="2" style="text-transform: uppercase;"
+                            required>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Documentação - Empresa</legend>
+
+                    <div class="form-group">
+                        <label for="docContratoSocial">
+                            Contrato Social / Certificado MEI
+                            <span class="badge-limit">Máx: 10MB</span>
+                        </label>
+
+                        <div class="upload-wrapper">
+                            <input type="file" id="docContratoSocial" name="docContratoSocial"
+                                accept=".pdf,.jpg,.jpeg,.png" data-limit="10" onchange="validateAndPreview(this)"><label for="docContratoSocial" class="file-upload-label">
+                                <span class="file-upload-icon"></span>
+                                <span class="upload-text">Selecionar arquivo...</span>
+                            </label>
+                        </div>
+                        <div class="file-status" id="status-docContratoSocial"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="docEndEmpresa">
+                            Comprovante de Endereço
+                            <span class="badge-limit">Máx: 5MB</span>
+                        </label>
+
+                        <div class="upload-wrapper">
+                            <input type="file" id="docEndEmpresa" name="docEndEmpresa" accept=".pdf,.jpg,.jpeg,.png"
+                                data-limit="5" onchange="validateAndPreview(this)">
+
+                            <label for="docEndEmpresa" class="file-upload-label">
+                                <span class="file-upload-icon"></span>
+                                <span class="upload-text">Selecionar arquivo...</span>
+                            </label>
+                        </div>
+                        <div class="file-status" id="status-docEndEmpresa"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="docCartaoCnpj">
+                            Cartão CNPJ
+                            <span class="badge-limit">Máx: 3MB</span>
+                        </label>
+
+                        <div class="upload-wrapper">
+                            <input type="file" id="docCartaoCnpj" name="docCartaoCnpj" accept=".pdf,.jpg,.jpeg,.png"
+                                data-limit="3" onchange="validateAndPreview(this)">
+
+                            <label for="docCartaoCnpj" class="file-upload-label">
+                                <span class="file-upload-icon"></span>
+                                <span class="upload-text">Selecionar arquivo...</span>
+                            </label>
+                        </div>
+                        <div class="file-status" id="status-docCartaoCnpj"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="docCore">
+                            CORE
+                            <span class="badge-limit">Máx: 5MB</span>
+                        </label>
+
+                        <div class="upload-wrapper">
+                            <input type="file" id="docCore" name="docCore" accept=".pdf,.jpg,.jpeg,.png" data-limit="5"
+                                onchange="validateAndPreview(this)">
+
+                            <label for="docCore" class="file-upload-label">
+                                <span class="file-upload-icon"></span>
+                                <span class="upload-text">Selecionar arquivo...</span>
+                            </label>
+                        </div>
+                        <div class="file-status" id="status-docCore"></div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Documentação - Sócios</legend>
+
+                    <div class="form-group">
+                        <label for="docCpfSocio">
+                            CPF
+                            <span class="badge-limit">Máx: 3MB</span>
+                        </label>
+
+                        <div class="upload-wrapper">
+                            <input type="file" id="docCpfSocio" name="docCpfSocio" accept=".pdf,.jpg,.jpeg,.png"
+                                data-limit="3" onchange="validateAndPreview(this)">
+
+                            <label for="docCpfSocio" class="file-upload-label">
+                                <span class="file-upload-icon"></span>
+                                <span class="upload-text">Selecionar arquivo...</span>
+                            </label>
+                        </div>
+                        <div class="file-status" id="status-docCpfSocio"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="docIdentidadeSocio">
+                            Identidade (RG)
+                            <span class="badge-limit">Máx: 5MB</span>
+                        </label>
+
+                        <div class="upload-wrapper">
+                            <input type="file" id="docIdentidadeSocio" name="docIdentidadeSocio"
+                                accept=".pdf,.jpg,.jpeg,.png" data-limit="5" onchange="validateAndPreview(this)">
+
+                            <label for="docIdentidadeSocio" class="file-upload-label">
+                                <span class="file-upload-icon"></span>
+                                <span class="upload-text">Selecionar arquivo...</span>
+                            </label>
+                        </div>
+                        <div class="file-status" id="status-docIdentidadeSocio"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="docEndSocioComp">
+                            Comp. Endereço Sócio
+                            <span class="badge-limit">Máx: 5MB</span>
+                        </label>
+
+                        <div class="upload-wrapper">
+                            <input type="file" id="docEndSocioComp" name="docEndSocioComp" accept=".pdf,.jpg,.jpeg,.png"
+                                data-limit="5" onchange="validateAndPreview(this)">
+
+                            <label for="docEndSocioComp" class="file-upload-label">
+                                <span class="file-upload-icon"></span>
+                                <span class="upload-text">Selecionar arquivo...</span>
+                            </label>
+                        </div>
+                        <div class="file-status" id="status-docEndSocioComp"></div>
+                    </div>
+                </fieldset>
+
+                <div class="button-container">
+                    <button type="submit">Cadastrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../assets/js/toast.js"></script>
+    <script src="assets/js/api.js?v=2"></script>
+
+    <!-- ====================== MODAL LGPD ====================== -->
+    <div id="modal-lgpd" class="modal-lgpd-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="modal-lgpd-titulo">
+        <div class="modal-lgpd-box">
+            <div class="modal-lgpd-header">
+                <i class="fa-solid fa-shield-halved modal-lgpd-icon"></i>
+                <h3 id="modal-lgpd-titulo">Termo de Consentimento e Privacidade</h3>
+            </div>
+            <div class="modal-lgpd-body">
+                <p>
+                    Ao prosseguir, você declara estar ciente de que os dados fornecidos neste formulário serão coletados e tratados,
+                    exclusivamente para fins de <strong>contrato de prestação de serviços, recrutamento, seleção e análise de perfil</strong>
+                    para vagas disponíveis.
+                </p>
+                <p>
+                    Seus dados serão armazenados de forma segura e <strong>não serão compartilhados com terceiros</strong> sem sua
+                    autorização prévia. Você poderá solicitar a exclusão dos seus dados a qualquer momento enviando um e-mail para
+                    <a href="mailto:dp@belmax.com.br">dp@belmax.com.br</a>.
+                </p>
+            </div>
+            <div class="modal-lgpd-check-row">
+                <label class="modal-lgpd-check-label" for="check-lgpd">
+                    <input type="checkbox" id="check-lgpd">
+                    Li e aceito os termos de tratamento de dados conforme a LGPD.
+                </label>
+            </div>
+            <div class="modal-lgpd-footer">
+                <button type="button" id="btn-lgpd-cancelar" class="btn-lgpd-cancelar">
+                    <i class="fa-solid fa-xmark"></i> Cancelar
+                </button>
+                <button type="button" id="btn-lgpd-confirmar" class="btn-lgpd-confirmar" disabled>
+                    <i class="fa-solid fa-paper-plane"></i> Confirmar e Enviar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    /*
+     * LGPD — intercepta o submit na FASE DE CAPTURA (antes de api.js)
+     * e usa stopImmediatePropagation para bloquear completamente o evento
+     * até o usuário aceitar os termos.
+     */
+    (function () {
+        'use strict';
+
+        var form        = document.getElementById('formContratos');
+        var modal       = document.getElementById('modal-lgpd');
+        var checkLgpd   = document.getElementById('check-lgpd');
+        var btnConfirmar= document.getElementById('btn-lgpd-confirmar');
+        var btnCancelar = document.getElementById('btn-lgpd-cancelar');
+        var termoAceito = false;  // flag LOCAL, sem risco de conflito global
+
+        /* ── Abre o modal ────────────────────────────────── */
+        function abrirModal() {
+            checkLgpd.checked     = false;
+            btnConfirmar.disabled = true;
+            modal.style.display   = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        /* ── Fecha o modal ───────────────────────────────── */
+        function fecharModal() {
+            modal.style.display  = 'none';
+            document.body.style.overflow = '';
+        }
+
+        /*
+         * Listener de CAPTURA no form — roda ANTES de qualquer listener
+         * registrado em fase de bolha (inclusive o de api.js).
+         * Se o termo ainda não foi aceito: bloqueia tudo e abre o modal.
+         * Se já foi aceito: limpa a flag e deixa o evento seguir normalmente.
+         */
+        form.addEventListener('submit', function (e) {
+            if (!termoAceito) {
+                e.preventDefault();
+                e.stopImmediatePropagation(); // impede api.js de ver o evento
+                abrirModal();
+            } else {
+                termoAceito = false; // reset para próxima submissão
+                /* deixa o evento prosseguir — api.js irá tratá-lo */
+            }
+        }, true /* capture = true */);
+
+        /* ── Checkbox habilita botão ─────────────────────── */
+        checkLgpd.addEventListener('change', function () {
+            btnConfirmar.disabled = !this.checked;
+        });
+
+        /* ── Confirmar: seta flag e re-dispara submit ────── */
+        btnConfirmar.addEventListener('click', function () {
+            if (!checkLgpd.checked) return;
+            fecharModal();
+            termoAceito = true;
+            /*
+             * Cria e dispara um novo evento submit.
+             * O listener de captura acima verá termoAceito=true
+             * e deixará o evento chegar ao handler de api.js.
+             */
+            form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+        });
+
+        /* ── Cancelar ────────────────────────────────────── */
+        btnCancelar.addEventListener('click', fecharModal);
+
+        /* ── Clique fora fecha ───────────────────────────── */
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) fecharModal();
+        });
+
+        /* ── ESC fecha ───────────────────────────────────── */
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && modal.style.display === 'flex') fecharModal();
+        });
+
+    })();
+    </script>
+    <!-- ========================================================= -->
+
+        <script>
+        function updateFileName(input) {
+            const fileNameDisplay = document.getElementById('fileName-' + input.id);
+            if (input.files.length > 0) {
+                fileNameDisplay.textContent = input.files[0].name;
+            } else {
+                fileNameDisplay.textContent = 'Nenhum arquivo selecionado';
+            }
+        }
+
+        /* ============================================
+           CEP Auto-fill — via ViaCEP
+           ============================================ */
+        (function () {
+            "use strict";
+
+            function configurarCep(cepId, fields) {
+                const input = document.getElementById(cepId);
+                if (!input) return;
+
+                input.addEventListener("input", function () {
+                    let v = this.value.replace(/\D/g, "").slice(0, 8);
+                    if (v.length > 5) v = v.slice(0, 5) + "-" + v.slice(5);
+                    this.value = v;
+                });
+
+                function buscar() {
+                    const cep = input.value.replace(/\D/g, "");
+                    if (cep.length !== 8) return;
+
+                    input.style.opacity = "0.6";
+                    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                        .then(r => r.json())
+                        .then(data => {
+                            input.style.opacity = "1";
+                            if (data.erro) { input.style.borderColor = "#e53935"; return; }
+                            input.style.borderColor = "";
+                            if (fields.logradouro && document.getElementById(fields.logradouro))
+                                document.getElementById(fields.logradouro).value = data.logradouro || "";
+                            if (fields.bairro && document.getElementById(fields.bairro))
+                                document.getElementById(fields.bairro).value = data.bairro || "";
+                            if (fields.cidade && document.getElementById(fields.cidade))
+                                document.getElementById(fields.cidade).value = data.localidade || "";
+                            if (fields.uf && document.getElementById(fields.uf))
+                                document.getElementById(fields.uf).value = data.uf || "";
+                            if (fields.numero && document.getElementById(fields.numero))
+                                document.getElementById(fields.numero).focus();
+                        })
+                        .catch(() => { input.style.opacity = "1"; });
+                }
+
+                input.addEventListener("blur", buscar);
+                input.addEventListener("keydown", function (e) {
+                    if (e.key === "Enter") { e.preventDefault(); buscar(); }
+                });
+            }
+
+            // CEP da Empresa
+            configurarCep("cep", {
+                logradouro: "endereco",
+                bairro: "bairro",
+                cidade: "cidade",
+                uf: "uf",
+                numero: "numero"
+            });
+
+            // CEP do Sócio
+            configurarCep("cepSocio", {
+                logradouro: "enderecoSocio",
+                bairro: "bairroSocio",
+                cidade: "cidadeSocio",
+                uf: "ufSocio",
+                numero: "numeroSocio"
+            });
+        })();
+    </script>
+
+    <script>
+        function selecionarTipo(tipo) {
+            document.getElementById('tipoContrato').value = tipo;
+            document.getElementById('telaSelecaoTipo').style.display = 'none';
+            document.getElementById('formContainer').style.display = '';
+
+            const titulo = document.getElementById('formTitulo');
+            if (tipo === 'RCA') {
+                titulo.textContent = 'RCA — Representante Comercial Autônomo';
+            } else {
+                titulo.textContent = 'PJ — Promoção de Vendas';
+            }
+        }
+
+        function voltarSelecao() {
+            document.getElementById('tipoContrato').value = '';
+            document.getElementById('formContainer').style.display = 'none';
+            document.getElementById('telaSelecaoTipo').style.display = 'flex';
+        }
+    </script>
+
+</body>
+
+</html>

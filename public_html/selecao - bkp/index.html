@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha de Seleção</title>
+    <link rel="stylesheet" href="assets/css/selecao.css">
+    <link rel="stylesheet" href="../assets/css/loading.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="../contratos/assets/images/icone.png" type="image/x-icon">
+</head>
+
+<body>
+
+    <!-- ====================== LOADING OVERLAY ====================== -->
+    <div id="griffus-loading-overlay">
+        <span class="gf-sparkle"></span>
+        <span class="gf-sparkle"></span>
+        <span class="gf-sparkle"></span>
+        <span class="gf-sparkle"></span>
+        <span class="gf-sparkle"></span>
+        <span class="gf-sparkle"></span>
+
+        <img class="gf-loading-logo" src="../contratos/assets/images/logo.webp" alt="Griffus Style">
+
+        <div class="gf-bubble-track">
+            <div class="gf-bubble"></div>
+            <div class="gf-bubble"></div>
+            <div class="gf-bubble"></div>
+            <div class="gf-bubble"></div>
+            <div class="gf-bubble"></div>
+        </div>
+
+        <div class="gf-progress-wrap">
+            <div class="gf-progress-bar"></div>
+        </div>
+
+        <span class="gf-loading-label">Enviando sua ficha...</span>
+        <span class="gf-loading-sublabel">Por favor, aguarde um momento</span>
+    </div>
+    <!-- ============================================================== -->
+
+    <div class="main-container">
+        <div class="header-strip">
+            <img src="../contratos/assets/images/logo.webp" alt="Logo" class="logo">
+            <h2>Ficha de Seleção</h2>
+        </div>
+        <div class="content-body">
+            <form id="formSelecao">
+
+                <!-- ====== IDENTIFICAÇÃO ====== -->
+                <fieldset>
+                    <legend>Identificação</legend>
+                    <div class="form-group">
+                        <label for="empresa">Empresa <span class="obrigatorio">*</span></label>
+                        <select id="empresa" name="empresa" required>
+                            <option value="">Selecione...</option>
+                            <option value="BELMAX S/A">BELMAX S/A</option>
+                            <option value="GRIFFUS SA">GRIFFUS SA</option>
+                            <option value="BIOPACK LTDA">BIOPACK LTDA</option>
+                            <option value="GRIFFUSONLINE LTDA">GRIFFUSONLINE LTDA</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cargo">Cargo Pretendido <span class="obrigatorio">*</span></label>
+                        <select id="cargo" name="cargo" required>
+                            <option value="">Carregando cargos...</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="grupo-outro-cargo" style="display:none;">
+                        <label for="cargoOutro">Qual cargo? <span class="obrigatorio">*</span></label>
+                        <input type="text" id="cargoOutro" name="cargoOutro" placeholder="Descreva o cargo desejado">
+                    </div>
+                </fieldset>
+
+                <!-- ====== DADOS PESSOAIS ====== -->
+                <fieldset>
+                    <legend>Dados Pessoais</legend>
+                    <div class="form-group full-width">
+                        <label for="nomeCompleto">Nome Completo <span class="obrigatorio">*</span></label>
+                        <input type="text" id="nomeCompleto" name="nomeCompleto" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cpf">CPF <span class="obrigatorio">*</span></label>
+                        <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" maxlength="14" required>
+                        <span id="erro-cpf" style="color:#e53935;font-size:0.8rem;margin-top:3px;display:block;"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="rg">RG <span class="obrigatorio">*</span></label>
+                        <input type="text" id="rg" name="rg" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="orgaoExpedidor">Órgão Expedidor <span class="obrigatorio">*</span></label>
+                        <input type="text" id="orgaoExpedidor" name="orgaoExpedidor" style="text-transform:uppercase;" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dataNascimento">Data de Nascimento <span class="obrigatorio">*</span></label>
+                        <input type="date" id="dataNascimento" name="dataNascimento" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="estadoCivil">Estado Civil <span class="obrigatorio">*</span></label>
+                        <select id="estadoCivil" name="estadoCivil" required>
+                            <option value="">Selecione...</option>
+                            <option value="Solteiro(a)">Solteiro(a)</option>
+                            <option value="Casado(a)">Casado(a)</option>
+                            <option value="Divorciado(a)">Divorciado(a)</option>
+                            <option value="Viúvo(a)">Viúvo(a)</option>
+                            <option value="União Estável">União Estável</option>
+                            <option value="Separado(a)">Separado(a)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="naturalidade">Naturalidade</label>
+                        <input type="text" id="naturalidade" name="naturalidade" placeholder="Cidade/UF">
+                    </div>
+                    <div class="form-group">
+                        <label for="nacionalidade">Nacionalidade</label>
+                        <input type="text" id="nacionalidade" name="nacionalidade" value="Brasileiro(a)">
+                    </div>
+                    <div class="form-group">
+                        <label>Possui Filhos? <span class="obrigatorio">*</span></label>
+                        <div class="radio-group">
+                            <label class="radio-label"><input type="radio" name="possuiFilhos" value="nao" required> Não</label>
+                            <label class="radio-label"><input type="radio" name="possuiFilhos" value="sim"> Sim</label>
+                        </div>
+                    </div>
+                    <div class="form-group" id="grupo-qtd-filhos" style="display:none;">
+                        <label for="qtdFilhos">Quantos filhos?</label>
+                        <input type="number" id="qtdFilhos" name="qtdFilhos" min="1" max="20" placeholder="Ex: 2">
+                    </div>
+                    <div class="form-group">
+                        <label>Possui CNH? <span class="obrigatorio">*</span></label>
+                        <div class="radio-group">
+                            <label class="radio-label"><input type="radio" name="possuiCnh" value="nao" required> Não</label>
+                            <label class="radio-label"><input type="radio" name="possuiCnh" value="sim"> Sim</label>
+                        </div>
+                    </div>
+                    <div class="form-group" id="grupo-cnh" style="display:none;">
+                        <label for="categoriaCnh">Categoria da CNH</label>
+                        <select id="categoriaCnh" name="categoriaCnh">
+                            <option value="">Selecione...</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="AB">AB</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                        </select>
+                    </div>
+                </fieldset>
+
+                <!-- ====== ENDEREÇO ====== -->
+                <fieldset>
+                    <legend>Endereço</legend>
+                    <div class="form-group cep-wrapper">
+                        <label for="cep">CEP <span class="obrigatorio">*</span></label>
+                        <div class="cep-input-group">
+                            <input type="text" id="cep" name="cep" placeholder="00000-000" maxlength="9" required>
+                            <span id="cep-spinner" class="cep-spinner" style="display:none;">⏳</span>
+                        </div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="endereco">Endereço <span class="obrigatorio">*</span></label>
+                        <input type="text" id="endereco" name="endereco" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="numero">Número <span class="obrigatorio">*</span></label>
+                        <input type="text" id="numero" name="numero" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="complemento">Complemento</label>
+                        <input type="text" id="complemento" name="complemento" placeholder="Apto, bloco, casa...">
+                    </div>
+                    <div class="form-group">
+                        <label for="bairro">Bairro <span class="obrigatorio">*</span></label>
+                        <input type="text" id="bairro" name="bairro" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cidade">Cidade <span class="obrigatorio">*</span></label>
+                        <input type="text" id="cidade" name="cidade" required>
+                    </div>
+                    <div class="form-group small">
+                        <label for="uf">UF <span class="obrigatorio">*</span></label>
+                        <input type="text" id="uf" name="uf" maxlength="2" style="text-transform:uppercase;" required>
+                    </div>
+                </fieldset>
+
+                <!-- ====== CONTATO ====== -->
+                <fieldset>
+                    <legend>Contato</legend>
+                    <div class="form-group">
+                        <label for="celular">Celular <span class="obrigatorio">*</span></label>
+                        <input type="tel" id="celular" name="celular" placeholder="(00) 90000-0000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-mail <span class="obrigatorio">*</span></label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                </fieldset>
+
+                <!-- ====== FORMAÇÃO ====== -->
+                <fieldset>
+                    <legend>Formação</legend>
+                    <div class="form-group">
+                        <label for="escolaridade">Escolaridade <span class="obrigatorio">*</span></label>
+                        <select id="escolaridade" name="escolaridade" required>
+                            <option value="">Selecione...</option>
+                            <option value="Fundamental Incompleto">Fundamental Incompleto</option>
+                            <option value="Fundamental Completo">Fundamental Completo</option>
+                            <option value="Médio Incompleto">Médio Incompleto</option>
+                            <option value="Médio Completo">Médio Completo</option>
+                            <option value="Superior Incompleto">Superior Incompleto</option>
+                            <option value="Superior Completo">Superior Completo</option>
+                            <option value="Pós-Graduação">Pós-Graduação</option>
+                            <option value="Mestrado">Mestrado</option>
+                            <option value="Doutorado">Doutorado</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="curso">Curso/Área de Formação</label>
+                        <input type="text" id="curso" name="curso" placeholder="Ex: Administração, Logística...">
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="habilidades">Habilidades / Observações</label>
+                        <textarea id="habilidades" name="habilidades" rows="3"
+                            placeholder="Idiomas, ferramentas, informações adicionais..."></textarea>
+                    </div>
+                </fieldset>
+
+                <!-- ====== EXPERIÊNCIA ANTERIOR ====== -->
+                <fieldset id="fieldset-experiencias">
+                    <legend>Experiência Profissional Anterior</legend>
+
+                    <div class="full-width experiencias-container">
+                        <p class="exp-instrucao">Adicione até <strong>3 experiências anteriores</strong> (da mais recente para a mais antiga).</p>
+
+                        <div id="lista-experiencias">
+                            <!-- Blocos inseridos via JS -->
+                        </div>
+
+                        <div id="area-adicionar-exp">
+                            <button type="button" id="btn-add-exp" class="btn-adicionar-exp">
+                                <i class="fa-solid fa-plus"></i> Adicionar Experiência
+                            </button>
+                            <span id="exp-counter-msg" class="exp-counter-msg"></span>
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="experiencia" name="experiencia" value="[]">
+                </fieldset>
+
+                <!-- ====== QUESTIONÁRIO ====== -->
+                <fieldset>
+                    <legend>Questionário</legend>
+
+                    <div class="form-group full-width questao-destaque">
+                        <p class="questao-titulo-destaque">As questões abaixo vão nos possibilitar conhecê-lo um pouco melhor</p>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="motivacao">O que mais te motiva e o que mais te revolta?</label>
+                        <textarea id="motivacao" name="motivacao" rows="3" placeholder="Descreva..."></textarea>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="lazer">O que você gosta de fazer nos momentos de lazer?</label>
+                        <textarea id="lazer" name="lazer" rows="3" placeholder="Descreva..."></textarea>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="qualidades_pessoais">Quais são as suas qualidades pessoais?</label>
+                        <textarea id="qualidades_pessoais" name="qualidades_pessoais" rows="3" placeholder="Descreva..."></textarea>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="qualidades_profissionais">Quais são as suas qualidades profissionais?</label>
+                        <textarea id="qualidades_profissionais" name="qualidades_profissionais" rows="3" placeholder="Descreva..."></textarea>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="oportunidades_melhoria">Quais suas oportunidades de Melhoria?</label>
+                        <textarea id="oportunidades_melhoria" name="oportunidades_melhoria" rows="3" placeholder="Descreva..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="esporte">Pratica algum esporte? Qual?</label>
+                        <input type="text" id="esporte" name="esporte" placeholder="Ex: Futebol, Academia, Corrida...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="animal_domestico">Possui animal doméstico? Qual?</label>
+                        <input type="text" id="animal_domestico" name="animal_domestico" placeholder="Ex: Cachorro, Gato...">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="expectativas">Fale um pouco das expectativas para seu futuro profissional e pessoal:</label>
+                        <textarea id="expectativas" name="expectativas" rows="3" placeholder="Descreva suas expectativas..."></textarea>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="fatores_ambiente">Para você, quais os fatores MAIS e MENOS importantes em se tratando do ambiente de trabalho?</label>
+                        <textarea id="fatores_ambiente" name="fatores_ambiente" rows="3" placeholder="Descreva..."></textarea>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="motivo_escolha">Apresente motivos para escolhermos você ao invés de outras pessoas:</label>
+                        <textarea id="motivo_escolha" name="motivo_escolha" rows="3" placeholder="Descreva..."></textarea>
+                    </div>
+                </fieldset>
+
+                <!-- ====== DISPONIBILIDADE & PRETENSÃO ====== -->
+                <fieldset>
+                    <legend>Disponibilidade &amp; Pretensão</legend>
+
+                    <div class="form-group full-width">
+                        <label>Você possui disponibilidade para trabalhar em qualquer horário? <span class="obrigatorio">*</span></label>
+                        <div class="radio-group">
+                            <label class="radio-label"><input type="radio" name="disponibilidade_horario" value="sim" required> Sim</label>
+                            <label class="radio-label"><input type="radio" name="disponibilidade_horario" value="nao"> Não</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width" id="grupo-disponibilidade-info" style="display:none;">
+                        <label for="disponibilidade_info">Caso negativo, favor informar:</label>
+                        <input type="text" id="disponibilidade_info" name="disponibilidade_info"
+                            placeholder="Informe sua disponibilidade de horário...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pretensao_salarial">Pretensão Salarial <span class="obrigatorio">*</span></label>
+                        <input type="text" id="pretensao_salarial" name="pretensao_salarial"
+                            placeholder="Ex: R$ 2.500,00" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="indicado_por">Se foi indicado por alguém que já trabalha nesta empresa, cite o nome:</label>
+                        <input type="text" id="indicado_por" name="indicado_por"
+                            placeholder="Nome do colaborador que te indicou (se houver)">
+                    </div>
+                </fieldset>
+
+                <!-- Mensagem de feedback -->
+                <div id="msg-feedback" style="display:none;" class="msg-feedback"></div>
+
+                <div class="button-container">
+                    <button type="submit" id="btn-submit">Enviar Ficha</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ====================== MODAL LGPD ====================== -->
+    <div id="modal-lgpd" class="modal-lgpd-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="modal-lgpd-titulo">
+        <div class="modal-lgpd-box">
+            <div class="modal-lgpd-header">
+                <i class="fa-solid fa-shield-halved modal-lgpd-icon"></i>
+                <h3 id="modal-lgpd-titulo">Termo de Consentimento e Privacidade</h3>
+            </div>
+            <div class="modal-lgpd-body">
+                <p>
+                    Ao prosseguir, você declara estar ciente de que os dados fornecidos neste formulário serão coletados e tratados,
+                    exclusivamente para fins de <strong>contrato de prestação de serviços, recrutamento, seleção e análise de perfil</strong>
+                    para vagas disponíveis.
+                </p>
+                <p>
+                    Seus dados serão armazenados de forma segura e <strong>não serão compartilhados com terceiros</strong> sem sua
+                    autorização prévia. Você poderá solicitar a exclusão dos seus dados a qualquer momento enviando um e-mail para
+                    <a href="mailto:dp@belmax.com.br">dp@belmax.com.br</a>.
+                </p>
+            </div>
+            <div class="modal-lgpd-check-row">
+                <label class="modal-lgpd-check-label" for="check-lgpd">
+                    <input type="checkbox" id="check-lgpd">
+                    <span class="modal-lgpd-checkmark"></span>
+                    Li e aceito os termos de tratamento de dados conforme a <strong>LGPD</strong>.
+                </label>
+            </div>
+            <div class="modal-lgpd-footer">
+                <button type="button" id="btn-lgpd-cancelar" class="btn-lgpd-cancelar">
+                    <i class="fa-solid fa-xmark"></i> Cancelar
+                </button>
+                <button type="button" id="btn-lgpd-confirmar" class="btn-lgpd-confirmar" disabled>
+                    <i class="fa-solid fa-paper-plane"></i> Confirmar e Enviar
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- ========================================================= -->
+
+    <script>
+    // Intercepta o submit do formulário para exibir o modal LGPD
+    (function () {
+        var form = document.getElementById('formSelecao');
+        var modal = document.getElementById('modal-lgpd');
+        var checkLgpd = document.getElementById('check-lgpd');
+        var btnConfirmar = document.getElementById('btn-lgpd-confirmar');
+        var btnCancelar = document.getElementById('btn-lgpd-cancelar');
+        var _submitBloqueado = true;
+
+        // Abre o modal ao tentar enviar
+        form.addEventListener('submit', function (e) {
+            if (_submitBloqueado) {
+                e.preventDefault();
+                checkLgpd.checked = false;
+                btnConfirmar.disabled = true;
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+        });
+
+        // Habilita o botão confirmar conforme o checkbox
+        checkLgpd.addEventListener('change', function () {
+            btnConfirmar.disabled = !this.checked;
+        });
+
+        // Fechar modal sem enviar
+        btnCancelar.addEventListener('click', fecharModal);
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) fecharModal();
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && modal.style.display === 'flex') fecharModal();
+        });
+
+        // Confirma e dispara o submit real
+        btnConfirmar.addEventListener('click', function () {
+            if (!checkLgpd.checked) return;
+            fecharModal();
+            _submitBloqueado = false;
+            form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+            _submitBloqueado = true;
+        });
+
+        function fecharModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    })();
+    </script>
+
+    <script src="../assets/js/toast.js"></script>
+    <script src="assets/js/selecao.js"></script>
+</body>
+</html>
