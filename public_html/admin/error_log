@@ -136,3 +136,108 @@ Stack trace:
 [26-Feb-2026 09:39:56 America/Fortaleza] PHP Parse error:  syntax error, unexpected token "<", expecting end of file in /home1/griffu80/dp.belmax.com.br/app/controllers/FuncionariosController.php on line 114
 [26-Feb-2026 09:39:57 America/Fortaleza] PHP Parse error:  syntax error, unexpected token "<", expecting end of file in /home1/griffu80/dp.belmax.com.br/app/controllers/FuncionariosController.php on line 114
 [26-Feb-2026 09:40:36 America/Fortaleza] PHP Parse error:  syntax error, unexpected token "<", expecting end of file in /home1/griffu80/dp.belmax.com.br/app/controllers/FuncionariosController.php on line 114
+[10-Mar-2026 13:24:40 America/Fortaleza] PHP Fatal error:  Uncaught TypeError: e(): Argument #1 ($value) must be of type ?string, int given, called in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 221 and defined in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php:5
+Stack trace:
+#0 /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php(221): e(1)
+#1 /home1/griffu80/dp.belmax.com.br/app/controllers/SelecaoController.php(44): require('/home1/griffu80...')
+#2 /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php(43): SelecaoController->view(13)
+#3 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 5
+[10-Mar-2026 13:24:53 America/Fortaleza] PHP Fatal error:  Uncaught TypeError: e(): Argument #1 ($value) must be of type ?string, int given, called in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 221 and defined in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php:5
+Stack trace:
+#0 /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php(221): e(1)
+#1 /home1/griffu80/dp.belmax.com.br/app/controllers/SelecaoController.php(44): require('/home1/griffu80...')
+#2 /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php(43): SelecaoController->view(13)
+#3 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 5
+[10-Mar-2026 13:27:53 America/Fortaleza] PHP Fatal error:  Uncaught TypeError: e(): Argument #1 ($value) must be of type ?string, int given, called in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 221 and defined in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php:5
+Stack trace:
+#0 /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php(221): e(1)
+#1 /home1/griffu80/dp.belmax.com.br/app/controllers/SelecaoController.php(44): require('/home1/griffu80...')
+#2 /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php(43): SelecaoController->view(13)
+#3 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 5
+[10-Mar-2026 13:27:59 America/Fortaleza] PHP Fatal error:  Uncaught TypeError: e(): Argument #1 ($value) must be of type ?string, int given, called in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 221 and defined in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php:5
+Stack trace:
+#0 /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php(221): e(1)
+#1 /home1/griffu80/dp.belmax.com.br/app/controllers/SelecaoController.php(44): require('/home1/griffu80...')
+#2 /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php(43): SelecaoController->view(13)
+#3 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 5
+[10-Mar-2026 13:28:27 America/Fortaleza] PHP Fatal error:  Uncaught TypeError: e(): Argument #1 ($value) must be of type ?string, int given, called in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 221 and defined in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php:5
+Stack trace:
+#0 /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php(221): e(1)
+#1 /home1/griffu80/dp.belmax.com.br/app/controllers/SelecaoController.php(44): require('/home1/griffu80...')
+#2 /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php(43): SelecaoController->view(13)
+#3 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 5
+[10-Mar-2026 13:53:21 America/Fortaleza] PHP Fatal error:  Uncaught TypeError: e(): Argument #1 ($value) must be of type ?string, int given, called in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 221 and defined in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php:5
+Stack trace:
+#0 /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php(221): e(1)
+#1 /home1/griffu80/dp.belmax.com.br/app/controllers/SelecaoController.php(44): require('/home1/griffu80...')
+#2 /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php(43): SelecaoController->view(13)
+#3 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 5
+[10-Mar-2026 14:30:26 America/Fortaleza] PHP Fatal error:  Uncaught TypeError: e(): Argument #1 ($value) must be of type ?string, int given, called in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 221 and defined in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php:5
+Stack trace:
+#0 /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php(221): e(1)
+#1 /home1/griffu80/dp.belmax.com.br/app/controllers/SelecaoController.php(44): require('/home1/griffu80...')
+#2 /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php(43): SelecaoController->view(14)
+#3 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 5
+[10-Mar-2026 14:30:33 America/Fortaleza] PHP Fatal error:  Uncaught TypeError: e(): Argument #1 ($value) must be of type ?string, int given, called in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 221 and defined in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php:5
+Stack trace:
+#0 /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php(221): e(1)
+#1 /home1/griffu80/dp.belmax.com.br/app/controllers/SelecaoController.php(44): require('/home1/griffu80...')
+#2 /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php(43): SelecaoController->view(13)
+#3 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 5
+[10-Mar-2026 14:30:51 America/Fortaleza] PHP Fatal error:  Uncaught TypeError: e(): Argument #1 ($value) must be of type ?string, int given, called in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 221 and defined in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php:5
+Stack trace:
+#0 /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php(221): e(1)
+#1 /home1/griffu80/dp.belmax.com.br/app/controllers/SelecaoController.php(44): require('/home1/griffu80...')
+#2 /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php(43): SelecaoController->view(14)
+#3 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 5
+[10-Mar-2026 14:47:04 America/Fortaleza] PHP Fatal error:  Uncaught TypeError: e(): Argument #1 ($value) must be of type ?string, int given, called in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 221 and defined in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php:5
+Stack trace:
+#0 /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php(221): e(1)
+#1 /home1/griffu80/dp.belmax.com.br/app/controllers/SelecaoController.php(44): require('/home1/griffu80...')
+#2 /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php(43): SelecaoController->view(14)
+#3 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 5
+[10-Mar-2026 14:47:10 America/Fortaleza] PHP Fatal error:  Uncaught TypeError: e(): Argument #1 ($value) must be of type ?string, int given, called in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 221 and defined in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php:5
+Stack trace:
+#0 /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php(221): e(1)
+#1 /home1/griffu80/dp.belmax.com.br/app/controllers/SelecaoController.php(44): require('/home1/griffu80...')
+#2 /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php(43): SelecaoController->view(13)
+#3 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 5
+[10-Mar-2026 15:28:02 America/Fortaleza] PHP Fatal error:  Uncaught TypeError: e(): Argument #1 ($value) must be of type ?string, int given, called in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 221 and defined in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php:5
+Stack trace:
+#0 /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php(221): e(1)
+#1 /home1/griffu80/dp.belmax.com.br/app/controllers/SelecaoController.php(44): require('/home1/griffu80...')
+#2 /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php(43): SelecaoController->view(14)
+#3 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 5
+[10-Mar-2026 15:28:11 America/Fortaleza] PHP Fatal error:  Uncaught TypeError: e(): Argument #1 ($value) must be of type ?string, int given, called in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 221 and defined in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php:5
+Stack trace:
+#0 /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php(221): e(1)
+#1 /home1/griffu80/dp.belmax.com.br/app/controllers/SelecaoController.php(44): require('/home1/griffu80...')
+#2 /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php(43): SelecaoController->view(14)
+#3 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 5
+[11-Mar-2026 13:45:56 America/Fortaleza] PHP Fatal error:  Uncaught TypeError: e(): Argument #1 ($value) must be of type ?string, int given, called in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 221 and defined in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php:5
+Stack trace:
+#0 /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php(221): e(1)
+#1 /home1/griffu80/dp.belmax.com.br/app/controllers/SelecaoController.php(44): require('/home1/griffu80...')
+#2 /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php(43): SelecaoController->view(14)
+#3 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 5
+[11-Mar-2026 13:46:05 America/Fortaleza] PHP Fatal error:  Uncaught TypeError: e(): Argument #1 ($value) must be of type ?string, int given, called in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 221 and defined in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php:5
+Stack trace:
+#0 /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php(221): e(1)
+#1 /home1/griffu80/dp.belmax.com.br/app/controllers/SelecaoController.php(44): require('/home1/griffu80...')
+#2 /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php(43): SelecaoController->view(14)
+#3 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 5
