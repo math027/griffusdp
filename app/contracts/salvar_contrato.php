@@ -43,6 +43,32 @@ try {
         }
     }
 
+    // ── Validação: todos os documentos são obrigatórios ───────────────────
+    $docsObrigatorios = [
+        'docContratoSocial'  => 'Contrato Social / Certificado MEI',
+        'docEndEmpresa'      => 'Comprovante de Endereço (Empresa)',
+        'docCartaoCnpj'      => 'Cartão CNPJ',
+        'docCore'            => 'CORE',
+        'docCpfSocio'        => 'CPF do Sócio',
+        'docIdentidadeSocio' => 'Identidade do Sócio (RG)',
+        'docEndSocioComp'    => 'Comprovante de Endereço (Sócio)',
+    ];
+
+    $faltando = [];
+    foreach ($docsObrigatorios as $campo => $label) {
+        if (!isset($_FILES[$campo]) || $_FILES[$campo]['error'] !== UPLOAD_ERR_OK) {
+            $faltando[] = $label;
+        }
+    }
+
+    if (!empty($faltando)) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Documentos obrigatórios não enviados: ' . implode(', ', $faltando),
+        ]);
+        exit;
+    }
+
     // ── Mapeamento campo → coluna do banco ────────────────────────────────
     $fileFields = [
         'docContratoSocial'  => 'doc_contrato_social',

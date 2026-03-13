@@ -161,6 +161,7 @@ $MONTHS = ['','Janeiro','Fevereiro','Março','Abril','Maio','Junho',
     <nav class="sidebar__menu">
         <a href="index.php?section=dashboard"       class="sidebar__item">Dashboard</a>
         <a href="index.php?section=contratos"        class="sidebar__item">Contratos</a>
+        <a href="index.php?section=curriculos"       class="sidebar__item">Currículos</a>
         <a href="index.php?section=selecao"          class="sidebar__item">Fichas de Seleção</a>
         <a href="index.php?section=vagas"            class="sidebar__item">Vagas Disponíveis</a>
         <a href="index.php?section=funcionarios"     class="sidebar__item is-active">Funcionários</a>

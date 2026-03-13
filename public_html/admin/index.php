@@ -61,6 +61,19 @@ switch ($section) {
         }
         break;
 
+    case 'curriculos':
+        require_once APP_ROOT . '/controllers/CurriculoController.php';
+        $ctrl = new CurriculoController($db);
+        switch ($action) {
+            case 'view_cv':        $ctrl->viewCv((int)($_GET['id'] ?? 0)); break;
+            case 'status':         $ctrl->changeStatus();                  break;
+            case 'delete':         $ctrl->delete();                        break;
+            case 'generate_token': $ctrl->generateToken();                 break;
+            case 'talent_bank':    $ctrl->talentBank();                    break;
+            default:               $ctrl->index();                         break;
+        }
+        break;
+
     case 'contratos':
         require APP_ROOT . '/models/Contract.php';
         require APP_ROOT . '/controllers/ContractController.php';

@@ -286,3 +286,38 @@ INSERT INTO fichas_selecao (
     'sim', '', 'R$ 1.450,00', 'Funcionário atual do supermercado',
     '2026-02-20', 'aprovado', '2026-02-25 10:00:00', 'Supermercado BomPreço — Gerência', 'aprovado_entrevista'
 );
+
+
+-- ──────────────────────────────────────────
+--  TABELA: curriculos
+-- ──────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS curriculos (
+    id              INT AUTO_INCREMENT PRIMARY KEY,
+    nome_completo   VARCHAR(150) NOT NULL,
+    telefone        VARCHAR(20)  NOT NULL,
+    email           VARCHAR(150) NOT NULL,
+    cidade          VARCHAR(100) NOT NULL,
+    cargo_desejado  VARCHAR(150) NOT NULL,
+    curriculo_path  VARCHAR(255) NOT NULL,
+    status          VARCHAR(50)  NOT NULL DEFAULT 'novo',
+    created_at      DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+INSERT INTO curriculos (nome_completo, telefone, email, cidade, cargo_desejado, curriculo_path, status, created_at) VALUES
+('Ana Paula Rodrigues',   '(27) 99812-3344', 'ana.paula@email.com',    'Vitória',   'Auxiliar Administrativo', 'cv_ana_paula.pdf',   'novo',           '2026-02-20 10:00:00'),
+('Carlos Eduardo Mendes', '(27) 99744-5566', 'carlos.mendes@email.com','Serra',      'Motorista Entregador',    'cv_carlos_mendes.pdf','ficha_enviada',  '2026-02-18 14:30:00'),
+('Fernanda Souza Lima',   '(27) 99633-7788', 'fernanda.lima@email.com','Cariacica',  'Recepcionista',           'cv_fernanda_lima.pdf','banco_talentos', '2026-02-15 09:00:00');
+
+
+-- ──────────────────────────────────────────
+--  TABELA: selecao_tokens
+-- ──────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS selecao_tokens (
+    id             INT AUTO_INCREMENT PRIMARY KEY,
+    curriculo_id   INT          NOT NULL,
+    token          VARCHAR(64)  NOT NULL UNIQUE,
+    usado          TINYINT(1)   NOT NULL DEFAULT 0,
+    expires_at     DATETIME     NOT NULL,
+    created_at     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (curriculo_id) REFERENCES curriculos(id) ON DELETE CASCADE
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

@@ -700,9 +700,11 @@
 
     <script>
     /*
-     * LGPD — intercepta o submit na FASE DE CAPTURA (antes de api.js)
-     * e usa stopImmediatePropagation para bloquear completamente o evento
-     * até o usuário aceitar os termos.
+     * LGPD + Validação de Documentos Obrigatórios
+     * Intercepta o submit na FASE DE CAPTURA (antes de api.js)
+     * 1. Valida se todos os 7 documentos foram anexados
+     * 2. Se OK, abre modal LGPD
+     * 3. Após aceite, re-dispara o submit para api.js tratar
      */
     (function () {
         'use strict';
@@ -712,7 +714,46 @@
         var checkLgpd   = document.getElementById('check-lgpd');
         var btnConfirmar= document.getElementById('btn-lgpd-confirmar');
         var btnCancelar = document.getElementById('btn-lgpd-cancelar');
-        var termoAceito = false;  // flag LOCAL, sem risco de conflito global
+        var termoAceito = false;
+
+        /* ── Documentos obrigatórios: id → label amigável ─ */
+        var docsObrigatorios = {
+            'docContratoSocial':  'Contrato Social / Certificado MEI',
+            'docEndEmpresa':      'Comprovante de Endereço (Empresa)',
+            'docCartaoCnpj':      'Cartão CNPJ',
+            'docCore':            'CORE',
+            'docCpfSocio':        'CPF do Sócio',
+            'docIdentidadeSocio': 'Identidade do Sócio (RG)',
+            'docEndSocioComp':    'Comprovante de Endereço (Sócio)'
+        };
+
+        /* ── Valida se todos os documentos foram anexados ── */
+        function validarDocumentos() {
+            var faltando = [];
+
+            // Limpa destaques anteriores
+            var destaques = form.querySelectorAll('.missing-doc');
+            for (var i = 0; i < destaques.length; i++) {
+                destaques[i].classList.remove('missing-doc');
+            }
+
+            for (var inputId in docsObrigatorios) {
+                var input = document.getElementById(inputId);
+                if (!input || !input.files || input.files.length === 0) {
+                    faltando.push(docsObrigatorios[inputId]);
+                    // Destaca visualmente o wrapper do upload
+                    if (input) {
+                        var wrapper = input.closest('.form-group');
+                        if (wrapper) {
+                            var label = wrapper.querySelector('.file-upload-label');
+                            if (label) label.classList.add('missing-doc');
+                        }
+                    }
+                }
+            }
+
+            return faltando;
+        }
 
         /* ── Abre o modal ────────────────────────────────── */
         function abrirModal() {
@@ -729,19 +770,36 @@
         }
 
         /*
-         * Listener de CAPTURA no form — roda ANTES de qualquer listener
-         * registrado em fase de bolha (inclusive o de api.js).
-         * Se o termo ainda não foi aceito: bloqueia tudo e abre o modal.
-         * Se já foi aceito: limpa a flag e deixa o evento seguir normalmente.
+         * Listener de CAPTURA — roda ANTES de api.js.
+         * Ordem: 1) valida docs  2) abre LGPD  3) libera submit
          */
         form.addEventListener('submit', function (e) {
             if (!termoAceito) {
                 e.preventDefault();
-                e.stopImmediatePropagation(); // impede api.js de ver o evento
+                e.stopImmediatePropagation();
+
+                // Primeiro: validar documentos obrigatórios
+                var faltando = validarDocumentos();
+                if (faltando.length > 0) {
+                    var msg = 'Os seguintes documentos são obrigatórios:\n• ' + faltando.join('\n• ');
+                    if (typeof Toast !== 'undefined') {
+                        Toast.error(msg);
+                    } else {
+                        alert(msg);
+                    }
+                    // Rolar até a seção de documentos
+                    var primeiroDoc = document.getElementById(Object.keys(docsObrigatorios)[0]);
+                    if (primeiroDoc) {
+                        var secao = primeiroDoc.closest('fieldset');
+                        if (secao) secao.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                    return; // NÃO abre o modal LGPD
+                }
+
+                // Documentos OK → abre modal LGPD
                 abrirModal();
             } else {
-                termoAceito = false; // reset para próxima submissão
-                /* deixa o evento prosseguir — api.js irá tratá-lo */
+                termoAceito = false;
             }
         }, true /* capture = true */);
 
@@ -755,11 +813,6 @@
             if (!checkLgpd.checked) return;
             fecharModal();
             termoAceito = true;
-            /*
-             * Cria e dispara um novo evento submit.
-             * O listener de captura acima verá termoAceito=true
-             * e deixará o evento chegar ao handler de api.js.
-             */
             form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
         });
 
@@ -789,72 +842,7 @@
                 fileNameDisplay.textContent = 'Nenhum arquivo selecionado';
             }
         }
-
-        /* ============================================
-           CEP Auto-fill — via ViaCEP
-           ============================================ */
-        (function () {
-            "use strict";
-
-            function configurarCep(cepId, fields) {
-                const input = document.getElementById(cepId);
-                if (!input) return;
-
-                input.addEventListener("input", function () {
-                    let v = this.value.replace(/\D/g, "").slice(0, 8);
-                    if (v.length > 5) v = v.slice(0, 5) + "-" + v.slice(5);
-                    this.value = v;
-                });
-
-                function buscar() {
-                    const cep = input.value.replace(/\D/g, "");
-                    if (cep.length !== 8) return;
-
-                    input.style.opacity = "0.6";
-                    fetch(`https://viacep.com.br/ws/${cep}/json/`)
-                        .then(r => r.json())
-                        .then(data => {
-                            input.style.opacity = "1";
-                            if (data.erro) { input.style.borderColor = "#e53935"; return; }
-                            input.style.borderColor = "";
-                            if (fields.logradouro && document.getElementById(fields.logradouro))
-                                document.getElementById(fields.logradouro).value = data.logradouro || "";
-                            if (fields.bairro && document.getElementById(fields.bairro))
-                                document.getElementById(fields.bairro).value = data.bairro || "";
-                            if (fields.cidade && document.getElementById(fields.cidade))
-                                document.getElementById(fields.cidade).value = data.localidade || "";
-                            if (fields.uf && document.getElementById(fields.uf))
-                                document.getElementById(fields.uf).value = data.uf || "";
-                            if (fields.numero && document.getElementById(fields.numero))
-                                document.getElementById(fields.numero).focus();
-                        })
-                        .catch(() => { input.style.opacity = "1"; });
-                }
-
-                input.addEventListener("blur", buscar);
-                input.addEventListener("keydown", function (e) {
-                    if (e.key === "Enter") { e.preventDefault(); buscar(); }
-                });
-            }
-
-            // CEP da Empresa
-            configurarCep("cep", {
-                logradouro: "endereco",
-                bairro: "bairro",
-                cidade: "cidade",
-                uf: "uf",
-                numero: "numero"
-            });
-
-            // CEP do Sócio
-            configurarCep("cepSocio", {
-                logradouro: "enderecoSocio",
-                bairro: "bairroSocio",
-                cidade: "cidadeSocio",
-                uf: "ufSocio",
-                numero: "numeroSocio"
-            });
-        })();
+        /* CEP Auto-fill removido daqui — já tratado em api.js */
     </script>
 
     <script>

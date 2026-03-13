@@ -267,6 +267,46 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            // Valida documentos obrigatórios (segunda camada de segurança)
+            const docsObrigatorios = {
+                'docContratoSocial':  'Contrato Social / Certificado MEI',
+                'docEndEmpresa':      'Comprovante de Endereço (Empresa)',
+                'docCartaoCnpj':      'Cartão CNPJ',
+                'docCore':            'CORE',
+                'docCpfSocio':        'CPF do Sócio',
+                'docIdentidadeSocio': 'Identidade do Sócio (RG)',
+                'docEndSocioComp':    'Comprovante de Endereço (Sócio)'
+            };
+
+            const faltando = [];
+            for (const [inputId, label] of Object.entries(docsObrigatorios)) {
+                const input = document.getElementById(inputId);
+                if (!input || !input.files || input.files.length === 0) {
+                    faltando.push(label);
+                    if (input) {
+                        const wrapper = input.closest('.form-group');
+                        if (wrapper) {
+                            const uploadLabel = wrapper.querySelector('.file-upload-label');
+                            if (uploadLabel) uploadLabel.classList.add('missing-doc');
+                        }
+                    }
+                } else {
+                    // Limpar destaque se documento presente
+                    if (input) {
+                        const wrapper = input.closest('.form-group');
+                        if (wrapper) {
+                            const uploadLabel = wrapper.querySelector('.file-upload-label');
+                            if (uploadLabel) uploadLabel.classList.remove('missing-doc');
+                        }
+                    }
+                }
+            }
+
+            if (faltando.length > 0) {
+                Toast.error('Documentos obrigatórios faltando:\n• ' + faltando.join('\n• '));
+                return;
+            }
+
             // Valida tamanho dos arquivos
             for (const [inputId, limitMB] of Object.entries(fileLimits)) {
                 const input = document.getElementById(inputId);

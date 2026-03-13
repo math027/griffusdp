@@ -275,6 +275,22 @@ input[type="file"]:focus + .file-upload-label {
 /* Ícones de estado */
 .file-status.success::before { content: '✔ '; }
 .file-status.error::before { content: '✖ '; }
+
+/* Destaque para documentos obrigatórios não anexados */
+.missing-doc {
+    border-color: #e53935 !important;
+    background-color: #ffebee !important;
+    animation: shakeMissing 0.5s ease;
+}
+
+@keyframes shakeMissing {
+    0%, 100% { transform: translateX(0); }
+    20%      { transform: translateX(-4px); }
+    40%      { transform: translateX(4px); }
+    60%      { transform: translateX(-3px); }
+    80%      { transform: translateX(3px); }
+}
+
 /* =====================================================
    MODAL LGPD
    ===================================================== */
