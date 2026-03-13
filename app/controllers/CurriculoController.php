@@ -57,6 +57,70 @@ class CurriculoController
     }
 
     /* ═══════════════════════════════════════════
+       GET — retorna dados de um currículo em JSON
+    ═══════════════════════════════════════════ */
+    public function get(): void
+    {
+        header('Content-Type: application/json; charset=utf-8');
+
+        $id = (int) ($_GET['id'] ?? 0);
+        if ($id <= 0) {
+            echo json_encode(['success' => false, 'message' => 'ID inválido.']);
+            return;
+        }
+
+        $cv = $this->model->find($id);
+        if (!$cv) {
+            echo json_encode(['success' => false, 'message' => 'Currículo não encontrado.']);
+            return;
+        }
+
+        echo json_encode(['success' => true, 'data' => $cv]);
+    }
+
+    /* ═══════════════════════════════════════════
+       UPDATE — atualiza dados do currículo via AJAX
+    ═══════════════════════════════════════════ */
+    public function update(): void
+    {
+        header('Content-Type: application/json; charset=utf-8');
+        $this->verifyCsrf();
+
+        $id = (int) ($_POST['id'] ?? 0);
+        if ($id <= 0) {
+            echo json_encode(['success' => false, 'message' => 'ID inválido.']);
+            return;
+        }
+
+        $validos = ['novo', 'em_analise', 'ficha_enviada', 'aprovado', 'rejeitado', 'banco_talentos'];
+        $status  = trim((string) ($_POST['status'] ?? ''));
+
+        if (!in_array($status, $validos, true)) {
+            echo json_encode(['success' => false, 'message' => 'Status inválido.']);
+            return;
+        }
+
+        $data = [
+            'nome_completo'  => trim((string) ($_POST['nome_completo']  ?? '')),
+            'telefone'       => trim((string) ($_POST['telefone']        ?? '')),
+            'email'          => trim((string) ($_POST['email']           ?? '')),
+            'cidade'         => trim((string) ($_POST['cidade']          ?? '')),
+            'cargo_desejado' => trim((string) ($_POST['cargo_desejado']  ?? '')),
+            'status'         => $status,
+        ];
+
+        foreach (['nome_completo', 'telefone', 'email', 'cidade', 'cargo_desejado'] as $campo) {
+            if ($data[$campo] === '') {
+                echo json_encode(['success' => false, 'message' => 'Preencha todos os campos obrigatórios.']);
+                return;
+            }
+        }
+
+        $this->model->update($id, $data);
+        echo json_encode(['success' => true, 'message' => 'Currículo atualizado com sucesso.']);
+    }
+
+    /* ═══════════════════════════════════════════
        CHANGE STATUS — via AJAX
     ═══════════════════════════════════════════ */
     public function changeStatus(): void

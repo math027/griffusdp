@@ -67,6 +67,25 @@ class DashboardController
             $fichasPorEmpresa[$row['empresa']] = (int)$row['total'];
         }
 
+        // ---- Currículos ----
+        $stmt = $this->db->query("SELECT COUNT(*) AS total FROM curriculos");
+        $totalCurriculos = (int)$stmt->fetch()['total'];
+
+        $stmt = $this->db->query("SELECT COUNT(*) AS total FROM curriculos WHERE status = 'novo'");
+        $curriculosNovos = (int)$stmt->fetch()['total'];
+
+        $stmt = $this->db->query("SELECT status, COUNT(*) AS total FROM curriculos GROUP BY status");
+        $curriculosPorStatus = [];
+        while ($row = $stmt->fetch()) {
+            $curriculosPorStatus[strtolower($row['status'])] = (int)$row['total'];
+        }
+
+        $stmt = $this->db->query(
+            "SELECT id, nome_completo, cargo_desejado, cidade, telefone, email, status, created_at
+             FROM curriculos ORDER BY id DESC LIMIT 5"
+        );
+        $curriculosRecentes = $stmt->fetchAll();
+
         // ---- Funcionários ----
         $stmt = $this->db->query("SELECT COUNT(*) AS total FROM aniversariantes");
         $totalFuncionarios = (int)$stmt->fetch()['total'];
@@ -106,6 +125,10 @@ class DashboardController
             'fichasPorStatus'      => $fichasPorStatus,
             'fichasRecentes'       => $fichasRecentes,
             'fichasPorEmpresa'     => $fichasPorEmpresa,
+            'totalCurriculos'      => $totalCurriculos,
+            'curriculosNovos'      => $curriculosNovos,
+            'curriculosPorStatus'  => $curriculosPorStatus,
+            'curriculosRecentes'   => $curriculosRecentes,
             'totalFuncionarios'    => $totalFuncionarios,
             'funcPorTipo'          => $funcPorTipo,
             'aniversariantesHoje'  => $aniversariantesHoje,

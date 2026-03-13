@@ -193,6 +193,27 @@ if (!function_exists('statusBadgeCv')) {
         .pb-rejeitado       { background:#ffebee; color:#c62828; }
         .pb-banco_talentos  { background:#e8eaf6; color:#283593; }
 
+        /* ── Form edição ── */
+        .edit-form { display: flex; flex-direction: column; gap: 14px; margin-top: 4px; }
+        .edit-form label { font-size: .82rem; font-weight: 600; color: #555; display: block; margin-bottom: 4px; }
+        .edit-form input, .edit-form select {
+            width: 100%; padding: 10px 12px; border: 1px solid #ddd;
+            border-radius: 8px; font-size: .9rem; font-family: inherit;
+            color: #333; box-sizing: border-box; outline: none;
+            transition: border-color .2s;
+        }
+        .edit-form input:focus, .edit-form select:focus { border-color: #e91e63; }
+        .edit-form .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .btn-save {
+            padding: 11px 22px; background: #e91e63; color: #fff;
+            border: none; border-radius: 8px; font-size: .9rem;
+            font-weight: 600; cursor: pointer; font-family: inherit;
+            display: flex; align-items: center; gap: 8px; justify-content: center;
+            transition: background .2s; margin-top: 4px;
+        }
+        .btn-save:hover { background: #c2185b; }
+        .btn-save:disabled { opacity: .6; cursor: not-allowed; }
+
         /* ── Toast ── */
         .toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9999; }
         .toast-msg {
@@ -295,6 +316,12 @@ if (!function_exists('statusBadgeCv')) {
                         <td><?= statusBadgeCv($cv['status'] ?? 'novo') ?></td>
                         <td>
                             <div class="actions">
+                                <!-- Editar CV -->
+                                <button class="icon-btn"
+                                        onclick="editarCv(<?= (int)$cv['id'] ?>)"
+                                        title="Editar currículo">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </button>
                                 <!-- Visualizar CV -->
                                 <button class="icon-btn"
                                         onclick="visualizarCv(<?= (int)$cv['id'] ?>, '<?= e($cv['nome_completo'] ?? '') ?>')"
@@ -553,6 +580,98 @@ async function alterarStatus(id, status) {
         }
     } catch (e) {
         toast('Erro de conexão.', 'error');
+    }
+}
+
+/* ═══════════════ EDITAR CURRÍCULO ═══════════════ */
+async function editarCv(id) {
+    try {
+        const res  = await fetch(baseUrl + '&action=get&id=' + id);
+        const data = await res.json();
+
+        if (!data.success) { toast(data.message || 'Erro ao carregar dados.', 'error'); return; }
+
+        const cv = data.data;
+        const statusOpts = [
+            { v: 'novo',           l: 'Novo' },
+            { v: 'em_analise',     l: 'Em Análise' },
+            { v: 'ficha_enviada',  l: 'Ficha Enviada' },
+            { v: 'aprovado',       l: 'Aprovado' },
+            { v: 'rejeitado',      l: 'Rejeitado' },
+            { v: 'banco_talentos', l: 'Banco de Talentos' },
+        ];
+
+        const optsHtml = statusOpts.map(o =>
+            `<option value="${o.v}"${(cv.status || 'novo') === o.v ? ' selected' : ''}>${o.l}</option>`
+        ).join('');
+
+        const html = `
+            <h3><i class="fa-regular fa-pen-to-square" style="margin-right:8px;"></i>Editar Currículo #${cv.id}</h3>
+            <form class="edit-form" onsubmit="salvarEdicao(event, ${cv.id})">
+                <div>
+                    <label>Nome Completo *</label>
+                    <input type="text" name="nome_completo" value="${esc(cv.nome_completo)}" required maxlength="150">
+                </div>
+                <div class="row2">
+                    <div>
+                        <label>Telefone *</label>
+                        <input type="text" name="telefone" value="${esc(cv.telefone)}" required maxlength="20">
+                    </div>
+                    <div>
+                        <label>Cidade *</label>
+                        <input type="text" name="cidade" value="${esc(cv.cidade)}" required maxlength="100">
+                    </div>
+                </div>
+                <div>
+                    <label>E-mail *</label>
+                    <input type="email" name="email" value="${esc(cv.email)}" required maxlength="150">
+                </div>
+                <div>
+                    <label>Cargo Desejado *</label>
+                    <input type="text" name="cargo_desejado" value="${esc(cv.cargo_desejado)}" required maxlength="150">
+                </div>
+                <div>
+                    <label>Status</label>
+                    <select name="status">${optsHtml}</select>
+                </div>
+                <button type="submit" class="btn-save" id="btnSalvarEdicao">
+                    <i class="fa-solid fa-floppy-disk"></i> Salvar Alterações
+                </button>
+            </form>`;
+
+        openModal(html);
+    } catch (e) {
+        toast('Erro de conexão.', 'error');
+    }
+}
+
+async function salvarEdicao(event, id) {
+    event.preventDefault();
+    const form = event.target;
+    const btn  = document.getElementById('btnSalvarEdicao');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Salvando...';
+
+    const fd = new FormData(form);
+    fd.append('id', id);
+    fd.append('csrf_token', CSRF);
+
+    try {
+        const res  = await fetch(baseUrl + '&action=update', { method: 'POST', body: fd });
+        const data = await res.json();
+        if (data.success) {
+            toast('Currículo atualizado com sucesso!');
+            closeModal();
+            setTimeout(() => location.reload(), 800);
+        } else {
+            toast(data.message || 'Erro ao salvar.', 'error');
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Salvar Alterações';
+        }
+    } catch (e) {
+        toast('Erro de conexão.', 'error');
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Salvar Alterações';
     }
 }
 

@@ -45,6 +45,30 @@ class Curriculo
         return (int) $this->db->lastInsertId();
     }
 
+    /* ── Atualizar dados do currículo ─────────────── */
+    public function update(int $id, array $data): bool
+    {
+        $stmt = $this->db->prepare(
+            "UPDATE curriculos
+             SET nome_completo  = :nome,
+                 telefone       = :telefone,
+                 email          = :email,
+                 cidade         = :cidade,
+                 cargo_desejado = :cargo,
+                 status         = :status
+             WHERE id = :id"
+        );
+        return $stmt->execute([
+            ':nome'     => $data['nome_completo'],
+            ':telefone' => $data['telefone'],
+            ':email'    => $data['email'],
+            ':cidade'   => $data['cidade'],
+            ':cargo'    => $data['cargo_desejado'],
+            ':status'   => $data['status'],
+            ':id'       => $id,
+        ]);
+    }
+
     /* ── Atualizar status ─────────────────────────── */
     public function updateStatus(int $id, string $status): bool
     {

@@ -6,15 +6,18 @@ function e(string $value): string {
 }
 
 $totalContratos     = $data['totalContratos']     ?? 0;
-$contratosNovos     = $data['contratosNovos']     ?? 0;
 $contratosPorStatus = $data['contratosPorStatus'] ?? [];
 $contratosRecentes  = $data['contratosRecentes']  ?? [];
 
 $totalFichas        = $data['totalFichas']        ?? 0;
-$fichasNovas        = $data['fichasNovas']        ?? 0;
 $fichasPorStatus    = $data['fichasPorStatus']    ?? [];
 $fichasRecentes     = $data['fichasRecentes']     ?? [];
 $fichasPorEmpresa   = $data['fichasPorEmpresa']   ?? [];
+
+$totalCurriculos    = $data['totalCurriculos']    ?? 0;
+$curriculosNovos    = $data['curriculosNovos']    ?? 0;
+$curriculosPorStatus = $data['curriculosPorStatus'] ?? [];
+$curriculosRecentes = $data['curriculosRecentes'] ?? [];
 
 $totalFuncionarios    = $data['totalFuncionarios']    ?? 0;
 $funcPorTipo          = $data['funcPorTipo']          ?? [];
@@ -78,11 +81,15 @@ function badge(string $status): string {
             gap: 18px;
             transition: transform 0.2s, box-shadow 0.2s;
             border: 1px solid #f0f0f0;
+            text-decoration: none;
+            cursor: pointer;
         }
         .stat-card:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(0,0,0,0.1);
         }
+        .stat-card .stat-value { color: #212121; }
+        .stat-card:hover .stat-value { color: #e91e63; }
 
         .stat-icon {
             width: 52px;
@@ -279,7 +286,7 @@ function badge(string $status): string {
 
         <!-- ====== CARDS DE RESUMO ====== -->
         <div class="dashboard-grid">
-            <div class="stat-card">
+            <a class="stat-card" href="index.php?section=contratos">
                 <div class="stat-icon pink">
                     <i class="fa-solid fa-file-contract"></i>
                 </div>
@@ -287,19 +294,9 @@ function badge(string $status): string {
                     <div class="stat-value"><?= $totalContratos ?></div>
                     <div class="stat-label">Contratos Total</div>
                 </div>
-            </div>
+            </a>
 
-            <div class="stat-card">
-                <div class="stat-icon orange">
-                    <i class="fa-solid fa-bell"></i>
-                </div>
-                <div class="stat-info">
-                    <div class="stat-value"><?= $contratosNovos ?></div>
-                    <div class="stat-label">Contratos Novos</div>
-                </div>
-            </div>
-
-            <div class="stat-card">
+            <a class="stat-card" href="index.php?section=selecao">
                 <div class="stat-icon blue">
                     <i class="fa-solid fa-users"></i>
                 </div>
@@ -307,19 +304,29 @@ function badge(string $status): string {
                     <div class="stat-value"><?= $totalFichas ?></div>
                     <div class="stat-label">Fichas de Seleção</div>
                 </div>
-            </div>
+            </a>
 
-            <div class="stat-card">
-                <div class="stat-icon green">
-                    <i class="fa-solid fa-user-plus"></i>
+            <a class="stat-card" href="index.php?section=curriculos">
+                <div class="stat-icon" style="background:linear-gradient(135deg,#fce4ec,#f8bbd0);color:#e91e63;">
+                    <i class="fa-solid fa-file-lines"></i>
                 </div>
                 <div class="stat-info">
-                    <div class="stat-value"><?= $fichasNovas ?></div>
-                    <div class="stat-label">Fichas Novas</div>
+                    <div class="stat-value"><?= $totalCurriculos ?></div>
+                    <div class="stat-label">Currículos Recebidos</div>
                 </div>
-            </div>
+            </a>
 
-            <div class="stat-card">
+            <a class="stat-card" href="index.php?section=curriculos&status=novo">
+                <div class="stat-icon orange">
+                    <i class="fa-solid fa-bell"></i>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-value"><?= $curriculosNovos ?></div>
+                    <div class="stat-label">Currículos Novos</div>
+                </div>
+            </a>
+
+            <a class="stat-card" href="index.php?section=funcionarios">
                 <div class="stat-icon purple">
                     <i class="fa-solid fa-id-badge"></i>
                 </div>
@@ -327,9 +334,9 @@ function badge(string $status): string {
                     <div class="stat-value"><?= $totalFuncionarios ?></div>
                     <div class="stat-label">Funcionários</div>
                 </div>
-            </div>
+            </a>
 
-            <div class="stat-card">
+            <a class="stat-card" href="index.php?section=aniversariantes">
                 <div class="stat-icon" style="background:linear-gradient(135deg,#fff3e0,#ffe0b2);color:#e65100;">
                     <i class="fa-solid fa-cake-candles"></i>
                 </div>
@@ -337,7 +344,7 @@ function badge(string $status): string {
                     <div class="stat-value"><?= count($aniversariantesMes) ?></div>
                     <div class="stat-label">Aniversariantes do Mês</div>
                 </div>
-            </div>
+            </a>
         </div>
 
         <!-- ====== STATUS BREAKDOWN ====== -->
@@ -345,6 +352,7 @@ function badge(string $status): string {
             <div class="card">
                 <div class="section-header">
                     <h2><i class="fa-solid fa-chart-pie"></i> Contratos por Status</h2>
+                    <a href="index.php?section=contratos" class="btn-link">Ver todos →</a>
                 </div>
                 <?php if (empty($contratosPorStatus)) : ?>
                     <p style="color:#aaa;font-size:0.9rem;">Nenhum dado.</p>
@@ -353,10 +361,10 @@ function badge(string $status): string {
                         <?php foreach ($contratosPorStatus as $st => $count) :
                             $s = statusLabel($st);
                         ?>
-                            <span class="status-chip">
+                            <a href="index.php?section=contratos" class="status-chip" style="text-decoration:none;">
                                 <?= $s['label'] ?>
                                 <span class="count" style="background:<?= $s['bg'] ?>"><?= $count ?></span>
-                            </span>
+                            </a>
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
@@ -364,34 +372,31 @@ function badge(string $status): string {
 
             <div class="card">
                 <div class="section-header">
-                    <h2><i class="fa-solid fa-chart-pie"></i> Fichas por Status</h2>
+                    <h2><i class="fa-solid fa-chart-pie"></i> Currículos por Status</h2>
+                    <a href="index.php?section=curriculos" class="btn-link">Ver todos →</a>
                 </div>
-                <?php if (empty($fichasPorStatus)) : ?>
+                <?php if (empty($curriculosPorStatus)) : ?>
                     <p style="color:#aaa;font-size:0.9rem;">Nenhum dado.</p>
-                <?php else : ?>
+                <?php else :
+                    $cvStatusMap = [
+                        'novo'           => ['label' => 'Novo',             'bg' => '#e91e63'],
+                        'em_analise'     => ['label' => 'Em Análise',       'bg' => '#ff9800'],
+                        'ficha_enviada'  => ['label' => 'Ficha Enviada',    'bg' => '#9c27b0'],
+                        'aprovado'       => ['label' => 'Aprovado',         'bg' => '#4caf50'],
+                        'rejeitado'      => ['label' => 'Rejeitado',        'bg' => '#f44336'],
+                        'banco_talentos' => ['label' => 'Banco de Talentos','bg' => '#5c6bc0'],
+                    ];
+                ?>
                     <div class="status-breakdown">
-                        <?php foreach ($fichasPorStatus as $st => $count) :
-                            $s = statusLabel($st);
+                        <?php foreach ($curriculosPorStatus as $st => $count) :
+                            $s = $cvStatusMap[$st] ?? ['label' => ucfirst($st), 'bg' => '#757575'];
                         ?>
-                            <span class="status-chip">
+                            <a href="index.php?section=curriculos" class="status-chip" style="text-decoration:none;">
                                 <?= $s['label'] ?>
                                 <span class="count" style="background:<?= $s['bg'] ?>"><?= $count ?></span>
-                            </span>
+                            </a>
                         <?php endforeach; ?>
                     </div>
-                    <?php if (!empty($fichasPorEmpresa)) : ?>
-                        <div style="margin-top:16px;padding-top:14px;border-top:1px solid #f0f0f0;">
-                            <span style="font-size:0.82rem;color:#888;font-weight:600;">Por empresa:</span>
-                            <div class="status-breakdown" style="margin-top:8px;">
-                                <?php foreach ($fichasPorEmpresa as $emp => $count) : ?>
-                                    <span class="status-chip">
-                                        <span class="empresa-badge empresa-<?= strtolower(e($emp)) ?>"><?= e($emp) ?></span>
-                                        <span class="count" style="background:#555"><?= $count ?></span>
-                                    </span>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-                    <?php endif; ?>
                 <?php endif; ?>
             </div>
         </div>
@@ -418,7 +423,7 @@ function badge(string $status): string {
                         </thead>
                         <tbody>
                         <?php foreach ($contratosRecentes as $c) : ?>
-                            <tr>
+                            <tr onclick="window.location='index.php?section=contratos'" style="cursor:pointer;" title="Ver contratos">
                                 <td><?= (int)$c['id'] ?></td>
                                 <td>
                                     <div class="primary"><?= e($c['razao_social'] ?? '') ?></div>
@@ -433,36 +438,49 @@ function badge(string $status): string {
                 <?php endif; ?>
             </div>
 
-            <!-- Últimas Fichas -->
+            <!-- Últimos Currículos -->
             <div class="card">
                 <div class="section-header">
-                    <h2><i class="fa-solid fa-users"></i> Últimas Fichas</h2>
-                    <a href="index.php?section=selecao" class="btn-link">Ver todas →</a>
+                    <h2><i class="fa-solid fa-file-lines"></i> Últimos Currículos</h2>
+                    <a href="index.php?section=curriculos" class="btn-link">Ver todos →</a>
                 </div>
-                <?php if (empty($fichasRecentes)) : ?>
-                    <div class="empty-table">Nenhuma ficha recebida.</div>
-                <?php else : ?>
+                <?php if (empty($curriculosRecentes)) : ?>
+                    <div class="empty-table">Nenhum currículo recebido.</div>
+                <?php else :
+                    $cvBadgeMap = [
+                        'novo'           => ['label' => 'Novo',             'bg' => '#e91e63'],
+                        'em_analise'     => ['label' => 'Em Análise',       'bg' => '#ff9800'],
+                        'ficha_enviada'  => ['label' => 'Ficha Enviada',    'bg' => '#9c27b0'],
+                        'aprovado'       => ['label' => 'Aprovado',         'bg' => '#4caf50'],
+                        'rejeitado'      => ['label' => 'Rejeitado',        'bg' => '#f44336'],
+                        'banco_talentos' => ['label' => 'Banco de Talentos','bg' => '#5c6bc0'],
+                    ];
+                ?>
                     <table class="dash-table">
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Candidato</th>
-                                <th>Empresa</th>
+                                <th>Cargo</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($fichasRecentes as $f) : ?>
-                            <tr>
-                                <td><?= (int)$f['id'] ?></td>
+                        <?php foreach ($curriculosRecentes as $cv) :
+                            $bs = $cvBadgeMap[$cv['status'] ?? 'novo'] ?? ['label' => ucfirst($cv['status']), 'bg' => '#757575'];
+                        ?>
+                            <tr onclick="window.location='index.php?section=curriculos'" style="cursor:pointer;" title="Ver currículos">
+                                <td><?= (int)$cv['id'] ?></td>
                                 <td>
-                                    <div class="primary"><?= e($f['nome_completo'] ?? '') ?></div>
-                                    <div class="secondary"><?= e($f['cargo'] ?? '') ?></div>
+                                    <div class="primary"><?= e($cv['nome_completo'] ?? '') ?></div>
+                                    <div class="secondary"><?= e($cv['cidade'] ?? '') ?></div>
                                 </td>
+                                <td style="font-weight:600;"><?= e($cv['cargo_desejado'] ?? '') ?></td>
                                 <td>
-                                    <span class="empresa-badge empresa-<?= strtolower(e($f['empresa'] ?? '')) ?>"><?= e($f['empresa'] ?? '') ?></span>
+                                    <span style="background:<?= $bs['bg'] ?>;color:#fff;padding:3px 10px;border-radius:12px;font-size:0.78rem;font-weight:600;">
+                                        <?= $bs['label'] ?>
+                                    </span>
                                 </td>
-                                <td><?= badge($f['status'] ?? 'novo') ?></td>
                             </tr>
                         <?php endforeach; ?>
                         </tbody>
