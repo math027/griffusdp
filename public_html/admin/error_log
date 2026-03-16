@@ -241,3 +241,21 @@ Stack trace:
 #2 /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php(43): SelecaoController->view(14)
 #3 {main}
   thrown in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 5
+[12-Mar-2026 09:12:00 America/Fortaleza] PHP Fatal error:  Uncaught TypeError: e(): Argument #1 ($value) must be of type ?string, int given, called in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 221 and defined in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php:5
+Stack trace:
+#0 /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php(221): e(1)
+#1 /home1/griffu80/dp.belmax.com.br/app/controllers/SelecaoController.php(44): require('/home1/griffu80...')
+#2 /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php(43): SelecaoController->view(14)
+#3 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 5
+[13-Mar-2026 09:20:04 America/Fortaleza] PHP Fatal error:  Uncaught TypeError: e(): Argument #1 ($value) must be of type ?string, int given, called in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 221 and defined in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php:5
+Stack trace:
+#0 /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php(221): e(1)
+#1 /home1/griffu80/dp.belmax.com.br/app/controllers/SelecaoController.php(44): require('/home1/griffu80...')
+#2 /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php(43): SelecaoController->view(14)
+#3 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/app/views/selecao/view.php on line 5
+[13-Mar-2026 10:46:00 America/Fortaleza] PHP Fatal error:  Uncaught Error: Call to undefined method CurriculoController::get() in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php:69
+Stack trace:
+#0 {main}
+  thrown in /home1/griffu80/dp.belmax.com.br/public_html/admin/index.php on line 69

@@ -66,6 +66,8 @@ switch ($section) {
         $ctrl = new CurriculoController($db);
         switch ($action) {
             case 'view_cv':        $ctrl->viewCv((int)($_GET['id'] ?? 0)); break;
+            case 'get':            $ctrl->get();                           break;
+            case 'update':         $ctrl->update();                        break;
             case 'status':         $ctrl->changeStatus();                  break;
             case 'delete':         $ctrl->delete();                        break;
             case 'generate_token': $ctrl->generateToken();                 break;
