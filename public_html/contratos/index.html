@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* ============================================================
-   GRIFFUS — Loading Overlay & Obrigado Page
+   GRIFFUS - Loading Overlay & Obrigado Page
    ============================================================ */
 
         /* ---------- Loading Overlay ---------- */
@@ -390,74 +390,75 @@
             background: rgba(255, 255, 255, .3);
         }
 
-        /* ── Responsividade — Tela de seleção e header em telas muito pequenas ── */
-        @media (max-width: 360px) {
+        /* ── Responsividade - Tela de seleção e header em telas muito pequenas ── */
+        @media (max-width: 344px) {
             #telaSelecaoTipo {
                 padding: 0.5rem;
             }
 
             .selecao-header {
-                padding: 20px 16px;
+                padding: 16px 10px;
             }
 
             .selecao-logo {
-                width: 80px;
+                width: 70px;
             }
 
             .selecao-titulo {
-                font-size: 1.3rem;
+                font-size: 1.15rem;
             }
 
             .selecao-subtitulo {
-                font-size: 0.82rem;
+                font-size: 0.78rem;
             }
 
             .selecao-body {
-                padding: 16px 12px;
-                gap: 10px;
+                padding: 12px 8px;
+                gap: 8px;
             }
 
             .selecao-btn {
-                padding: 12px 14px;
+                padding: 10px 10px;
             }
 
             .selecao-btn__icon {
-                font-size: 1.2rem;
-                width: 32px;
-                height: 32px;
-                margin-right: 10px;
+                font-size: 1.1rem;
+                width: 28px;
+                height: 28px;
+                margin-right: 8px;
             }
 
             .selecao-btn__text strong {
-                font-size: 0.9rem;
+                font-size: 0.85rem;
             }
 
             .selecao-btn__text span {
-                font-size: 0.78rem;
+                font-size: 0.72rem;
             }
 
             .header-strip {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                gap: 8px;
-                padding: 14px 10px;
+                gap: 6px;
+                padding: 12px 8px;
             }
 
             .header-strip .logo {
-                max-width: 120px;
+                max-width: 110px;
             }
 
             .header-strip__titles h2 {
-                font-size: 0.95rem;
+                font-size: 0.85rem;
                 text-align: center;
             }
 
             .btn-trocar-tipo {
-                font-size: 0.72rem;
-                padding: 0.35rem 0.7rem;
+                font-size: 0.68rem;
+                padding: 0.3rem 0.6rem;
             }
         }
+
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
@@ -976,7 +977,7 @@
             }
 
             /*
-             * Listener de CAPTURA — roda ANTES de api.js.
+             * Listener de CAPTURA - roda ANTES de api.js.
              * Ordem: 1) valida docs  2) abre LGPD  3) libera submit
              */
             form.addEventListener('submit', function (e) {
@@ -1048,7 +1049,7 @@
                 fileNameDisplay.textContent = 'Nenhum arquivo selecionado';
             }
         }
-        /* CEP Auto-fill removido daqui — já tratado em api.js */
+        /* CEP Auto-fill removido daqui - já tratado em api.js */
     </script>
 
     <script>
@@ -1059,9 +1060,9 @@
 
             const titulo = document.getElementById('formTitulo');
             if (tipo === 'RCA') {
-                titulo.textContent = 'RCA — Representante Comercial Autônomo';
+                titulo.textContent = 'RCA - Representante Comercial Autônomo';
             } else {
-                titulo.textContent = 'PJ — Promoção de Vendas';
+                titulo.textContent = 'PJ - Promoção de Vendas';
             }
         }
 

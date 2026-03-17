@@ -400,7 +400,11 @@ button:disabled {
     text-align: center;
 }
 
-/* ---- Responsive ---- */
+/* =====================================================
+   RESPONSIVIDADE
+   ===================================================== */
+
+/* ---- Tablets e celulares normais (≤768px) ---- */
 @media (max-width: 768px) {
     fieldset {
         grid-template-columns: 1fr;
@@ -413,12 +417,233 @@ button:disabled {
     .exp-grid { grid-template-columns: 1fr; }
 }
 
+/* ---- Celulares (≤480px) ---- */
 @media (max-width: 480px) {
-    .header-strip h2 { font-size: 1.1rem; }
-    button { width: 100%; }
-    .button-container { justify-content: center; }
-    .exp-grid { grid-template-columns: 1fr; }
+    body {
+        padding: 14px 8px;
+    }
+
+    .header-strip {
+        padding: 18px 12px;
+    }
+
+    .header-strip h2 {
+        font-size: 1.05rem;
+    }
+
+    .logo {
+        max-width: 160px;
+    }
+
+    .content-body {
+        padding: 12px 8px;
+    }
+
+    fieldset {
+        padding: 12px 10px;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-size: 0.82rem;
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+
+    input,
+    select,
+    textarea {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+        min-width: 0;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    .button-container {
+        justify-content: center;
+    }
+
+    .exp-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .exp-bloco {
+        padding: 14px;
+    }
+
+    .exp-bloco-header {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .btn-adicionar-exp {
+        padding: 9px 16px;
+        font-size: 0.82rem;
+    }
+
+    .questao-titulo-destaque {
+        font-size: 0.85rem;
+        padding: 10px 14px;
+    }
 }
+
+/* ---- Z-Folder e celulares muito finos (≤344px) ---- */
+@media (max-width: 344px) {
+    body {
+        padding: 6px 2px;
+    }
+
+    .main-container {
+        border-radius: 6px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .header-strip {
+        padding: 12px 8px;
+    }
+
+    .header-strip h2 {
+        font-size: 0.92rem;
+    }
+
+    .logo {
+        max-width: 110px;
+    }
+
+    .content-body {
+        padding: 8px 5px;
+    }
+
+    /* Info banner no topo */
+    .content-body > div[style] {
+        padding: 10px 12px !important;
+        font-size: 0.82rem !important;
+    }
+
+    fieldset {
+        padding: 8px 6px;
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+
+    legend {
+        font-size: 0.88rem;
+        padding: 0 6px;
+    }
+
+    label {
+        font-size: 0.76rem;
+        margin-bottom: 4px;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        hyphens: auto;
+    }
+
+    input,
+    select,
+    textarea {
+        padding: 9px 8px;
+        font-size: 0.85rem;
+        min-width: 0;
+    }
+
+    textarea {
+        min-height: 70px;
+    }
+
+    .radio-group {
+        gap: 12px;
+        padding: 8px 0 0;
+    }
+
+    .radio-label {
+        font-size: 0.85rem;
+        gap: 5px;
+    }
+
+    .radio-label input[type="radio"] {
+        width: 15px;
+        height: 15px;
+    }
+
+    /* Experiências */
+    .exp-instrucao {
+        font-size: 0.78rem;
+        padding: 8px 10px;
+        margin-bottom: 10px;
+    }
+
+    .exp-bloco {
+        padding: 10px 8px;
+        margin-bottom: 10px;
+    }
+
+    .exp-bloco-header {
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .exp-bloco-titulo {
+        font-size: 0.82rem;
+        gap: 6px;
+    }
+
+    .exp-bloco-titulo i {
+        width: 20px;
+        height: 20px;
+        font-size: 0.6rem;
+    }
+
+    .btn-remover-exp {
+        padding: 4px 8px;
+        font-size: 0.72rem;
+    }
+
+    .exp-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .btn-adicionar-exp {
+        padding: 8px 14px;
+        font-size: 0.78rem;
+        gap: 6px;
+    }
+
+    .exp-counter-msg {
+        font-size: 0.72rem;
+    }
+
+    #area-adicionar-exp {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    /* Questionário */
+    .questao-titulo-destaque {
+        font-size: 0.78rem;
+        padding: 8px 12px;
+        letter-spacing: 0;
+    }
+
+    /* Botão submit */
+    button[type="submit"],
+    #btn-submit {
+        padding: 11px 16px;
+        font-size: 0.88rem;
+    }
+
+    /* Pre-filled note */
+    .pre-filled-note {
+        font-size: 0.72rem;
+    }
+}
+
 /* =====================================================
    MODAL LGPD
    ===================================================== */
@@ -593,6 +818,7 @@ button:disabled {
     box-shadow: none;
 }
 
+/* ---- Modal LGPD — celulares (≤480px) ---- */
 @media (max-width: 480px) {
     .modal-lgpd-header   { padding: 18px 20px; }
     .modal-lgpd-body     { padding: 18px 20px 6px; }
@@ -600,4 +826,67 @@ button:disabled {
     .modal-lgpd-footer   { flex-direction: column-reverse; padding: 14px 20px 20px; }
     .btn-lgpd-cancelar,
     .btn-lgpd-confirmar  { width: 100%; justify-content: center; }
+}
+
+/* ---- Modal LGPD — Z-Folder (≤344px) ---- */
+@media (max-width: 344px) {
+    .modal-lgpd-overlay {
+        padding: 10px 4px;
+    }
+
+    .modal-lgpd-box {
+        border-radius: 10px;
+    }
+
+    .modal-lgpd-header {
+        padding: 12px 10px;
+        gap: 8px;
+    }
+
+    .modal-lgpd-header h3 {
+        font-size: 0.88rem;
+    }
+
+    .modal-lgpd-icon {
+        font-size: 1.3rem;
+    }
+
+    .modal-lgpd-body {
+        padding: 10px 10px 4px;
+    }
+
+    .modal-lgpd-body p {
+        font-size: 0.78rem;
+        line-height: 1.45;
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+
+    .modal-lgpd-check-row {
+        padding: 8px 10px 6px;
+    }
+
+    .modal-lgpd-check-label {
+        font-size: 0.78rem;
+        gap: 6px;
+    }
+
+    .modal-lgpd-check-label input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+    }
+
+    .modal-lgpd-footer {
+        padding: 8px 10px 14px;
+        gap: 6px;
+        flex-direction: column-reverse;
+    }
+
+    .btn-lgpd-cancelar,
+    .btn-lgpd-confirmar {
+        font-size: 0.78rem;
+        padding: 9px 14px;
+        width: 100%;
+        justify-content: center;
+    }
 }

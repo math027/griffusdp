@@ -15,7 +15,7 @@ class CurriculoController
     }
 
     /* ═══════════════════════════════════════════
-       INDEX — lista todos os currículos
+       INDEX - lista todos os currículos
     ═══════════════════════════════════════════ */
     public function index(): void
     {
@@ -25,7 +25,7 @@ class CurriculoController
     }
 
     /* ═══════════════════════════════════════════
-       VIEW — visualizar CV (serve o arquivo)
+       VIEW - visualizar CV (serve o arquivo)
     ═══════════════════════════════════════════ */
     public function viewCv(int $id): void
     {
@@ -57,7 +57,7 @@ class CurriculoController
     }
 
     /* ═══════════════════════════════════════════
-       GET — retorna dados de um currículo em JSON
+       GET - retorna dados de um currículo em JSON
     ═══════════════════════════════════════════ */
     public function get(): void
     {
@@ -79,7 +79,7 @@ class CurriculoController
     }
 
     /* ═══════════════════════════════════════════
-       UPDATE — atualiza dados do currículo via AJAX
+       UPDATE - atualiza dados do currículo via AJAX
     ═══════════════════════════════════════════ */
     public function update(): void
     {
@@ -121,7 +121,7 @@ class CurriculoController
     }
 
     /* ═══════════════════════════════════════════
-       CHANGE STATUS — via AJAX
+       CHANGE STATUS - via AJAX
     ═══════════════════════════════════════════ */
     public function changeStatus(): void
     {
@@ -143,7 +143,7 @@ class CurriculoController
     }
 
     /* ═══════════════════════════════════════════
-       DELETE — exclui currículo via AJAX
+       DELETE - exclui currículo via AJAX
     ═══════════════════════════════════════════ */
     public function delete(): void
     {
@@ -170,7 +170,7 @@ class CurriculoController
     }
 
     /* ═══════════════════════════════════════════
-       GENERATE TOKEN — gera link para ficha de seleção
+       GENERATE TOKEN - gera link para ficha de seleção
     ═══════════════════════════════════════════ */
     public function generateToken(): void
     {
@@ -211,15 +211,6 @@ class CurriculoController
         $scriptDir = dirname($_SERVER['SCRIPT_NAME']);
         $selecaoUrl = rtrim($baseUrl, '/') . rtrim($scriptDir, '/admin') . '/selecao/ficha.php?token=' . $token;
 
-        // Mensagem WhatsApp
-        $msgWhatsapp = "Olá {$cv['nome_completo']}! 👋\n\n"
-            . "Recebemos seu currículo para a vaga de *{$cv['cargo_desejado']}*.\n\n"
-            . "Para dar continuidade ao processo seletivo, pedimos que preencha a ficha de seleção no link abaixo:\n\n"
-            . "{$selecaoUrl}\n\n"
-            . "⚠️ Este link é de uso único e expira em 7 dias.\n\n"
-            . "Qualquer dúvida, estamos à disposição!\n"
-            . "Equipe RH — Griffus SA";
-
         // Formata telefone para WhatsApp (apenas dígitos, com 55)
         $telefone = preg_replace('/\D/', '', $cv['telefone']);
         if (strlen($telefone) <= 11) {
@@ -231,14 +222,13 @@ class CurriculoController
             'token'        => $token,
             'link'         => $selecaoUrl,
             'expires_at'   => $expiresAt,
-            'whatsapp_url' => 'https://wa.me/' . $telefone . '?text=' . rawurlencode($msgWhatsapp),
-            'mensagem'     => $msgWhatsapp,
+            'whatsapp_num' => $telefone,
             'candidato'    => $cv,
         ]);
     }
 
     /* ═══════════════════════════════════════════
-       TALENT BANK — currículos no banco de talentos
+       TALENT BANK - currículos no banco de talentos
     ═══════════════════════════════════════════ */
     public function talentBank(): void
     {

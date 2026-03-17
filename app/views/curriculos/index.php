@@ -455,9 +455,19 @@ async function enviarFicha(id) {
 
         const c = data.candidato;
 
-        // Extrai o número do WhatsApp
-        const matchNum = data.whatsapp_url.match(/wa\.me\/(\d+)/);
-        _whatsappNum = matchNum ? matchNum[1] : '';
+        _whatsappNum = data.whatsapp_num || '';
+
+        // Monta mensagem no JS com Unicode escapes para nao depender da codificacao do arquivo
+        var emojiWave = '\uD83D\uDC4B';
+        var emojiWarn = '\u26A0\uFE0F';
+        data.mensagem = 'Ol\u00E1 ' + c.nome_completo + '! ' + emojiWave + '\n\n'
+            + 'Recebemos seu curr\u00EDculo para a vaga de *' + c.cargo_desejado + '*.\n\n'
+            + 'Para dar continuidade ao processo seletivo, pedimos que preencha a ficha de sele\u00E7\u00E3o no link abaixo:\n\n'
+            + data.link + '\n\n'
+            + emojiWarn + ' Este link \u00E9 de uso \u00FAnico e expira em 7 dias.\n\n'
+            + 'Qualquer d\u00FAvida, estamos \u00E0 disposi\u00E7\u00E3o!\n'
+            + 'Equipe RH - Griffus SA';
+
 
         // Constrói HTML do modal via DOM para evitar problemas de escaping
         const modalBody = document.getElementById('modalBody');
