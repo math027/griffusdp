@@ -44,6 +44,14 @@
                     <p>Preenchimento de ficha para candidatos.</p>
                 </div>
             </a>
+
+            <a href="curriculos/" class="btn">
+                <i class="fa-solid fa-file"></i>
+                <div class="btn-info">
+                    <h3>Curriculos</h3>
+                    <p>Envio de curriculos para candidatos.</p>
+                </div>
+            </a>
             
             <a href="contratos/" class="btn">
                 <i class="fa-solid fa-file-contract"></i>

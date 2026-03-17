@@ -31,6 +31,7 @@ try {
         'docCore'            => 5  * 1024 * 1024,
         'docCpfSocio'        => 3  * 1024 * 1024,
         'docIdentidadeSocio' => 5  * 1024 * 1024,
+        'docCnh'             => 5  * 1024 * 1024,
         'docEndSocioComp'    => 5  * 1024 * 1024,
     ];
 
@@ -48,8 +49,6 @@ try {
         'docContratoSocial'  => 'Contrato Social / Certificado MEI',
         'docEndEmpresa'      => 'Comprovante de Endereço (Empresa)',
         'docCartaoCnpj'      => 'Cartão CNPJ',
-        'docCore'            => 'CORE',
-        'docCpfSocio'        => 'CPF do Sócio',
         'docIdentidadeSocio' => 'Identidade do Sócio (RG)',
         'docEndSocioComp'    => 'Comprovante de Endereço (Sócio)',
     ];
@@ -77,6 +76,7 @@ try {
         'docCore'            => 'doc_core',
         'docCpfSocio'        => 'doc_cpf_socio',
         'docIdentidadeSocio' => 'doc_identidade_socio',
+        'docCnh'             => 'doc_cnh',
         'docEndSocioComp'    => 'doc_end_socio_comp',
     ];
 
@@ -106,7 +106,7 @@ try {
         nome_socio, cpf, rg, orgao_expedidor, nascimento, nacionalidade, estado_civil, profissao, email_socio,
         cep_socio, endereco_socio, numero_socio, bairro_socio, cidade_socio, uf_socio,
         doc_contrato_social, doc_end_empresa, doc_cartao_cnpj, doc_core,
-        doc_cpf_socio, doc_identidade_socio, doc_end_socio_comp, status
+        doc_cpf_socio, doc_identidade_socio, doc_cnh, doc_end_socio_comp, status
     ) VALUES (
         :tipo_contrato,
         :razao_social, :cnpj, :cep, :endereco, :numero, :bairro, :cidade, :uf, :celular, :email_empresa,
@@ -114,7 +114,7 @@ try {
         :nome_socio, :cpf, :rg, :orgao_expedidor, :nascimento, :nacionalidade, :estado_civil, :profissao, :email_socio,
         :cep_socio, :endereco_socio, :numero_socio, :bairro_socio, :cidade_socio, :uf_socio,
         :doc_contrato_social, :doc_end_empresa, :doc_cartao_cnpj, :doc_core,
-        :doc_cpf_socio, :doc_identidade_socio, :doc_end_socio_comp, :status
+        :doc_cpf_socio, :doc_identidade_socio, :doc_cnh, :doc_end_socio_comp, :status
     )";
 
     $stmt = $pdo->prepare($sql);
@@ -156,6 +156,7 @@ try {
         ':doc_core'              => $filePaths['doc_core'],
         ':doc_cpf_socio'         => $filePaths['doc_cpf_socio'],
         ':doc_identidade_socio'  => $filePaths['doc_identidade_socio'],
+        ':doc_cnh'               => $filePaths['doc_cnh'],
         ':doc_end_socio_comp'    => $filePaths['doc_end_socio_comp'],
         ':status'                => 'novo',
     ]);

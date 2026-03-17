@@ -6,11 +6,13 @@ const Toast = {
         Object.assign(this.container.style, {
             position: 'fixed',
             top: '20px',
+            left: '20px',
             right: '20px',
-            zIndex: '9999',
+            zIndex: '99999',
             display: 'flex',
             flexDirection: 'column',
-            gap: '10px'
+            gap: '10px',
+            pointerEvents: 'none'
         });
         document.body.appendChild(this.container);
 
@@ -18,13 +20,15 @@ const Toast = {
         const style = document.createElement('style');
         style.textContent = `
             .toast {
-                min-width: 250px;
+                max-width: 500px;
+                width: 100%;
+                margin-left: auto;
                 background: #fff;
                 padding: 12px 16px;
                 border-radius: 8px;
                 box-shadow: 0 4px 12px rgba(0,0,0,0.15);
                 display: flex;
-                align-items: center;
+                align-items: flex-start;
                 gap: 12px;
                 animation: slideIn 0.3s ease-out forwards;
                 opacity: 0;
@@ -32,25 +36,45 @@ const Toast = {
                 font-family: inherit;
                 font-size: 0.9rem;
                 border-left: 4px solid #333;
+                pointer-events: auto;
+                box-sizing: border-box;
+                word-break: break-word;
             }
             .toast.success { border-left-color: #4caf50; }
             .toast.error { border-left-color: #f44336; }
             .toast.warning { border-left-color: #ff9800; }
             .toast.info { border-left-color: #2196f3; }
             
-            .toast-icon { font-size: 1.2rem; }
+            .toast-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
             .toast.success .toast-icon { color: #4caf50; }
             .toast.error .toast-icon { color: #f44336; }
             .toast.warning .toast-icon { color: #ff9800; }
             .toast.info .toast-icon { color: #2196f3; }
 
-            .toast-message { color: #333; font-weight: 500; }
+            .toast-message {
+                color: #333;
+                font-weight: 500;
+                white-space: pre-line;
+                flex: 1;
+                min-width: 0;
+            }
 
             @keyframes slideIn {
                 to { opacity: 1; transform: translateX(0); }
             }
             @keyframes fadeOut {
                 to { opacity: 0; transform: translateX(100%); }
+            }
+
+            @media (max-width: 360px) {
+                .toast {
+                    font-size: 0.8rem;
+                    padding: 10px 12px;
+                    gap: 8px;
+                }
+                .toast-icon {
+                    font-size: 1rem;
+                }
             }
         `;
         document.head.appendChild(style);

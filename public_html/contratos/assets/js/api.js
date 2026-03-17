@@ -5,6 +5,7 @@ const fileLimits = {
     'docCore': 5,
     'docCpfSocio': 3,
     'docIdentidadeSocio': 5,
+    'docCnh': 5,
     'docEndSocioComp': 5
 };
 
@@ -272,8 +273,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 'docContratoSocial':  'Contrato Social / Certificado MEI',
                 'docEndEmpresa':      'Comprovante de Endereço (Empresa)',
                 'docCartaoCnpj':      'Cartão CNPJ',
-                'docCore':            'CORE',
-                'docCpfSocio':        'CPF do Sócio',
                 'docIdentidadeSocio': 'Identidade do Sócio (RG)',
                 'docEndSocioComp':    'Comprovante de Endereço (Sócio)'
             };

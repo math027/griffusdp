@@ -40,10 +40,10 @@ body.home-body {
 .main-container {
     background-color: #ffffff;
     width: 100%;
-    max-width: 1000px;
+    max-width: 1100px;
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    padding: 0; 
+    padding: 0;
     overflow: hidden;
 }
 
@@ -60,7 +60,7 @@ body.home-body {
     height: auto;
     display: block;
     margin: 0 auto;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .content-body {
@@ -68,7 +68,9 @@ body.home-body {
 }
 
 @media (max-width: 768px) {
-    .content-body { padding: 20px; }
+    .content-body {
+        padding: 20px;
+    }
 }
 
 fieldset {
@@ -96,8 +98,13 @@ legend {
     flex-direction: column;
 }
 
-.full-width { grid-column: span 3; }
-.small { grid-column: span 1; }
+.full-width {
+    grid-column: span 3;
+}
+
+.small {
+    grid-column: span 1;
+}
 
 @media (max-width: 768px) {
     fieldset {
@@ -105,8 +112,15 @@ legend {
         padding: 15px;
         gap: 15px;
     }
-    .full-width, .small { grid-column: span 1; }
-    .main-container { padding: 20px; }
+
+    .full-width,
+    .small {
+        grid-column: span 1;
+    }
+
+    .main-container {
+        padding: 20px;
+    }
 }
 
 label {
@@ -116,7 +130,8 @@ label {
     font-weight: 500;
 }
 
-input, select {
+input,
+select {
     padding: 12px 15px;
     border: 1px solid var(--input-border);
     border-radius: 6px;
@@ -127,13 +142,16 @@ input, select {
     background-color: #fcfcfc;
 }
 
-input:focus, select:focus {
+input:focus,
+select:focus {
     border-color: var(--griffus-pink);
     box-shadow: 0 0 0 4px var(--focus-shadow);
     background-color: #fff;
 }
 
-input::placeholder { color: #bdbdbd; }
+input::placeholder {
+    color: #bdbdbd;
+}
 
 .button-container {
     display: flex;
@@ -160,7 +178,9 @@ button:hover {
     box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
 }
 
-button:active { transform: translateY(1px); }
+button:active {
+    transform: translateY(1px);
+}
 
 /* Login Styles */
 .login-container {
@@ -170,13 +190,19 @@ button:active { transform: translateY(1px); }
     background: white;
     padding: 40px;
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
-.login-logo { max-width: 150px; margin-bottom: 20px; }
+
+.login-logo {
+    max-width: 150px;
+    margin-bottom: 20px;
+}
 
 /* File Upload Styles */
-input[type="file"] { display: none; }
+input[type="file"] {
+    display: none;
+}
 
 .file-upload-label {
     display: inline-flex;
@@ -208,7 +234,7 @@ input[type="file"] { display: none; }
     border-color: #c0c0c0;
 }
 
-input[type="file"]:focus + .file-upload-label {
+input[type="file"]:focus+.file-upload-label {
     border-color: var(--griffus-pink);
     box-shadow: 0 0 0 2px var(--focus-shadow);
 }
@@ -244,7 +270,8 @@ input[type="file"]:focus + .file-upload-label {
     width: 100%;
     padding: 12px;
     background-color: #fafafa;
-    border: 2px dashed #e0e0e0; /* Borda tracejada moderna */
+    border: 2px dashed #e0e0e0;
+    /* Borda tracejada moderna */
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -260,21 +287,29 @@ input[type="file"]:focus + .file-upload-label {
 .file-status {
     font-size: 0.85rem;
     margin-top: 5px;
-    min-height: 20px; /* Evita pulo de layout */
+    min-height: 20px;
+    /* Evita pulo de layout */
     font-weight: 500;
 }
 
 .file-status.success {
-    color: #2e7d32; /* Verde */
+    color: #2e7d32;
+    /* Verde */
 }
 
 .file-status.error {
-    color: #c62828; /* Vermelho */
+    color: #c62828;
+    /* Vermelho */
 }
 
 /* Ícones de estado */
-.file-status.success::before { content: '✔ '; }
-.file-status.error::before { content: '✖ '; }
+.file-status.success::before {
+    content: '✔ ';
+}
+
+.file-status.error::before {
+    content: '✖ ';
+}
 
 /* Destaque para documentos obrigatórios não anexados */
 .missing-doc {
@@ -284,11 +319,27 @@ input[type="file"]:focus + .file-upload-label {
 }
 
 @keyframes shakeMissing {
-    0%, 100% { transform: translateX(0); }
-    20%      { transform: translateX(-4px); }
-    40%      { transform: translateX(4px); }
-    60%      { transform: translateX(-3px); }
-    80%      { transform: translateX(3px); }
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    20% {
+        transform: translateX(-4px);
+    }
+
+    40% {
+        transform: translateX(4px);
+    }
+
+    60% {
+        transform: translateX(-3px);
+    }
+
+    80% {
+        transform: translateX(3px);
+    }
 }
 
 /* =====================================================
@@ -309,8 +360,13 @@ input[type="file"]:focus + .file-upload-label {
 }
 
 @keyframes fadeInOverlay {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .modal-lgpd-box {
@@ -324,8 +380,15 @@ input[type="file"]:focus + .file-upload-label {
 }
 
 @keyframes slideUpModal {
-    from { transform: translateY(20px); opacity: 0; }
-    to   { transform: translateY(0);    opacity: 1; }
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .modal-lgpd-header {
@@ -370,7 +433,9 @@ input[type="file"]:focus + .file-upload-label {
     font-weight: 500;
 }
 
-.modal-lgpd-body a:hover { text-decoration: underline; }
+.modal-lgpd-body a:hover {
+    text-decoration: underline;
+}
 
 .modal-lgpd-check-row {
     padding: 18px 28px 14px;
@@ -466,10 +531,155 @@ input[type="file"]:focus + .file-upload-label {
 }
 
 @media (max-width: 480px) {
-    .modal-lgpd-header   { padding: 18px 20px; }
-    .modal-lgpd-body     { padding: 18px 20px 6px; }
-    .modal-lgpd-check-row{ padding: 14px 20px 10px; }
-    .modal-lgpd-footer   { flex-direction: column-reverse; padding: 14px 20px 20px; }
+    .modal-lgpd-header {
+        padding: 18px 20px;
+    }
+
+    .modal-lgpd-body {
+        padding: 18px 20px 6px;
+    }
+
+    .modal-lgpd-check-row {
+        padding: 14px 20px 10px;
+    }
+
+    .modal-lgpd-footer {
+        flex-direction: column-reverse;
+        padding: 14px 20px 20px;
+    }
+
     .btn-lgpd-cancelar,
-    .btn-lgpd-confirmar  { width: 100%; justify-content: center; }
+    .btn-lgpd-confirmar {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* =====================================================
+   RESPONSIVIDADE — Telas muito pequenas (Z-Folder, ≤360px)
+   ===================================================== */
+
+@media (max-width: 360px) {
+    body {
+        padding: 10px 6px;
+    }
+
+    .main-container {
+        border-radius: 8px;
+    }
+
+    .header-strip {
+        padding: 14px 10px;
+    }
+
+    .logo {
+        max-width: 140px;
+    }
+
+    .content-body {
+        padding: 10px 8px;
+    }
+
+    fieldset {
+        padding: 10px 8px;
+        gap: 10px;
+        margin-bottom: 16px;
+        grid-template-columns: 1fr;
+    }
+
+    .full-width,
+    .small {
+        grid-column: span 1;
+    }
+
+    legend {
+        font-size: 0.95rem;
+        padding: 0 8px;
+    }
+
+    label {
+        font-size: 0.82rem;
+        margin-bottom: 5px;
+    }
+
+    input,
+    select {
+        padding: 10px 10px;
+        font-size: 0.9rem;
+    }
+
+    .badge-limit {
+        font-size: 0.65rem;
+        padding: 1px 4px;
+        margin-left: 4px;
+    }
+
+    .file-upload-label {
+        padding: 10px 8px;
+        font-size: 0.8rem;
+    }
+
+    .upload-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 100%;
+    }
+
+    .button-container {
+        justify-content: center;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 0.95rem;
+    }
+
+    /* Modal LGPD — telas muito pequenas */
+    .modal-lgpd-box {
+        border-radius: 12px;
+    }
+
+    .modal-lgpd-header {
+        padding: 14px 14px;
+        gap: 10px;
+    }
+
+    .modal-lgpd-header h3 {
+        font-size: 0.95rem;
+    }
+
+    .modal-lgpd-icon {
+        font-size: 1.4rem;
+    }
+
+    .modal-lgpd-body {
+        padding: 14px 14px 4px;
+    }
+
+    .modal-lgpd-body p {
+        font-size: 0.82rem;
+        line-height: 1.5;
+    }
+
+    .modal-lgpd-check-row {
+        padding: 10px 14px 8px;
+    }
+
+    .modal-lgpd-check-label {
+        font-size: 0.82rem;
+        gap: 8px;
+    }
+
+    .modal-lgpd-footer {
+        padding: 10px 14px 16px;
+        gap: 8px;
+    }
+
+    .btn-lgpd-cancelar,
+    .btn-lgpd-confirmar {
+        font-size: 0.82rem;
+        padding: 10px 16px;
+    }
 }

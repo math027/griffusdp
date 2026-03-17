@@ -4,136 +4,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro Representante - Griffus Style</title>
+    <title>Cadastro Representante - Griffus</title>
     <link rel="stylesheet" href="assets/css/global.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-/* ============================================================
+        /* ============================================================
    GRIFFUS — Loading Overlay & Obrigado Page
    ============================================================ */
 
-/* ---------- Loading Overlay ---------- */
-#griffus-loading-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 32px;
-    background: linear-gradient(160deg, #c2185b 0%, #e91e63 50%, #f06292 100%);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.35s ease;
-}
+        /* ---------- Loading Overlay ---------- */
+        #griffus-loading-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+            background: linear-gradient(160deg, #c2185b 0%, #e91e63 50%, #f06292 100%);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+        }
 
-#griffus-loading-overlay.active {
-    opacity: 1;
-    pointer-events: all;
-}
+        #griffus-loading-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
 
-/* Logo pulse */
-.gf-loading-logo {
-    width: 180px;
-    filter: brightness(0) invert(1);
-    animation: gfLogoPulse 2s ease-in-out infinite;
-}
+        /* Logo pulse */
+        .gf-loading-logo {
+            width: 180px;
+            filter: brightness(0) invert(1);
+            animation: gfLogoPulse 2s ease-in-out infinite;
+        }
 
-@keyframes gfLogoPulse {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50%       { transform: scale(1.04); opacity: 0.85; }
-}
+        @keyframes gfLogoPulse {
 
-/* Bubble track */
-.gf-bubble-track {
-    display: flex;
-    gap: 14px;
-    align-items: flex-end;
-}
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
 
-.gf-bubble {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.9);
-    animation: gfBubble 1.2s ease-in-out infinite;
-}
+            50% {
+                transform: scale(1.04);
+                opacity: 0.85;
+            }
+        }
 
-.gf-bubble:nth-child(1) { animation-delay: 0s; }
-.gf-bubble:nth-child(2) { animation-delay: 0.18s; }
-.gf-bubble:nth-child(3) { animation-delay: 0.36s; }
-.gf-bubble:nth-child(4) { animation-delay: 0.54s; }
-.gf-bubble:nth-child(5) { animation-delay: 0.72s; }
+        /* Bubble track */
+        .gf-bubble-track {
+            display: flex;
+            gap: 14px;
+            align-items: flex-end;
+        }
 
-@keyframes gfBubble {
-    0%, 80%, 100% { transform: translateY(0); opacity: 0.5; }
-    40%            { transform: translateY(-18px); opacity: 1; }
-}
+        .gf-bubble {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.9);
+            animation: gfBubble 1.2s ease-in-out infinite;
+        }
 
-/* Progress bar */
-.gf-progress-wrap {
-    width: 240px;
-    height: 5px;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 999px;
-    overflow: hidden;
-}
+        .gf-bubble:nth-child(1) {
+            animation-delay: 0s;
+        }
 
-.gf-progress-bar {
-    height: 100%;
-    width: 0%;
-    background: #ffffff;
-    border-radius: 999px;
-    animation: gfProgress 2.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
+        .gf-bubble:nth-child(2) {
+            animation-delay: 0.18s;
+        }
 
-@keyframes gfProgress {
-    0%   { width: 0%; margin-left: 0; }
-    60%  { width: 80%; margin-left: 0; }
-    100% { width: 0%;  margin-left: 100%; }
-}
+        .gf-bubble:nth-child(3) {
+            animation-delay: 0.36s;
+        }
 
-/* Text label */
-.gf-loading-label {
-    color: #fff;
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    text-align: center;
-    opacity: 0.92;
-}
+        .gf-bubble:nth-child(4) {
+            animation-delay: 0.54s;
+        }
 
-.gf-loading-sublabel {
-    color: rgba(255,255,255,0.75);
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.78rem;
-    text-align: center;
-    margin-top: -24px;
-}
+        .gf-bubble:nth-child(5) {
+            animation-delay: 0.72s;
+        }
 
-/* Decorative sparkle dots */
-.gf-sparkle {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.35);
-    animation: gfSparkle 3s ease-in-out infinite;
-}
+        @keyframes gfBubble {
 
-.gf-sparkle:nth-child(1)  { top: 12%; left: 18%; animation-delay: 0s;    width: 10px; height: 10px; }
-.gf-sparkle:nth-child(2)  { top: 25%; right: 14%; animation-delay: 0.7s;  width: 6px;  height: 6px; }
-.gf-sparkle:nth-child(3)  { bottom: 20%; left: 22%; animation-delay: 1.2s; width: 8px;  height: 8px; }
-.gf-sparkle:nth-child(4)  { bottom: 30%; right: 20%; animation-delay: 0.4s; width: 12px; height: 12px; }
-.gf-sparkle:nth-child(5)  { top: 55%; left: 8%;   animation-delay: 1.8s;  width: 7px;  height: 7px; }
-.gf-sparkle:nth-child(6)  { top: 40%; right: 7%;  animation-delay: 0.9s;  width: 9px;  height: 9px; }
+            0%,
+            80%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.5;
+            }
 
-@keyframes gfSparkle {
-    0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.35; }
-    50%       { transform: scale(1.6) rotate(180deg); opacity: 0.8; }
-}
+            40% {
+                transform: translateY(-18px);
+                opacity: 1;
+            }
+        }
+
+        /* Progress bar */
+        .gf-progress-wrap {
+            width: 240px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .gf-progress-bar {
+            height: 100%;
+            width: 0%;
+            background: #ffffff;
+            border-radius: 999px;
+            animation: gfProgress 2.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        @keyframes gfProgress {
+            0% {
+                width: 0%;
+                margin-left: 0;
+            }
+
+            60% {
+                width: 80%;
+                margin-left: 0;
+            }
+
+            100% {
+                width: 0%;
+                margin-left: 100%;
+            }
+        }
+
+        /* Text label */
+        .gf-loading-label {
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-align: center;
+            opacity: 0.92;
+        }
+
+        .gf-loading-sublabel {
+            color: rgba(255, 255, 255, 0.75);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.78rem;
+            text-align: center;
+            margin-top: -24px;
+        }
+
+        /* Decorative sparkle dots */
+        .gf-sparkle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.35);
+            animation: gfSparkle 3s ease-in-out infinite;
+        }
+
+        .gf-sparkle:nth-child(1) {
+            top: 12%;
+            left: 18%;
+            animation-delay: 0s;
+            width: 10px;
+            height: 10px;
+        }
+
+        .gf-sparkle:nth-child(2) {
+            top: 25%;
+            right: 14%;
+            animation-delay: 0.7s;
+            width: 6px;
+            height: 6px;
+        }
+
+        .gf-sparkle:nth-child(3) {
+            bottom: 20%;
+            left: 22%;
+            animation-delay: 1.2s;
+            width: 8px;
+            height: 8px;
+        }
+
+        .gf-sparkle:nth-child(4) {
+            bottom: 30%;
+            right: 20%;
+            animation-delay: 0.4s;
+            width: 12px;
+            height: 12px;
+        }
+
+        .gf-sparkle:nth-child(5) {
+            top: 55%;
+            left: 8%;
+            animation-delay: 1.8s;
+            width: 7px;
+            height: 7px;
+        }
+
+        .gf-sparkle:nth-child(6) {
+            top: 40%;
+            right: 7%;
+            animation-delay: 0.9s;
+            width: 9px;
+            height: 9px;
+        }
+
+        @keyframes gfSparkle {
+
+            0%,
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 0.35;
+            }
+
+            50% {
+                transform: scale(1.6) rotate(180deg);
+                opacity: 0.8;
+            }
+        }
 
         /* ============================================================
            TELA DE SELEÇÃO DE TIPO DE CONTRATO
@@ -148,45 +242,52 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+
         .selecao-card {
             background: #fff;
             width: 100%;
             max-width: 480px;
             border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             display: flex;
             flex-direction: column;
         }
+
         .selecao-header {
             background: linear-gradient(135deg, #e91e63, #c2185b);
             padding: 40px 30px;
             text-align: center;
             color: #fff;
         }
+
         .selecao-logo {
             width: 120px;
             filter: brightness(0) invert(1);
             margin-bottom: 0.5rem;
         }
+
         .selecao-titulo {
             font-size: 1.8rem;
             font-weight: 700;
             margin: 0 0 8px 0;
             letter-spacing: 1px;
         }
+
         .selecao-subtitulo {
             font-size: 0.95rem;
             font-weight: 400;
             margin: 0;
             opacity: 0.8;
         }
+
         .selecao-body {
             padding: 30px;
             display: flex;
             flex-direction: column;
             gap: 16px;
         }
+
         .selecao-btn {
             display: flex;
             align-items: center;
@@ -199,14 +300,16 @@
             transition: all 0.2s;
             text-align: left;
             color: #444;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
         }
+
         .selecao-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
             border-color: #ddd;
             background: #fff;
         }
+
         .selecao-btn__icon {
             font-size: 1.5rem;
             margin-right: 16px;
@@ -221,14 +324,17 @@
             transition: color 0.2s, background 0.2s;
             flex-shrink: 0;
         }
+
         .selecao-btn:hover .selecao-btn__icon {
             background: #fce4ec;
             color: #e91e63;
         }
+
         .selecao-btn__text {
             display: flex;
             flex-direction: column;
         }
+
         .selecao-btn__text strong {
             font-size: 1rem;
             font-weight: 600;
@@ -236,13 +342,16 @@
             color: #333;
             transition: color 0.2s;
         }
+
         .selecao-btn:hover .selecao-btn__text strong {
             color: #e91e63;
         }
+
         .selecao-btn__text span {
             font-size: 0.85rem;
             color: #888;
         }
+
         .selecao-footer {
             text-align: center;
             padding: 20px;
@@ -257,13 +366,15 @@
             flex-direction: column;
             gap: .2rem;
         }
+
         .header-strip__titles h2 {
             font-size: 1.25rem;
             margin: 0;
         }
+
         .btn-trocar-tipo {
-            background: rgba(255,255,255,.18);
-            border: 1px solid rgba(255,255,255,.4);
+            background: rgba(255, 255, 255, .18);
+            border: 1px solid rgba(255, 255, 255, .4);
             color: #fff;
             font-family: 'Poppins', sans-serif;
             font-size: .8rem;
@@ -274,9 +385,82 @@
             transition: background .2s;
             white-space: nowrap;
         }
-        .btn-trocar-tipo:hover { background: rgba(255,255,255,.3); }
+
+        .btn-trocar-tipo:hover {
+            background: rgba(255, 255, 255, .3);
+        }
+
+        /* ── Responsividade — Tela de seleção e header em telas muito pequenas ── */
+        @media (max-width: 360px) {
+            #telaSelecaoTipo {
+                padding: 0.5rem;
+            }
+
+            .selecao-header {
+                padding: 20px 16px;
+            }
+
+            .selecao-logo {
+                width: 80px;
+            }
+
+            .selecao-titulo {
+                font-size: 1.3rem;
+            }
+
+            .selecao-subtitulo {
+                font-size: 0.82rem;
+            }
+
+            .selecao-body {
+                padding: 16px 12px;
+                gap: 10px;
+            }
+
+            .selecao-btn {
+                padding: 12px 14px;
+            }
+
+            .selecao-btn__icon {
+                font-size: 1.2rem;
+                width: 32px;
+                height: 32px;
+                margin-right: 10px;
+            }
+
+            .selecao-btn__text strong {
+                font-size: 0.9rem;
+            }
+
+            .selecao-btn__text span {
+                font-size: 0.78rem;
+            }
+
+            .header-strip {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+                padding: 14px 10px;
+            }
+
+            .header-strip .logo {
+                max-width: 120px;
+            }
+
+            .header-strip__titles h2 {
+                font-size: 0.95rem;
+                text-align: center;
+            }
+
+            .btn-trocar-tipo {
+                font-size: 0.72rem;
+                padding: 0.35rem 0.7rem;
+            }
+        }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="shortcut icon" href="assets/images/icone.png" type="image/x-icon">
 </head>
 
@@ -290,7 +474,7 @@
         <span class="gf-sparkle"></span>
         <span class="gf-sparkle"></span>
 
-        <img class="gf-loading-logo" src="assets/images/logo.webp" alt="Griffus Style">
+        <img class="gf-loading-logo" src="assets/images/logo.webp" alt="Griffus">
 
         <div class="gf-bubble-track">
             <div class="gf-bubble"></div>
@@ -531,7 +715,8 @@
 
                         <div class="upload-wrapper">
                             <input type="file" id="docContratoSocial" name="docContratoSocial"
-                                accept=".pdf,.jpg,.jpeg,.png" data-limit="10" onchange="validateAndPreview(this)"><label for="docContratoSocial" class="file-upload-label">
+                                accept=".pdf,.jpg,.jpeg,.png" data-limit="10" onchange="validateAndPreview(this)"><label
+                                for="docContratoSocial" class="file-upload-label">
                                 <span class="file-upload-icon"></span>
                                 <span class="upload-text">Selecionar arquivo...</span>
                             </label>
@@ -578,7 +763,7 @@
                     <div class="form-group">
                         <label for="docCore">
                             CORE
-                            <span class="badge-limit">Máx: 5MB</span>
+                            <span class="badge-limit">Opcional - Máx: 5MB</span>
                         </label>
 
                         <div class="upload-wrapper">
@@ -634,6 +819,24 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="docCnh">
+                            CNH
+                            <span class="badge-limit">Opcional · Máx: 5MB</span>
+                        </label>
+
+                        <div class="upload-wrapper">
+                            <input type="file" id="docCnh" name="docCnh" accept=".pdf,.jpg,.jpeg,.png" data-limit="5"
+                                onchange="validateAndPreview(this)">
+
+                            <label for="docCnh" class="file-upload-label">
+                                <span class="file-upload-icon"></span>
+                                <span class="upload-text">Selecionar arquivo...</span>
+                            </label>
+                        </div>
+                        <div class="file-status" id="status-docCnh"></div>
+                    </div>
+
+                    <div class="form-group">
                         <label for="docEndSocioComp">
                             Comp. Endereço Sócio
                             <span class="badge-limit">Máx: 5MB</span>
@@ -663,7 +866,8 @@
     <script src="assets/js/api.js?v=2"></script>
 
     <!-- ====================== MODAL LGPD ====================== -->
-    <div id="modal-lgpd" class="modal-lgpd-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="modal-lgpd-titulo">
+    <div id="modal-lgpd" class="modal-lgpd-overlay" style="display:none;" role="dialog" aria-modal="true"
+        aria-labelledby="modal-lgpd-titulo">
         <div class="modal-lgpd-box">
             <div class="modal-lgpd-header">
                 <i class="fa-solid fa-shield-halved modal-lgpd-icon"></i>
@@ -671,13 +875,17 @@
             </div>
             <div class="modal-lgpd-body">
                 <p>
-                    Ao prosseguir, você declara estar ciente de que os dados fornecidos neste formulário serão coletados e tratados,
-                    exclusivamente para fins de <strong>contrato de prestação de serviços, recrutamento, seleção e análise de perfil</strong>
+                    Ao prosseguir, você declara estar ciente de que os dados fornecidos neste formulário serão coletados
+                    e tratados,
+                    exclusivamente para fins de <strong>contrato de prestação de serviços, recrutamento, seleção e
+                        análise de perfil</strong>
                     para vagas disponíveis.
                 </p>
                 <p>
-                    Seus dados serão armazenados de forma segura e <strong>não serão compartilhados com terceiros</strong> sem sua
-                    autorização prévia. Você poderá solicitar a exclusão dos seus dados a qualquer momento enviando um e-mail para
+                    Seus dados serão armazenados de forma segura e <strong>não serão compartilhados com
+                        terceiros</strong> sem sua
+                    autorização prévia. Você poderá solicitar a exclusão dos seus dados a qualquer momento enviando um
+                    e-mail para
                     <a href="mailto:dp@belmax.com.br">dp@belmax.com.br</a>.
                 </p>
             </div>
@@ -699,141 +907,139 @@
     </div>
 
     <script>
-    /*
-     * LGPD + Validação de Documentos Obrigatórios
-     * Intercepta o submit na FASE DE CAPTURA (antes de api.js)
-     * 1. Valida se todos os 7 documentos foram anexados
-     * 2. Se OK, abre modal LGPD
-     * 3. Após aceite, re-dispara o submit para api.js tratar
-     */
-    (function () {
-        'use strict';
+        /*
+         * LGPD + Validação de Documentos Obrigatórios
+         * Intercepta o submit na FASE DE CAPTURA (antes de api.js)
+         * 1. Valida se todos os 7 documentos foram anexados
+         * 2. Se OK, abre modal LGPD
+         * 3. Após aceite, re-dispara o submit para api.js tratar
+         */
+        (function () {
+            'use strict';
 
-        var form        = document.getElementById('formContratos');
-        var modal       = document.getElementById('modal-lgpd');
-        var checkLgpd   = document.getElementById('check-lgpd');
-        var btnConfirmar= document.getElementById('btn-lgpd-confirmar');
-        var btnCancelar = document.getElementById('btn-lgpd-cancelar');
-        var termoAceito = false;
+            var form = document.getElementById('formContratos');
+            var modal = document.getElementById('modal-lgpd');
+            var checkLgpd = document.getElementById('check-lgpd');
+            var btnConfirmar = document.getElementById('btn-lgpd-confirmar');
+            var btnCancelar = document.getElementById('btn-lgpd-cancelar');
+            var termoAceito = false;
 
-        /* ── Documentos obrigatórios: id → label amigável ─ */
-        var docsObrigatorios = {
-            'docContratoSocial':  'Contrato Social / Certificado MEI',
-            'docEndEmpresa':      'Comprovante de Endereço (Empresa)',
-            'docCartaoCnpj':      'Cartão CNPJ',
-            'docCore':            'CORE',
-            'docCpfSocio':        'CPF do Sócio',
-            'docIdentidadeSocio': 'Identidade do Sócio (RG)',
-            'docEndSocioComp':    'Comprovante de Endereço (Sócio)'
-        };
+            /* ── Documentos obrigatórios: id → label amigável ─ */
+            var docsObrigatorios = {
+                'docContratoSocial': 'Contrato Social / Certificado MEI',
+                'docEndEmpresa': 'Comprovante de Endereço (Empresa)',
+                'docCartaoCnpj': 'Cartão CNPJ',
+                'docIdentidadeSocio': 'Identidade do Sócio (RG)',
+                'docEndSocioComp': 'Comprovante de Endereço (Sócio)'
+            };
 
-        /* ── Valida se todos os documentos foram anexados ── */
-        function validarDocumentos() {
-            var faltando = [];
+            /* ── Valida se todos os documentos foram anexados ── */
+            function validarDocumentos() {
+                var faltando = [];
 
-            // Limpa destaques anteriores
-            var destaques = form.querySelectorAll('.missing-doc');
-            for (var i = 0; i < destaques.length; i++) {
-                destaques[i].classList.remove('missing-doc');
-            }
+                // Limpa destaques anteriores
+                var destaques = form.querySelectorAll('.missing-doc');
+                for (var i = 0; i < destaques.length; i++) {
+                    destaques[i].classList.remove('missing-doc');
+                }
 
-            for (var inputId in docsObrigatorios) {
-                var input = document.getElementById(inputId);
-                if (!input || !input.files || input.files.length === 0) {
-                    faltando.push(docsObrigatorios[inputId]);
-                    // Destaca visualmente o wrapper do upload
-                    if (input) {
-                        var wrapper = input.closest('.form-group');
-                        if (wrapper) {
-                            var label = wrapper.querySelector('.file-upload-label');
-                            if (label) label.classList.add('missing-doc');
+                for (var inputId in docsObrigatorios) {
+                    var input = document.getElementById(inputId);
+                    if (!input || !input.files || input.files.length === 0) {
+                        faltando.push(docsObrigatorios[inputId]);
+                        // Destaca visualmente o wrapper do upload
+                        if (input) {
+                            var wrapper = input.closest('.form-group');
+                            if (wrapper) {
+                                var label = wrapper.querySelector('.file-upload-label');
+                                if (label) label.classList.add('missing-doc');
+                            }
                         }
                     }
                 }
+
+                return faltando;
             }
 
-            return faltando;
-        }
+            /* ── Abre o modal ────────────────────────────────── */
+            function abrirModal() {
+                checkLgpd.checked = false;
+                btnConfirmar.disabled = true;
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
 
-        /* ── Abre o modal ────────────────────────────────── */
-        function abrirModal() {
-            checkLgpd.checked     = false;
-            btnConfirmar.disabled = true;
-            modal.style.display   = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
+            /* ── Fecha o modal ───────────────────────────────── */
+            function fecharModal() {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
 
-        /* ── Fecha o modal ───────────────────────────────── */
-        function fecharModal() {
-            modal.style.display  = 'none';
-            document.body.style.overflow = '';
-        }
+            /*
+             * Listener de CAPTURA — roda ANTES de api.js.
+             * Ordem: 1) valida docs  2) abre LGPD  3) libera submit
+             */
+            form.addEventListener('submit', function (e) {
+                if (!termoAceito) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
 
-        /*
-         * Listener de CAPTURA — roda ANTES de api.js.
-         * Ordem: 1) valida docs  2) abre LGPD  3) libera submit
-         */
-        form.addEventListener('submit', function (e) {
-            if (!termoAceito) {
-                e.preventDefault();
-                e.stopImmediatePropagation();
-
-                // Primeiro: validar documentos obrigatórios
-                var faltando = validarDocumentos();
-                if (faltando.length > 0) {
-                    var msg = 'Os seguintes documentos são obrigatórios:\n• ' + faltando.join('\n• ');
-                    if (typeof Toast !== 'undefined') {
-                        Toast.error(msg);
-                    } else {
-                        alert(msg);
+                    // Primeiro: validar documentos obrigatórios
+                    var faltando = validarDocumentos();
+                    if (faltando.length > 0) {
+                        var msg = 'Os seguintes documentos são obrigatórios:\n• ' + faltando.join('\n• ');
+                        if (typeof Toast !== 'undefined') {
+                            Toast.error(msg);
+                        } else {
+                            alert(msg);
+                        }
+                        // Rolar até a seção de documentos
+                        var primeiroDoc = document.getElementById(Object.keys(docsObrigatorios)[0]);
+                        if (primeiroDoc) {
+                            var secao = primeiroDoc.closest('fieldset');
+                            if (secao) secao.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                        return; // NÃO abre o modal LGPD
                     }
-                    // Rolar até a seção de documentos
-                    var primeiroDoc = document.getElementById(Object.keys(docsObrigatorios)[0]);
-                    if (primeiroDoc) {
-                        var secao = primeiroDoc.closest('fieldset');
-                        if (secao) secao.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
-                    return; // NÃO abre o modal LGPD
+
+                    // Documentos OK → abre modal LGPD
+                    abrirModal();
+                } else {
+                    termoAceito = false;
                 }
+            }, true /* capture = true */);
 
-                // Documentos OK → abre modal LGPD
-                abrirModal();
-            } else {
-                termoAceito = false;
-            }
-        }, true /* capture = true */);
+            /* ── Checkbox habilita botão ─────────────────────── */
+            checkLgpd.addEventListener('change', function () {
+                btnConfirmar.disabled = !this.checked;
+            });
 
-        /* ── Checkbox habilita botão ─────────────────────── */
-        checkLgpd.addEventListener('change', function () {
-            btnConfirmar.disabled = !this.checked;
-        });
+            /* ── Confirmar: seta flag e re-dispara submit ────── */
+            btnConfirmar.addEventListener('click', function () {
+                if (!checkLgpd.checked) return;
+                fecharModal();
+                termoAceito = true;
+                form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+            });
 
-        /* ── Confirmar: seta flag e re-dispara submit ────── */
-        btnConfirmar.addEventListener('click', function () {
-            if (!checkLgpd.checked) return;
-            fecharModal();
-            termoAceito = true;
-            form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
-        });
+            /* ── Cancelar ────────────────────────────────────── */
+            btnCancelar.addEventListener('click', fecharModal);
 
-        /* ── Cancelar ────────────────────────────────────── */
-        btnCancelar.addEventListener('click', fecharModal);
+            /* ── Clique fora fecha ───────────────────────────── */
+            modal.addEventListener('click', function (e) {
+                if (e.target === modal) fecharModal();
+            });
 
-        /* ── Clique fora fecha ───────────────────────────── */
-        modal.addEventListener('click', function (e) {
-            if (e.target === modal) fecharModal();
-        });
+            /* ── ESC fecha ───────────────────────────────────── */
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && modal.style.display === 'flex') fecharModal();
+            });
 
-        /* ── ESC fecha ───────────────────────────────────── */
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape' && modal.style.display === 'flex') fecharModal();
-        });
-
-    })();
+        })();
     </script>
     <!-- ========================================================= -->
 
-        <script>
+    <script>
         function updateFileName(input) {
             const fileNameDisplay = document.getElementById('fileName-' + input.id);
             if (input.files.length > 0) {
