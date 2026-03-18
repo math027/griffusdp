@@ -23,7 +23,7 @@
         <span class="gf-sparkle"></span>
         <span class="gf-sparkle"></span>
 
-        <img class="gf-loading-logo" src="../contratos/assets/images/logo.webp" alt="Griffus SA">
+        <img class="gf-loading-logo" src="../contratos/assets/images/logo.webp" alt="Griffus Style">
 
         <div class="gf-bubble-track">
             <div class="gf-bubble"></div>
@@ -392,7 +392,7 @@
 
     <script>
     /*
-     * LGPD - intercepta o submit na FASE DE CAPTURA (antes de selecao.js)
+     * LGPD — intercepta o submit na FASE DE CAPTURA (antes de selecao.js)
      * e usa stopImmediatePropagation para bloquear completamente o evento
      * até o usuário aceitar os termos.
      */
@@ -421,7 +421,7 @@
         }
 
         /*
-         * Listener de CAPTURA no form - roda ANTES de qualquer listener
+         * Listener de CAPTURA no form — roda ANTES de qualquer listener
          * registrado em fase de bolha (inclusive o de selecao.js).
          * Se o termo ainda não foi aceito: bloqueia tudo e abre o modal.
          * Se já foi aceito: limpa a flag e deixa o evento seguir normalmente.
@@ -433,7 +433,7 @@
                 abrirModal();
             } else {
                 termoAceito = false; // reset para próxima submissão
-                /* deixa o evento prosseguir - selecao.js irá tratá-lo */
+                /* deixa o evento prosseguir — selecao.js irá tratá-lo */
             }
         }, true /* capture = true */);
 

@@ -20,10 +20,25 @@ class AniversariantesController
                 setor       VARCHAR(100) NOT NULL,
                 tipo        ENUM('CLT','PJ') NOT NULL DEFAULT 'CLT',
                 data_aniversario DATE NOT NULL,
+                telefone    VARCHAR(20) DEFAULT NULL,
+                foto_path   VARCHAR(255) DEFAULT NULL,
+                msg_enviada_ano INT DEFAULT 0,
                 criado_em   DATETIME DEFAULT CURRENT_TIMESTAMP,
                 atualizado_em DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
         ");
+
+        // Adicionar colunas se não existirem (para tabela já criada)
+        $cols = $this->db->query("SHOW COLUMNS FROM aniversariantes")->fetchAll(PDO::FETCH_COLUMN);
+        if (!in_array('telefone', $cols)) {
+            $this->db->exec("ALTER TABLE aniversariantes ADD COLUMN telefone VARCHAR(20) DEFAULT NULL AFTER data_aniversario");
+        }
+        if (!in_array('foto_path', $cols)) {
+            $this->db->exec("ALTER TABLE aniversariantes ADD COLUMN foto_path VARCHAR(255) DEFAULT NULL AFTER telefone");
+        }
+        if (!in_array('msg_enviada_ano', $cols)) {
+            $this->db->exec("ALTER TABLE aniversariantes ADD COLUMN msg_enviada_ano INT DEFAULT 0 AFTER foto_path");
+        }
     }
 
     public function index(): void
@@ -65,7 +80,7 @@ class AniversariantesController
     {
         if ($month < 1 || $month > 12) return [];
         $stmt = $this->db->prepare(
-            "SELECT id, nome, setor, tipo, data_aniversario,
+            "SELECT id, nome, setor, tipo, data_aniversario, telefone, foto_path,
                     DAY(data_aniversario) as dia,
                     MONTH(data_aniversario) as mes
              FROM aniversariantes
@@ -79,7 +94,7 @@ class AniversariantesController
     private function listAll(): array
     {
         $stmt = $this->db->query(
-            "SELECT id, nome, setor, tipo, data_aniversario,
+            "SELECT id, nome, setor, tipo, data_aniversario, telefone, foto_path,
                     DAY(data_aniversario) as dia,
                     MONTH(data_aniversario) as mes
              FROM aniversariantes
