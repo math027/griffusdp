@@ -10,6 +10,7 @@ $empresas = ['BELMAX S/A', 'GRIFFUS SA', 'BIOPACK LTDA', 'GRIFFUSONLINE LTDA'];
     <link rel="shortcut icon" href="assets/images/icone.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/pagination.css">
     <style>
         /* ── Tabela ── */
         .vagas-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
@@ -27,6 +28,16 @@ $empresas = ['BELMAX S/A', 'GRIFFUS SA', 'BIOPACK LTDA', 'GRIFFUSONLINE LTDA'];
             display: inline-block; background: #f3e5f5; color: #7b1fa2;
             font-size: .78rem; font-weight: 700; padding: 2px 10px; border-radius: 20px;
         }
+
+        /* ── Tabs ── */
+        .tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+        .tab-btn {
+            padding: 8px 18px; border: 1px solid #e0e0e0; border-radius: 20px;
+            background: #fff; color: #666; cursor: pointer; font-size: .88rem;
+            font-weight: 600; transition: all .2s; font-family: inherit;
+        }
+        .tab-btn:hover { border-color: #e91e63; color: #e91e63; }
+        .tab-btn.active { background: #e91e63; color: #fff; border-color: #e91e63; }
 
         /* ── Filtros ── */
         .filters input, .filters select {
@@ -163,6 +174,14 @@ $empresas = ['BELMAX S/A', 'GRIFFUS SA', 'BIOPACK LTDA', 'GRIFFUSONLINE LTDA'];
         </button>
     </div>
 
+    <!-- Tabs Empresas -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="setTab('todas')">Todas</button>
+        <?php foreach ($empresas as $emp): ?>
+            <button class="tab-btn" onclick="setTab('<?= strtolower(htmlspecialchars($emp)) ?>')"><?= htmlspecialchars($emp) ?></button>
+        <?php endforeach; ?>
+    </div>
+
     <!-- Filtros -->
     <div class="filters">
         <input type="text" id="filtroCargo" placeholder="Buscar por cargo..." oninput="filtrar()">
@@ -233,6 +252,7 @@ $empresas = ['BELMAX S/A', 'GRIFFUS SA', 'BIOPACK LTDA', 'GRIFFUSONLINE LTDA'];
                 <?php endforeach; ?>
                 </tbody>
             </table>
+            <div id="paginationBar"></div>
         </div>
     <?php endif; ?>
 </main>
@@ -268,6 +288,7 @@ $empresas = ['BELMAX S/A', 'GRIFFUS SA', 'BIOPACK LTDA', 'GRIFFUSONLINE LTDA'];
 
 <div class="toast-container" id="toastContainer"></div>
 
+<script src="assets/js/pagination.js"></script>
 <script>
 "use strict";
 const baseUrl = 'index.php?section=vagas';
@@ -363,7 +384,9 @@ async function excluirVaga(id) {
 }
 
 /* ── Filtro ── */
+let pager;
 function filtrar() {
+    if (pager) pager.reset();
     const texto   = document.getElementById('filtroCargo').value.toLowerCase().trim();
     const empresa = document.getElementById('filtroEmpresa').value;
     const status  = document.getElementById('filtroStatus').value;
@@ -375,6 +398,21 @@ function filtrar() {
             (!status  || tr.getAttribute('data-ativo')   === status);
         tr.style.display = ok ? '' : 'none';
     });
+    if (pager) pager.apply();
+}
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('tabelaVagas')) {
+        pager = new TablePaginator({ tableId: 'tabelaVagas', containerId: 'paginationBar' });
+        pager.apply();
+    }
+});
+
+/* ── Tabs ── */
+function setTab(val) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    document.getElementById('filtroEmpresa').value = val === 'todas' ? '' : val;
+    filtrar();
 }
 </script>
 </body>

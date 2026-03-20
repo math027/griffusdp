@@ -150,7 +150,7 @@ if ($section === 'birthday_api') {
 $apiActions = [
     'curriculos'  => ['get', 'update', 'status', 'delete', 'generate_token', 'talent_bank', 'view_cv'],
     'selecao'     => ['status_selecao', 'entrevista_selecao', 'delete_selecao', 'view_selecao'],
-    'funcionarios'=> ['api', 'foto', 'template'],
+    'funcionarios'=> ['api', 'foto', 'template', 'import_excel'],
     'aniversariantes' => ['api'],
     'contratos'   => ['edit', 'update', 'status', 'delete', 'download'],
     'vagas'       => ['store', 'toggle', 'delete_vaga'],
@@ -188,7 +188,8 @@ if (isset($apiActions[$section]) && in_array($action, $apiActions[$section], tru
             $ctrl = new FuncionariosController($db);
             if ($action === 'api')      $ctrl->api();
             elseif ($action === 'foto') $ctrl->foto((int)($_GET['id'] ?? 0));
-            elseif ($action === 'template') $ctrl->template((string)($_GET['name'] ?? 'normal'));
+            elseif ($action === 'template')     $ctrl->template((string)($_GET['name'] ?? 'normal'));
+            elseif ($action === 'import_excel') $ctrl->importExcel();
             break;
 
         case 'aniversariantes':
@@ -324,6 +325,8 @@ switch ($section) {
             $ctrl->foto((int)($_GET['id'] ?? 0));
         } elseif ($action === 'template') {
             $ctrl->template((string)($_GET['name'] ?? 'normal'));
+        } elseif ($action === 'import_excel') {
+            $ctrl->importExcel();
         } else {
             $ctrl->index();
         }

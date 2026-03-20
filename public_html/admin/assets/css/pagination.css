@@ -1,0 +1,83 @@
+/* ── Pagination Bar ── */
+.pagination-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: #f8f9fa;
+    border-top: 1px solid #eee;
+    border-radius: 0 0 12px 12px;
+    font-size: .85rem;
+    color: #666;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.pagination-bar .pg-info {
+    font-weight: 500;
+}
+.pagination-bar .pg-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.pagination-bar .pg-per-page {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.pagination-bar .pg-per-page span {
+    color: #888;
+    font-size: .82rem;
+}
+.pagination-bar .pg-size-btn {
+    padding: 4px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    font-size: .82rem;
+    font-weight: 600;
+    color: #555;
+    transition: all .2s;
+    font-family: inherit;
+}
+.pagination-bar .pg-size-btn:hover {
+    border-color: #e91e63;
+    color: #e91e63;
+}
+.pagination-bar .pg-size-btn.active {
+    background: #e91e63;
+    color: #fff;
+    border-color: #e91e63;
+}
+.pagination-bar .pg-nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.pagination-bar .pg-nav-btn {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    font-size: .82rem;
+    color: #555;
+    transition: all .2s;
+    font-family: inherit;
+}
+.pagination-bar .pg-nav-btn:hover:not(:disabled) {
+    border-color: #e91e63;
+    color: #e91e63;
+}
+.pagination-bar .pg-nav-btn:disabled {
+    opacity: .4;
+    cursor: default;
+}
+.pagination-bar .pg-page-num {
+    font-size: .82rem;
+    font-weight: 600;
+    color: #333;
+    min-width: 60px;
+    text-align: center;
+}

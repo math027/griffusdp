@@ -17,6 +17,7 @@ if (!function_exists('e')) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="shortcut icon" href="assets/images/icone.png" type="image/x-icon">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/pagination.css">
     <style>
         .badge-tipo {
             display: inline-block;
@@ -35,6 +36,20 @@ if (!function_exists('e')) {
             white-space: pre-wrap; background: #fafafa;
             padding: 10px; border-radius: 6px; border: 1px solid #eee;
             font-size: .85rem; margin: 4px 0 0;
+        }
+
+        /* ── Tabs ── */
+        .tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+        .tab-btn {
+            padding: 8px 18px; border: 1px solid #e0e0e0; border-radius: 20px;
+            background: #fff; color: #666; cursor: pointer; font-size: .88rem;
+            font-weight: 600; transition: all .2s; font-family: inherit;
+        }
+        .tab-btn:hover { border-color: #e91e63; color: #e91e63; }
+        .tab-btn.active { background: #e91e63; color: #fff; border-color: #e91e63; }
+        .empty-state {
+            text-align: center; padding: 50px 20px; color: #888;
+            background: #fff; border-radius: 12px; border: 1px dashed #ddd;
         }
     </style>
 </head>
@@ -68,6 +83,16 @@ if (!function_exists('e')) {
             </a>
         </div>
 
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="setTab('todos')">Todos</button>
+            <button class="tab-btn" onclick="setTab('novo')">Novo</button>
+            <button class="tab-btn" onclick="setTab('pendente')">Pendente</button>
+            <button class="tab-btn" onclick="setTab('aprovado')">Aprovado</button>
+            <button class="tab-btn" onclick="setTab('rejeitado')">Rejeitado</button>
+            <button class="tab-btn" onclick="setTab('baixado')">Baixado</button>
+        </div>
+
         <div class="filters">
             <input type="text" id="filtroBusca" placeholder="Buscar por nome ou CNPJ..." oninput="filtrarContratos()" style="flex:1;min-width:200px;padding:9px 13px;border:1px solid #ddd;border-radius:8px;font-size:.9rem;outline:none;">
             <select id="filtroStatus" onchange="filtrarContratos()" style="padding:9px 13px;border:1px solid #ddd;border-radius:8px;font-size:.9rem;outline:none;">
@@ -86,7 +111,11 @@ if (!function_exists('e')) {
         </div>
 
         <?php if (empty($contracts)) : ?>
-            <div class="card empty-state">Nenhum contrato encontrado.</div>
+            <div class="empty-state">
+                <i class="fa-regular fa-folder-open" style="font-size:2rem;margin-bottom:10px;display:block;"></i>
+            <p>Nenhum currículo recebido ainda.</p>
+        </div>
+            <!-- <div class="card empty-state">Nenhum contrato encontrado.</div> -->
         <?php else : ?>
             <div class="card table-card">
                 <table class="contracts-table" id="tabelaContratos">
@@ -151,12 +180,16 @@ if (!function_exists('e')) {
                     <?php endforeach; ?>
                     </tbody>
                 </table>
+                <div id="paginationBar"></div>
             </div>
         <?php endif; ?>
     </main>
 
+    <script src="assets/js/pagination.js"></script>
     <script>
+    let pager;
     function filtrarContratos() {
+        if (pager) pager.reset();
         const texto  = (document.getElementById("filtroBusca").value || "").toLowerCase();
         const status = document.getElementById("filtroStatus").value;
         const tipo   = document.getElementById("filtroTipo").value;
@@ -173,6 +206,21 @@ if (!function_exists('e')) {
 
             tr.style.display = (matchTexto && matchStatus && matchTipo) ? "" : "none";
         });
+        if (pager) pager.apply();
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        if (document.getElementById('tabelaContratos')) {
+            pager = new TablePaginator({ tableId: 'tabelaContratos', containerId: 'paginationBar' });
+            pager.apply();
+        }
+    });
+
+    /* ── Tabs ── */
+    function setTab(val) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+        document.getElementById('filtroStatus').value = val === 'todos' ? '' : val;
+        filtrarContratos();
     }
     </script>
     <script src="../assets/js/toast.js"></script>

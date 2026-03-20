@@ -35,6 +35,7 @@ if (!function_exists('statusBadgeCv')) {
     <link rel="shortcut icon" href="assets/images/icone.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/pagination.css">
     <style>
         /* ── Tabela ── */
         .cv-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
@@ -346,6 +347,7 @@ if (!function_exists('statusBadgeCv')) {
                 <?php endforeach; ?>
                 </tbody>
             </table>
+            <div id="paginationBar"></div>
         </div>
     <?php endif; ?>
 </main>
@@ -378,6 +380,7 @@ if (!function_exists('statusBadgeCv')) {
 
 <div class="toast-container" id="toastContainer"></div>
 
+<script src="assets/js/pagination.js"></script>
 <script>
 const CSRF = <?= json_encode($csrfToken ?? '', JSON_HEX_TAG | JSON_HEX_AMP) ?>;
 const baseUrl = 'index.php?section=curriculos';
@@ -708,7 +711,9 @@ async function excluirCv(id) {
 }
 
 /* ═══════════════ FILTRO ═══════════════ */
+let pagerCv;
 function filtrar() {
+    if (pagerCv) pagerCv.reset();
     const texto  = document.getElementById('filtroTexto').value.toLowerCase().trim();
     const status = document.getElementById('filtroStatus').value;
 
@@ -718,7 +723,14 @@ function filtrar() {
             (!status || tr.getAttribute('data-status') === status);
         tr.style.display = ok ? '' : 'none';
     });
+    if (pagerCv) pagerCv.apply();
 }
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('tabelaCv')) {
+        pagerCv = new TablePaginator({ tableId: 'tabelaCv', containerId: 'paginationBar' });
+        pagerCv.apply();
+    }
+});
 
 /* ═══════════════ TABS ═══════════════ */
 function setTab(val) {

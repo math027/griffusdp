@@ -27,20 +27,79 @@ if (file_exists($tplDir . 'dayoff.png')) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+    <link rel="stylesheet" href="assets/css/pagination.css">
     <style>
         /* ── Tabela ── */
-        .func-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        .func-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; table-layout: fixed; }
         .func-table thead tr { background: #f8f9fa; }
         .func-table th {
             padding: 12px 14px; text-align: left;
             font-weight: 600; color: #555; border-bottom: 2px solid #eee;
+            position: relative; cursor: pointer; user-select: none; white-space: nowrap;
+            overflow: hidden;
         }
+        .func-table th:hover { background: #f0f0f0; }
+        .func-table th.no-filter { cursor: default; }
+        .func-table th.no-filter:hover { background: transparent; }
         .func-table td {
             padding: 11px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: middle;
+            overflow: hidden; text-overflow: ellipsis;
         }
         .func-table tr:hover td { background: #fff8fb; }
-        .primary   { font-weight: 600; color: #212121; }
+        .primary   { font-weight: 600; color: #212121; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .secondary { font-size: 0.82rem; color: #888; margin-top: 2px; }
+
+        /* ── Column widths ── */
+        .func-table .col-foto         { width: 50px; }
+        .func-table .col-nome         { width: 18%; }
+        .func-table .col-empresa      { width: 10%; }
+        .func-table .col-funcao       { width: 16%; }
+        .func-table .col-setor        { width: 14%; }
+        .func-table .col-tipo         { width: 60px; }
+        .func-table .col-nascimento   { width: 80px; }
+        .func-table .col-experiencia  { width: 80px; }
+        .func-table .col-telefone     { width: 13%; }
+        .func-table .col-acoes        { width: 70px; }
+
+        /* ── Sort indicators ── */
+        .sort-icon { font-size: .7rem; margin-left: 5px; color: #ccc; }
+        .func-table th.asc .sort-icon,
+        .func-table th.desc .sort-icon { color: #e91e63; }
+
+        /* ── Column filter dropdown ── */
+        .col-filter-dropdown {
+            display: none; position: absolute; top: 100%; left: 0; z-index: 500;
+            background: #fff; border: 1px solid #ddd; border-radius: 10px;
+            box-shadow: 0 8px 30px rgba(0,0,0,.15); min-width: 200px;
+            padding: 10px; font-weight: 400; font-size: .85rem;
+        }
+        .col-filter-dropdown.open { display: block; }
+        .col-filter-dropdown .filter-sort-btns { display: flex; flex-direction: column; gap: 4px; margin-bottom: 8px; }
+        .col-filter-dropdown .filter-sort-btn {
+            display: flex; align-items: center; gap: 8px; padding: 7px 10px;
+            border: none; background: none; cursor: pointer; border-radius: 6px;
+            font-size: .84rem; color: #444; font-family: inherit; width: 100%; text-align: left;
+        }
+        .col-filter-dropdown .filter-sort-btn:hover { background: #fce4ec; color: #e91e63; }
+        .col-filter-dropdown .filter-sort-btn i { width: 16px; text-align: center; color: #999; }
+        .col-filter-dropdown .filter-sort-btn:hover i { color: #e91e63; }
+        .col-filter-divider { height: 1px; background: #eee; margin: 6px 0; }
+        .col-filter-dropdown input[type="text"] {
+            width: 100%; padding: 7px 10px; border: 1px solid #ddd; border-radius: 6px;
+            font-size: .84rem; outline: none; font-family: inherit; box-sizing: border-box;
+        }
+        .col-filter-dropdown input[type="text"]:focus { border-color: #e91e63; }
+        .th-label { display: inline; }
+        .filter-active .th-label { color: #e91e63; font-weight: 700; }
+
+        /* ── Checkbox filter list ── */
+        .checkbox-filter-list { display: flex; flex-direction: column; gap: 2px; max-height: 180px; overflow-y: auto; }
+        .checkbox-filter-item {
+            display: flex; align-items: center; gap: 8px; padding: 5px 8px;
+            border-radius: 6px; cursor: pointer; font-size: .84rem; color: #444;
+        }
+        .checkbox-filter-item:hover { background: #fce4ec; }
+        .checkbox-filter-item input[type="checkbox"] { accent-color: #e91e63; cursor: pointer; }
 
         /* ── Badges ── */
         .badge-tipo {
@@ -87,14 +146,14 @@ if (file_exists($tplDir . 'dayoff.png')) {
             inset: auto;
         }
         .modal {
-            background: #fff; border-radius: 12px; padding: 30px;
-            max-width: 520px; width: 95%;
+            background: #fff; border-radius: 12px; padding: 24px 28px;
+            max-width: 720px; width: 95%;
             box-shadow: 0 20px 60px rgba(0,0,0,.25);
             position: relative;
-            max-height: 90vh; overflow-y: auto;
+            max-height: 96vh; overflow-y: auto;
         }
         .modal h3 {
-            color: #e91e63; font-size: 1.1rem; margin-bottom: 18px;
+            color: #e91e63; font-size: 1.1rem; margin-bottom: 14px;
             border-bottom: 2px solid #f8bbd0; padding-bottom: 8px;
         }
         .modal-close {
@@ -103,21 +162,29 @@ if (file_exists($tplDir . 'dayoff.png')) {
             cursor: pointer; color: #888; line-height: 1;
         }
         .modal-close:hover { color: #e91e63; }
+        .modal-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px;
+        }
+        .modal-grid .full-width { grid-column: 1 / -1; }
         .modal-field {
-            display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px;
+            display: flex; flex-direction: column; gap: 3px; margin-bottom: 12px;
         }
         .modal-field label {
-            font-size: .82rem; font-weight: 600; color: #555;
+            font-size: .78rem; font-weight: 600; color: #555;
             text-transform: uppercase; letter-spacing: .5px;
         }
         .modal-field input, .modal-field select {
-            padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px;
-            font-size: .9rem; outline: none; font-family: inherit; width: 100%;
+            padding: 9px 11px; border: 1px solid #ddd; border-radius: 8px;
+            font-size: .88rem; outline: none; font-family: inherit; width: 100%;
             box-sizing: border-box;
         }
         .modal-field input:focus, .modal-field select:focus {
             border-color: #e91e63;
             box-shadow: 0 0 0 3px rgba(233,30,99,.12);
+        }
+        @media (max-width: 600px) {
+            .modal-grid { grid-template-columns: 1fr; gap: 0; }
+            .modal { padding: 18px 16px; max-width: 98%; }
         }
         .tipo-btns { display: flex; gap: 8px; }
         .tipo-btn {
@@ -239,9 +306,14 @@ if (file_exists($tplDir . 'dayoff.png')) {
             <h1>Funcionários</h1>
             <p>Cadastre e gerencie os funcionários da empresa</p>
         </div>
-        <button class="btn-primary" onclick="openModal()">
-            <i class="fa-solid fa-user-plus"></i> Novo Funcionário
-        </button>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="btn-secondary" onclick="openImportModal()" style="background:#fff;border:1.5px solid #e91e63;color:#e91e63;padding:10px 18px;border-radius:8px;font-size:.9rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:7px;">
+                <i class="fa-solid fa-file-excel"></i> Importar Excel
+            </button>
+            <button class="btn-primary" onclick="openModal()">
+                <i class="fa-solid fa-user-plus"></i> Novo Funcionário
+            </button>
+        </div>
     </div>
 
     <!-- Filtros -->
@@ -254,7 +326,7 @@ if (file_exists($tplDir . 'dayoff.png')) {
             <?php endforeach; ?>
         </select>
         <select id="filtroMes" onchange="filtrar()">
-            <option value="">Todos os Meses</option>
+            <option value="">Mês de Nascimento</option>
             <?php for ($m = 1; $m <= 12; $m++): ?>
                 <option value="<?= $m; ?>"><?= $MONTHS[$m]; ?></option>
             <?php endfor; ?>
@@ -271,13 +343,108 @@ if (file_exists($tplDir . 'dayoff.png')) {
             <table class="func-table" id="tabelaFunc">
                 <thead>
                     <tr>
-                        <th>Foto</th>
-                        <th>Nome</th>
-                        <th>Setor</th>
-                        <th>Tipo</th>
-                        <th>Aniversário</th>
-                        <th>Telefone</th>
-                        <th>Ações</th>
+                        <th class="no-filter col-foto">Foto</th>
+                        <th data-col="nome" class="col-nome"><span class="th-label">Nome</span> <i class="fa-solid fa-filter sort-icon"></i>
+                            <div class="col-filter-dropdown">
+                                <div class="filter-sort-btns">
+                                    <button class="filter-sort-btn" onclick="sortTable('nome','asc',event)"><i class="fa-solid fa-arrow-up-a-z"></i> A → Z</button>
+                                    <button class="filter-sort-btn" onclick="sortTable('nome','desc',event)"><i class="fa-solid fa-arrow-down-z-a"></i> Z → A</button>
+                                    <button class="filter-sort-btn" onclick="clearColFilter('nome',event)"><i class="fa-solid fa-xmark"></i> Limpar</button>
+                                </div>
+                                <div class="filter-divider"></div>
+                                <input type="text" placeholder="Filtrar nome..." oninput="applyColFilter('nome',this.value)">
+                            </div>
+                        </th>
+                        <th data-col="empresa" class="col-empresa"><span class="th-label">Empresa</span> <i class="fa-solid fa-filter sort-icon"></i>
+                            <div class="col-filter-dropdown">
+                                <div class="filter-sort-btns">
+                                    <button class="filter-sort-btn" onclick="sortTable('empresa','asc',event)"><i class="fa-solid fa-arrow-up-a-z"></i> A → Z</button>
+                                    <button class="filter-sort-btn" onclick="sortTable('empresa','desc',event)"><i class="fa-solid fa-arrow-down-z-a"></i> Z → A</button>
+                                    <button class="filter-sort-btn" onclick="clearColFilter('empresa',event)"><i class="fa-solid fa-xmark"></i> Limpar</button>
+                                </div>
+                                <div class="filter-divider"></div>
+                                <div class="checkbox-filter-list" id="empresaFilterList">
+                                    <?php
+                                    $empresasUnicas = array_unique(array_filter(array_map(function($f) {
+                                        return trim($f['empresa'] ?? '');
+                                    }, $funcionarios)));
+                                    sort($empresasUnicas);
+                                    foreach ($empresasUnicas as $emp):
+                                    ?>
+                                    <label class="checkbox-filter-item" onclick="event.stopPropagation()">
+                                        <input type="checkbox" value="<?= e(strtolower($emp)) ?>" onchange="applyCheckboxFilter('empresa')" checked>
+                                        <span><?= e($emp) ?></span>
+                                    </label>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        </th>
+                        <th data-col="funcao" class="col-funcao"><span class="th-label">Função</span> <i class="fa-solid fa-filter sort-icon"></i>
+                            <div class="col-filter-dropdown">
+                                <div class="filter-sort-btns">
+                                    <button class="filter-sort-btn" onclick="sortTable('funcao','asc',event)"><i class="fa-solid fa-arrow-up-a-z"></i> A → Z</button>
+                                    <button class="filter-sort-btn" onclick="sortTable('funcao','desc',event)"><i class="fa-solid fa-arrow-down-z-a"></i> Z → A</button>
+                                    <button class="filter-sort-btn" onclick="clearColFilter('funcao',event)"><i class="fa-solid fa-xmark"></i> Limpar</button>
+                                </div>
+                                <div class="filter-divider"></div>
+                                <input type="text" placeholder="Filtrar função..." oninput="applyColFilter('funcao',this.value)">
+                            </div>
+                        </th>
+                        <th data-col="setor" class="col-setor"><span class="th-label">Setor</span> <i class="fa-solid fa-filter sort-icon"></i>
+                            <div class="col-filter-dropdown">
+                                <div class="filter-sort-btns">
+                                    <button class="filter-sort-btn" onclick="sortTable('setor','asc',event)"><i class="fa-solid fa-arrow-up-a-z"></i> A → Z</button>
+                                    <button class="filter-sort-btn" onclick="sortTable('setor','desc',event)"><i class="fa-solid fa-arrow-down-z-a"></i> Z → A</button>
+                                    <button class="filter-sort-btn" onclick="clearColFilter('setor',event)"><i class="fa-solid fa-xmark"></i> Limpar</button>
+                                </div>
+                                <div class="filter-divider"></div>
+                                <input type="text" placeholder="Filtrar setor..." oninput="applyColFilter('setor',this.value)">
+                            </div>
+                        </th>
+                        <th data-col="tipo" class="col-tipo"><span class="th-label">Tipo</span> <i class="fa-solid fa-filter sort-icon"></i>
+                            <div class="col-filter-dropdown">
+                                <div class="filter-sort-btns">
+                                    <button class="filter-sort-btn" onclick="sortTable('tipo','asc',event)"><i class="fa-solid fa-arrow-up-a-z"></i> A → Z</button>
+                                    <button class="filter-sort-btn" onclick="sortTable('tipo','desc',event)"><i class="fa-solid fa-arrow-down-z-a"></i> Z → A</button>
+                                    <button class="filter-sort-btn" onclick="clearColFilter('tipo',event)"><i class="fa-solid fa-xmark"></i> Limpar</button>
+                                </div>
+                                <div class="filter-divider"></div>
+                                <div class="checkbox-filter-list" id="tipoFilterList">
+                                    <?php
+                                    $tiposUnicos = array_unique(array_filter(array_map(function($f) {
+                                        return trim($f['tipo'] ?? '');
+                                    }, $funcionarios)));
+                                    sort($tiposUnicos);
+                                    foreach ($tiposUnicos as $tip):
+                                    ?>
+                                    <label class="checkbox-filter-item" onclick="event.stopPropagation()">
+                                        <input type="checkbox" value="<?= e(strtolower($tip)) ?>" onchange="applyCheckboxFilter('tipo')" checked>
+                                        <span><?= e($tip) ?></span>
+                                    </label>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        </th>
+                        <th data-col="nascimento" class="col-nascimento"><span class="th-label">Nascimento</span> <i class="fa-solid fa-filter sort-icon"></i>
+                            <div class="col-filter-dropdown">
+                                <div class="filter-sort-btns">
+                                    <button class="filter-sort-btn" onclick="sortTable('nascimento','asc',event)"><i class="fa-solid fa-arrow-up-short-wide"></i> Mais antigo</button>
+                                    <button class="filter-sort-btn" onclick="sortTable('nascimento','desc',event)"><i class="fa-solid fa-arrow-down-wide-short"></i> Mais recente</button>
+                                    <button class="filter-sort-btn" onclick="clearColFilter('nascimento',event)"><i class="fa-solid fa-xmark"></i> Limpar</button>
+                                </div>
+                            </div>
+                        </th>
+                        <th data-col="experiencia" class="col-experiencia"><span class="th-label">Experiência</span> <i class="fa-solid fa-filter sort-icon"></i>
+                            <div class="col-filter-dropdown">
+                                <div class="filter-sort-btns">
+                                    <button class="filter-sort-btn" onclick="sortTable('experiencia','asc',event)"><i class="fa-solid fa-arrow-up-short-wide"></i> Menor tempo</button>
+                                    <button class="filter-sort-btn" onclick="sortTable('experiencia','desc',event)"><i class="fa-solid fa-arrow-down-wide-short"></i> Maior tempo</button>
+                                    <button class="filter-sort-btn" onclick="clearColFilter('experiencia',event)"><i class="fa-solid fa-xmark"></i> Limpar</button>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="no-filter col-telefone">Telefone</th>
+                        <th class="no-filter col-acoes">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -286,8 +453,12 @@ if (file_exists($tplDir . 'dayoff.png')) {
                         data-setor="<?= e(strtolower($f['setor'])) ?>"
                         data-mes="<?= (int)$f['mes'] ?>"
                         data-id="<?= (int)$f['id'] ?>"
+                        data-empresa="<?= e($f['empresa'] ?? '') ?>"
+                        data-cpf="<?= e($f['cpf'] ?? '') ?>"
+                        data-funcao="<?= e($f['funcao'] ?? '') ?>"
                         data-tipo="<?= e($f['tipo']) ?>"
                         data-data="<?= e($f['data_aniversario']) ?>"
+                        data-admissao="<?= e($f['data_admissao'] ?? '') ?>"
                         data-telefone="<?= e($f['telefone'] ?? '') ?>"
                         data-foto="<?= e($f['foto_path'] ?? '') ?>">
                         <td>
@@ -304,6 +475,8 @@ if (file_exists($tplDir . 'dayoff.png')) {
                         <td>
                             <div class="primary"><?= e($f['nome']) ?></div>
                         </td>
+                        <td><?= e($f['empresa'] ?? '') ?: '<span style="color:#bbb">—</span>' ?></td>
+                        <td><?= e($f['funcao'] ?? '') ?: '<span style="color:#bbb">—</span>' ?></td>
                         <td><?= e($f['setor']) ?></td>
                         <td>
                             <span class="badge-tipo badge-<?= strtolower($f['tipo']) ?>">
@@ -312,6 +485,31 @@ if (file_exists($tplDir . 'dayoff.png')) {
                         </td>
                         <td>
                             <?= str_pad((string)$f['dia'], 2, '0', STR_PAD_LEFT) ?>/<?= str_pad((string)$f['mes'], 2, '0', STR_PAD_LEFT) ?>
+                        </td>
+                        <td>
+                            <?php if (!empty($f['data_admissao']) && $f['data_admissao'] !== '0000-00-00'):
+                                $admDate = new DateTime($f['data_admissao']);
+                                $now     = new DateTime();
+                                $diff    = $admDate->diff($now);
+                                $totalDays   = (int)$diff->days;
+                                $totalMonths = $diff->y * 12 + $diff->m;
+                                if ($totalDays <= 90):
+                            ?>
+                                <span title="Admissão: <?= date('d/m/Y', strtotime($f['data_admissao'])) ?>">
+                                    <?= $totalDays ?> <?= $totalDays === 1 ? 'dia' : 'dias' ?>
+                                </span>
+                            <?php elseif ($totalMonths <= 12): ?>
+                                <span title="Admissão: <?= date('d/m/Y', strtotime($f['data_admissao'])) ?>">
+                                    <?= $totalMonths ?> <?= $totalMonths === 1 ? 'mês' : 'meses' ?>
+                                </span>
+                            <?php else: ?>
+                                <span title="Admissão: <?= date('d/m/Y', strtotime($f['data_admissao'])) ?>">
+                                    <?= $diff->y ?> <?= $diff->y === 1 ? 'ano' : 'anos' ?>
+                                </span>
+                            <?php endif; ?>
+                            <?php else: ?>
+                                <span style="color:#bbb">—</span>
+                            <?php endif; ?>
                         </td>
                         <td>
                             <?php if (!empty($f['telefone'])): ?>
@@ -337,9 +535,63 @@ if (file_exists($tplDir . 'dayoff.png')) {
                 <?php endforeach; ?>
                 </tbody>
             </table>
+            <div id="paginationBar"></div>
         </div>
     <?php endif; ?>
 </main>
+
+
+<!-- Modal Importar Excel -->
+<div class="modal-backdrop" id="importModalBackdrop">
+    <div class="modal" style="max-width:580px;">
+        <button class="modal-close" onclick="closeImportModal()">&times;</button>
+        <h3><i class="fa-solid fa-file-excel" style="margin-right:8px;color:#1D6F42;"></i>Importar Funcionários via Excel</h3>
+
+        <!-- Instruções -->
+        <div style="background:#f0fff4;border:1px solid #c3e6cb;border-radius:8px;padding:14px 16px;margin-bottom:18px;font-size:.85rem;color:#2d6a4f;line-height:1.6;">
+            <strong>Como usar:</strong><br>
+            Prepare seu arquivo <strong>.xlsx</strong> ou <strong>.csv</strong> com as seguintes colunas na primeira linha:
+            <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;">
+                <span style="background:#d4edda;padding:3px 10px;border-radius:20px;font-weight:600;">empresa</span>
+                <span style="background:#d4edda;padding:3px 10px;border-radius:20px;font-weight:600;">funcionario</span>
+                <span style="background:#d4edda;padding:3px 10px;border-radius:20px;font-weight:600;">cpf</span>
+                <span style="background:#d4edda;padding:3px 10px;border-radius:20px;font-weight:600;">whatsapp</span>
+                <span style="background:#d4edda;padding:3px 10px;border-radius:20px;font-weight:600;">funcao</span>
+                <span style="background:#d4edda;padding:3px 10px;border-radius:20px;font-weight:600;">departamento</span>
+                <span style="background:#d4edda;padding:3px 10px;border-radius:20px;font-weight:600;">nascimento</span>
+                <span style="background:#d4edda;padding:3px 10px;border-radius:20px;font-weight:600;">admissao</span>
+            </div>
+            <div style="margin-top:8px;color:#555;">
+                • <strong>nascimento / admissão:</strong> DD/MM/AAAA &nbsp;|&nbsp;
+                <strong>whatsapp:</strong> opcional (com DDD) &nbsp;|&nbsp;
+                <strong>cpf:</strong> apenas números
+            </div>
+        </div>
+
+        <!-- Upload area -->
+        <div id="importDropZone"
+             style="border:2px dashed #ddd;border-radius:10px;padding:28px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:14px;"
+             onclick="document.getElementById('importFile').click()"
+             ondragover="importDragOver(event)"
+             ondragleave="importDragLeave(event)"
+             ondrop="importDrop(event)">
+            <i class="fa-solid fa-cloud-arrow-up" style="font-size:2rem;color:#ccc;display:block;margin-bottom:8px;"></i>
+            <div id="importDropLabel" style="color:#888;font-size:.9rem;">Clique ou arraste o arquivo aqui<br><small style="color:#bbb;">.xlsx ou .csv</small></div>
+            <input type="file" id="importFile" accept=".xlsx,.csv" style="display:none;" onchange="importFileSelected(this)">
+        </div>
+
+        <!-- Progress / resultado -->
+        <div id="importResult" style="display:none;"></div>
+
+        <div class="modal-actions" style="margin-top:6px;">
+            <button class="btn-modal-cancel" onclick="closeImportModal()">Cancelar</button>
+            <button class="btn-modal-save" id="btnImportar" onclick="doImport()" disabled style="opacity:.5;">
+                <i class="fa-solid fa-upload" style="margin-right:6px;"></i>
+                <span id="btnImportarLabel">Importar</span>
+            </button>
+        </div>
+    </div>
+</div>
 
 <!-- Modal Adicionar / Editar -->
 <div class="modal-backdrop" id="modalBackdrop">
@@ -349,52 +601,79 @@ if (file_exists($tplDir . 'dayoff.png')) {
 
         <input type="hidden" id="f-id">
 
-        <div class="modal-field">
-            <label>Foto do Funcionário</label>
-            <div class="foto-upload-area">
-                <div id="fotoPreviewWrap">
-                    <div class="foto-preview-placeholder" id="fotoPlaceholder">
-                        <i class="fa-solid fa-camera"></i>
+        <div class="modal-grid">
+            <!-- Foto — ocupa linha inteira -->
+            <div class="modal-field full-width">
+                <label>Foto do Funcionário</label>
+                <div class="foto-upload-area">
+                    <div id="fotoPreviewWrap">
+                        <div class="foto-preview-placeholder" id="fotoPlaceholder">
+                            <i class="fa-solid fa-camera"></i>
+                        </div>
+                        <img class="foto-preview" id="fotoPreview" style="display:none;" alt="Preview">
                     </div>
-                    <img class="foto-preview" id="fotoPreview" style="display:none;" alt="Preview">
-                </div>
-                <div class="foto-upload-btns">
-                    <button type="button" class="btn-upload-foto" onclick="document.getElementById('f-foto').click()">
-                        <i class="fa-solid fa-upload" style="margin-right:4px;"></i> Escolher foto
-                    </button>
-                    <button type="button" class="btn-remove-foto" id="btnRemoveFoto" style="display:none;" onclick="removeFoto()">
-                        <i class="fa-solid fa-xmark"></i> Remover foto
-                    </button>
-                    <input type="file" id="f-foto" accept="image/jpeg,image/png,image/webp" style="display:none;" onchange="previewFoto(this)">
+                    <div class="foto-upload-btns">
+                        <button type="button" class="btn-upload-foto" onclick="document.getElementById('f-foto').click()">
+                            <i class="fa-solid fa-upload" style="margin-right:4px;"></i> Escolher foto
+                        </button>
+                        <button type="button" class="btn-remove-foto" id="btnRemoveFoto" style="display:none;" onclick="removeFoto()">
+                            <i class="fa-solid fa-xmark"></i> Remover foto
+                        </button>
+                        <input type="file" id="f-foto" accept="image/jpeg,image/png,image/webp" style="display:none;" onchange="previewFoto(this)">
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="modal-field">
-            <label>Nome do Funcionário</label>
-            <input type="text" id="f-nome" placeholder="Ex: Ana Silva">
-        </div>
-        <div class="modal-field">
-            <label>Setor</label>
-            <input type="text" id="f-setor" placeholder="Ex: Logística">
-        </div>
-        <div class="modal-field">
-            <label>Data de Aniversário</label>
-            <input type="date" id="f-data">
-        </div>
-        <div class="modal-field">
-            <label>Telefone WhatsApp</label>
-            <input type="tel" id="f-telefone" placeholder="(11) 99999-9999" maxlength="15" oninput="mascaraTel(this)">
-            <span style="font-size:.72rem;color:#999;margin-top:2px;">Número com DDD para envio automático de mensagem</span>
-        </div>
-        <div class="modal-field">
-            <label>Tipo</label>
-            <div class="tipo-btns">
-                <button type="button" class="tipo-btn active-clt" id="btn-clt" onclick="setTipo('CLT')">CLT</button>
-                <button type="button" class="tipo-btn" id="btn-pj" onclick="setTipo('PJ')">PJ</button>
+            <!-- Linha 1: Empresa + Nome -->
+            <div class="modal-field">
+                <label>Empresa</label>
+                <input type="text" id="f-empresa" placeholder="Ex: BELMAX S/A">
             </div>
-            <input type="hidden" id="f-tipo" value="CLT">
-        </div>
+            <div class="modal-field">
+                <label>Nome do Funcionário</label>
+                <input type="text" id="f-nome" placeholder="Ex: Ana Silva">
+            </div>
+
+            <!-- Linha 2: CPF + Função -->
+            <div class="modal-field">
+                <label>CPF</label>
+                <input type="text" id="f-cpf" placeholder="000.000.000-00" maxlength="14" oninput="mascaraCpf(this)">
+            </div>
+            <div class="modal-field">
+                <label>Função</label>
+                <input type="text" id="f-funcao" placeholder="Ex: Motorista">
+            </div>
+
+            <!-- Linha 3: Setor + Telefone -->
+            <div class="modal-field">
+                <label>Setor / Departamento</label>
+                <input type="text" id="f-setor" placeholder="Ex: Logística">
+            </div>
+            <div class="modal-field">
+                <label>Telefone WhatsApp</label>
+                <input type="tel" id="f-telefone" placeholder="(11) 99999-9999" maxlength="15" oninput="mascaraTel(this)">
+            </div>
+
+            <!-- Linha 4: Nascimento + Admissão -->
+            <div class="modal-field">
+                <label>Data de Nascimento</label>
+                <input type="date" id="f-data">
+            </div>
+            <div class="modal-field">
+                <label>Data de Admissão</label>
+                <input type="date" id="f-admissao">
+            </div>
+
+            <!-- Linha 5: Tipo — ocupa linha inteira -->
+            <div class="modal-field full-width">
+                <label>Tipo</label>
+                <div class="tipo-btns">
+                    <button type="button" class="tipo-btn active-clt" id="btn-clt" onclick="setTipo('CLT')">CLT</button>
+                    <button type="button" class="tipo-btn" id="btn-pj" onclick="setTipo('PJ')">PJ</button>
+                </div>
+                <input type="hidden" id="f-tipo" value="CLT">
+            </div>
+        </div><!-- /.modal-grid -->
 
         <div class="modal-actions">
             <button class="btn-modal-cancel" onclick="closeModal()">Cancelar</button>
@@ -460,6 +739,115 @@ if (file_exists($tplDir . 'dayoff.png')) {
 <div class="toast-container" id="toastContainer"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+<script src="assets/js/pagination.js"></script>
+<script>
+
+/* ════════════════════════════════════════════════
+   Import Excel Modal
+════════════════════════════════════════════════ */
+let importSelectedFile = null;
+
+function openImportModal() {
+    document.getElementById('importModalBackdrop').classList.add('open');
+    resetImportModal();
+}
+
+function closeImportModal() {
+    document.getElementById('importModalBackdrop').classList.remove('open');
+    resetImportModal();
+}
+
+function resetImportModal() {
+    importSelectedFile = null;
+    document.getElementById('importFile').value = '';
+    document.getElementById('importDropLabel').innerHTML = 'Clique ou arraste o arquivo aqui<br><small style="color:#bbb;">.xlsx ou .csv</small>';
+    document.getElementById('importDropZone').style.borderColor = '#ddd';
+    document.getElementById('importDropZone').style.background  = '';
+    document.getElementById('importResult').style.display = 'none';
+    document.getElementById('importResult').innerHTML = '';
+    const btn = document.getElementById('btnImportar');
+    btn.disabled = true; btn.style.opacity = '.5';
+    document.getElementById('btnImportarLabel').textContent = 'Importar';
+}
+
+function importDragOver(e) {
+    e.preventDefault();
+    document.getElementById('importDropZone').style.borderColor = '#e91e63';
+    document.getElementById('importDropZone').style.background  = '#fff0f5';
+}
+function importDragLeave(e) {
+    document.getElementById('importDropZone').style.borderColor = '#ddd';
+    document.getElementById('importDropZone').style.background  = '';
+}
+function importDrop(e) {
+    e.preventDefault();
+    importDragLeave(e);
+    const file = e.dataTransfer.files[0];
+    if (file) setImportFile(file);
+}
+
+function importFileSelected(input) {
+    if (input.files[0]) setImportFile(input.files[0]);
+}
+
+function setImportFile(file) {
+    const valid = /\.(xlsx|csv)$/i.test(file.name);
+    if (!valid) { toast('Arquivo inválido. Use .xlsx ou .csv', 'error'); return; }
+    importSelectedFile = file;
+    document.getElementById('importDropLabel').innerHTML =
+        '<i class="fa-solid fa-file-excel" style="color:#1D6F42;margin-right:6px;"></i><strong>' +
+        file.name + '</strong><br><small style="color:#aaa;">' +
+        (file.size / 1024).toFixed(1) + ' KB</small>';
+    document.getElementById('importDropZone').style.borderColor = '#1D6F42';
+    document.getElementById('importDropZone').style.background  = '#f0fff4';
+    const btn = document.getElementById('btnImportar');
+    btn.disabled = false; btn.style.opacity = '1';
+}
+
+function doImport() {
+    if (!importSelectedFile) return;
+    const btn = document.getElementById('btnImportar');
+    btn.disabled = true; btn.style.opacity = '.6';
+    document.getElementById('btnImportarLabel').textContent = 'Importando...';
+
+    const fd = new FormData();
+    fd.append('arquivo', importSelectedFile);
+
+    fetch('index.php?section=funcionarios&action=import_excel', { method: 'POST', body: fd })
+        .then(r => r.json())
+        .then(res => {
+            const box = document.getElementById('importResult');
+            box.style.display = 'block';
+            if (res.error) {
+                box.innerHTML = '<div style="background:#ffebee;border:1px solid #ffcdd2;border-radius:8px;padding:14px;color:#c62828;font-size:.88rem;">' +
+                    '<i class="fa-solid fa-circle-xmark" style="margin-right:6px;"></i>' + res.error + '</div>';
+                btn.disabled = false; btn.style.opacity = '1';
+                document.getElementById('btnImportarLabel').textContent = 'Importar';
+                return;
+            }
+            let html = '<div style="background:#e8f5e9;border:1px solid #c8e6c9;border-radius:8px;padding:14px;font-size:.88rem;color:#2e7d32;">' +
+                '<i class="fa-solid fa-circle-check" style="margin-right:6px;"></i>' +
+                '<strong>' + res.imported + ' funcionário(s) importado(s) com sucesso!</strong></div>';
+            if (res.skipped && res.skipped.length > 0) {
+                html += '<div style="background:#fff3e0;border:1px solid #ffe0b2;border-radius:8px;padding:12px;font-size:.82rem;color:#e65100;margin-top:8px;">' +
+                    '<strong><i class="fa-solid fa-triangle-exclamation" style="margin-right:5px;"></i>' + res.skipped.length + ' linha(s) ignorada(s):</strong><ul style="margin:6px 0 0 18px;padding:0;">' +
+                    res.skipped.map(s => '<li>' + s + '</li>').join('') + '</ul></div>';
+            }
+            box.innerHTML = html;
+            btn.disabled = false; btn.style.opacity = '1';
+            document.getElementById('btnImportarLabel').textContent = 'Importar Mais';
+            importSelectedFile = null;
+            document.getElementById('importFile').value = '';
+            if (res.imported > 0) setTimeout(() => { closeImportModal(); location.reload(); }, 2200);
+        })
+        .catch(() => {
+            toast('Erro ao importar arquivo', 'error');
+            btn.disabled = false; btn.style.opacity = '1';
+            document.getElementById('btnImportarLabel').textContent = 'Importar';
+        });
+}
+
+</script>
 <script>
 "use strict";
 
@@ -500,6 +888,18 @@ function mascaraTel(input) {
     if      (v.length > 6) v = '(' + v.slice(0,2) + ') ' + v.slice(2,7) + '-' + v.slice(7);
     else if (v.length > 2) v = '(' + v.slice(0,2) + ') ' + v.slice(2);
     else if (v.length > 0) v = '(' + v;
+    input.value = v;
+}
+
+/* ════════════════════════════════════════════════
+   Máscara CPF
+════════════════════════════════════════════════ */
+function mascaraCpf(input) {
+    let v = input.value.replace(/\D/g, '');
+    if (v.length > 11) v = v.slice(0, 11);
+    if      (v.length > 9) v = v.slice(0,3) + '.' + v.slice(3,6) + '.' + v.slice(6,9) + '-' + v.slice(9);
+    else if (v.length > 6) v = v.slice(0,3) + '.' + v.slice(3,6) + '.' + v.slice(6);
+    else if (v.length > 3) v = v.slice(0,3) + '.' + v.slice(3);
     input.value = v;
 }
 
@@ -741,9 +1141,13 @@ document.addEventListener('keydown', function(e) {
 
 function clearForm() {
     document.getElementById('f-id').value        = '';
+    document.getElementById('f-empresa').value   = '';
     document.getElementById('f-nome').value      = '';
+    document.getElementById('f-cpf').value       = '';
+    document.getElementById('f-funcao').value    = '';
     document.getElementById('f-setor').value     = '';
     document.getElementById('f-data').value      = '';
+    document.getElementById('f-admissao').value  = '';
     document.getElementById('f-telefone').value  = '';
     document.getElementById('f-foto').value      = '';
     setTipo('CLT');
@@ -760,11 +1164,20 @@ function editFunc(id) {
     const row = document.querySelector(`tr[data-id="${id}"]`);
     if (!row) return;
 
-    document.getElementById('f-id').value    = id;
-    document.getElementById('f-nome').value  = row.querySelector('.primary').textContent.trim();
-    document.getElementById('f-setor').value = row.getAttribute('data-setor').toUpperCase();
-    document.getElementById('f-data').value  = row.getAttribute('data-data');
+    document.getElementById('f-id').value      = id;
+    document.getElementById('f-empresa').value = (row.getAttribute('data-empresa') || '').toUpperCase();
+    document.getElementById('f-nome').value    = row.querySelector('.primary').textContent.trim();
+    document.getElementById('f-setor').value   = row.getAttribute('data-setor').toUpperCase();
+    document.getElementById('f-data').value    = row.getAttribute('data-data');
+    document.getElementById('f-admissao').value = row.getAttribute('data-admissao') || '';
     setTipo(row.getAttribute('data-tipo'));
+
+    const cpf = row.getAttribute('data-cpf') || '';
+    if (cpf) { const inp = document.getElementById('f-cpf'); inp.value = cpf; mascaraCpf(inp); }
+    else document.getElementById('f-cpf').value = '';
+
+    const funcao = row.getAttribute('data-funcao') || '';
+    document.getElementById('f-funcao').value = funcao;
 
     const tel = row.getAttribute('data-telefone') || '';
     if (tel) { const inp = document.getElementById('f-telefone'); inp.value = tel; mascaraTel(inp); }
@@ -790,9 +1203,13 @@ function editFunc(id) {
 /* ── Salvar ── */
 function saveFunc() {
     const id       = document.getElementById('f-id').value;
+    const empresa  = document.getElementById('f-empresa').value.trim().toUpperCase();
     const nome     = document.getElementById('f-nome').value.trim().toUpperCase();
+    const cpf      = document.getElementById('f-cpf').value;
+    const funcao   = document.getElementById('f-funcao').value.trim().toUpperCase();
     const setor    = document.getElementById('f-setor').value.trim().toUpperCase();
     const data     = document.getElementById('f-data').value;
+    const admissao = document.getElementById('f-admissao').value;
     const tipo     = document.getElementById('f-tipo').value;
     const telefone = document.getElementById('f-telefone').value;
 
@@ -800,9 +1217,13 @@ function saveFunc() {
 
     const body = new FormData();
     if (id) body.append('id', id);
+    body.append('empresa', empresa);
     body.append('nome', nome);
+    body.append('cpf', cpf);
+    body.append('funcao', funcao);
     body.append('setor', setor);
     body.append('data_aniversario', data);
+    body.append('data_admissao', admissao);
     body.append('tipo', tipo);
     body.append('telefone', telefone);
     if (croppedBlob) body.append('foto', croppedBlob, 'foto_recortada.jpg');
@@ -846,19 +1267,174 @@ function deleteFunc(id) {
 }
 
 /* ── Filtro client-side ── */
+const colFilters = {}; // { colName: filterValue } para filtros de texto
+const checkboxFilters = {}; // { colName: Set(['val1','val2']) } para filtros de checkbox
+let pagerFunc;
+
 function filtrar() {
+    if (pagerFunc) pagerFunc.reset();
     const texto = document.getElementById('filtroNome').value.toLowerCase().trim();
     const setor = document.getElementById('filtroSetor').value;
     const mes   = document.getElementById('filtroMes').value;
 
     document.querySelectorAll('#tabelaFunc tbody tr').forEach(function(tr) {
-        const ok =
+        let ok =
             (!texto || (tr.getAttribute('data-nome') || '').indexOf(texto) > -1) &&
             (!setor || tr.getAttribute('data-setor') === setor) &&
             (!mes   || tr.getAttribute('data-mes')   === mes);
+
+        // Column header text filters
+        if (ok) {
+            for (const col in colFilters) {
+                if (!colFilters[col]) continue;
+                const val = getColValue(tr, col).toLowerCase();
+                if (val.indexOf(colFilters[col].toLowerCase()) === -1) { ok = false; break; }
+            }
+        }
+        // Column header checkbox filters
+        if (ok) {
+            for (const col in checkboxFilters) {
+                const allowed = checkboxFilters[col];
+                if (!allowed || allowed.size === 0) continue;
+                const val = getColValue(tr, col).toLowerCase();
+                if (!allowed.has(val)) { ok = false; break; }
+            }
+        }
         tr.style.display = ok ? '' : 'none';
     });
+    if (pagerFunc) pagerFunc.apply();
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('tabelaFunc')) {
+        pagerFunc = new TablePaginator({ tableId: 'tabelaFunc', containerId: 'paginationBar' });
+        pagerFunc.apply();
+    }
+});
+
+function getColValue(tr, col) {
+    const map = {
+        nome: () => tr.getAttribute('data-nome') || '',
+        empresa: () => (tr.getAttribute('data-empresa') || '').toLowerCase(),
+        funcao: () => (tr.getAttribute('data-funcao') || '').toLowerCase(),
+        setor: () => tr.getAttribute('data-setor') || '',
+        tipo: () => (tr.getAttribute('data-tipo') || '').toLowerCase(),
+        nascimento: () => tr.getAttribute('data-mes') || '',
+        experiencia: () => tr.getAttribute('data-admissao') || ''
+    };
+    return (map[col] ? map[col]() : '');
+}
+
+function getSortValue(tr, col) {
+    if (col === 'nascimento') {
+        const m = parseInt(tr.getAttribute('data-mes') || '0');
+        const d = parseInt(tr.getAttribute('data-dia') || '0');
+        return m * 100 + d;
+    }
+    if (col === 'experiencia') {
+        const adm = tr.getAttribute('data-admissao') || '';
+        if (!adm || adm === '0000-00-00') return Infinity;
+        // Negativo para que asc = menor tempo (admissão mais recente primeiro)
+        return -new Date(adm).getTime();
+    }
+    return getColValue(tr, col);
+}
+
+/* ── Column sorting ── */
+function sortTable(col, dir, e) {
+    e.stopPropagation();
+    const tbody = document.querySelector('#tabelaFunc tbody');
+    if (!tbody) return;
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+
+    rows.sort((a, b) => {
+        let va = getSortValue(a, col);
+        let vb = getSortValue(b, col);
+        if (typeof va === 'string') { va = va.toLowerCase(); vb = ('' + vb).toLowerCase(); }
+        if (va < vb) return dir === 'asc' ? -1 : 1;
+        if (va > vb) return dir === 'asc' ? 1 : -1;
+        return 0;
+    });
+
+    rows.forEach(r => tbody.appendChild(r));
+
+    // Update header state
+    document.querySelectorAll('#tabelaFunc th').forEach(th => th.classList.remove('asc', 'desc'));
+    const th = document.querySelector(`#tabelaFunc th[data-col="${col}"]`);
+    if (th) th.classList.add(dir);
+    closeAllDropdowns();
+    if (pagerFunc) pagerFunc.apply();
+}
+
+/* ── Column filter apply ── */
+function applyColFilter(col, value) {
+    colFilters[col] = value;
+    const th = document.querySelector(`#tabelaFunc th[data-col="${col}"]`);
+    if (th) {
+        if (value) th.classList.add('filter-active');
+        else th.classList.remove('filter-active');
+    }
+    filtrar();
+}
+
+function applyCheckboxFilter(col) {
+    const th = document.querySelector(`#tabelaFunc th[data-col="${col}"]`);
+    if (!th) return;
+    const checkboxes = th.querySelectorAll('.checkbox-filter-list input[type="checkbox"]');
+    const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+    if (allChecked) {
+        delete checkboxFilters[col];
+        th.classList.remove('filter-active');
+    } else {
+        const selected = new Set();
+        checkboxes.forEach(cb => { if (cb.checked) selected.add(cb.value); });
+        checkboxFilters[col] = selected;
+        th.classList.add('filter-active');
+    }
+    filtrar();
+}
+
+function clearColFilter(col, e) {
+    e.stopPropagation();
+    colFilters[col] = '';
+    delete checkboxFilters[col];
+    const th = document.querySelector(`#tabelaFunc th[data-col="${col}"]`);
+    if (th) {
+        th.classList.remove('asc', 'desc', 'filter-active');
+        const input = th.querySelector('.col-filter-dropdown input[type="text"]');
+        if (input) input.value = '';
+        // Re-check all checkboxes
+        th.querySelectorAll('.checkbox-filter-list input[type="checkbox"]').forEach(cb => cb.checked = true);
+    }
+    filtrar();
+    closeAllDropdowns();
+}
+
+/* ── Dropdown toggle ── */
+function closeAllDropdowns() {
+    document.querySelectorAll('.col-filter-dropdown.open').forEach(d => d.classList.remove('open'));
+}
+
+document.addEventListener('click', function(e) {
+    // Click on a filterable TH
+    const th = e.target.closest('#tabelaFunc th[data-col]');
+    if (th && !e.target.closest('.col-filter-dropdown')) {
+        const dd = th.querySelector('.col-filter-dropdown');
+        const wasOpen = dd && dd.classList.contains('open');
+        closeAllDropdowns();
+        if (dd && !wasOpen) {
+            dd.classList.add('open');
+            const inp = dd.querySelector('input[type="text"]');
+            if (inp) setTimeout(() => inp.focus(), 50);
+        }
+        return;
+    }
+    // Click outside any dropdown
+    if (!e.target.closest('.col-filter-dropdown')) {
+        closeAllDropdowns();
+    }
+});
+
 </script>
 </body>
 </html>

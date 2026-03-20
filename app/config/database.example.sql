@@ -35,23 +35,27 @@ INSERT INTO vagas (empresa, cargo, ativo, created_at) VALUES
 -- ──────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS aniversariantes (
     id               INT AUTO_INCREMENT PRIMARY KEY,
+    empresa          VARCHAR(150) DEFAULT NULL,
     nome             VARCHAR(150) NOT NULL,
+    cpf              VARCHAR(20)  DEFAULT NULL,
+    funcao           VARCHAR(150) DEFAULT NULL,
     setor            VARCHAR(100) NOT NULL,
     tipo             ENUM('CLT','PJ') NOT NULL DEFAULT 'CLT',
     data_aniversario DATE         NOT NULL,
+    data_admissao    DATE         DEFAULT NULL,
     criado_em        DATETIME     DEFAULT CURRENT_TIMESTAMP,
     atualizado_em    DATETIME     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-INSERT INTO aniversariantes (nome, setor, tipo, data_aniversario) VALUES
-('Ana Paula Rodrigues',    'Administrativo',   'CLT', '1990-03-15'),
-('Carlos Eduardo Mendes',  'Financeiro',       'CLT', '1985-07-22'),
-('Fernanda Souza Lima',    'RH',               'CLT', '1993-11-08'),
-('João Vitor Almeida',     'Operações',        'PJ',  '1988-05-30'),
-('Mariana Costa Ferreira', 'Comercial',        'CLT', '1995-09-14'),
-('Rafael Oliveira Santos',  'TI',              'PJ',  '1992-01-27'),
-('Tatiane Gomes Pinto',    'Administrativo',   'CLT', '1989-12-03'),
-('Luciano Braga Nunes',    'Operações',        'CLT', '1991-06-19');
+INSERT INTO aniversariantes (empresa, nome, cpf, funcao, setor, tipo, data_aniversario, data_admissao) VALUES
+('BELMAX S/A', 'Ana Paula Rodrigues',    '12345678900', 'ASSISTENTE DE MARKETING', 'ADMINISTRATIVO', 'CLT', '1990-03-15', '2020-01-10'),
+('BELMAX S/A', 'Carlos Eduardo Mendes',  '23456789011', 'SUPERVISOR DE VENDAS',    'FINANCEIRO',     'CLT', '1985-07-22', '2018-05-15'),
+('BELMAX S/A', 'Fernanda Souza Lima',    '34567890122', 'COORDENADORA FISCAL',     'RH',             'CLT', '1993-11-08', '2019-08-20'),
+('BELMAX S/A', 'João Vitor Almeida',     '45678901233', 'MOTORISTA',               'OPERAÇÕES',      'PJ',  '1988-05-30', '2017-03-01'),
+('BELMAX S/A', 'Mariana Costa Ferreira', '56789012344', 'GERENTE ADM',             'COMERCIAL',      'CLT', '1995-09-14', '2021-06-12'),
+('BELMAX S/A', 'Rafael Oliveira Santos', '67890123455', 'ESTAGIÁRIO DE TI',        'TI',             'PJ',  '1992-01-27', '2022-02-28'),
+('BELMAX S/A', 'Tatiane Gomes Pinto',    '78901234566', 'AUXILIAR DE RH',          'ADMINISTRATIVO', 'CLT', '1989-12-03', '2016-09-05'),
+('BELMAX S/A', 'Luciano Braga Nunes',    '89012345677', 'CONFERENTE DE MERCADORIAS','OPERAÇÕES',     'CLT', '1991-06-19', '2020-11-22');
 
 
 -- ──────────────────────────────────────────
@@ -321,3 +325,21 @@ CREATE TABLE IF NOT EXISTS selecao_tokens (
     created_at     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (curriculo_id) REFERENCES curriculos(id) ON DELETE CASCADE
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+
+-- ──────────────────────────────────────────
+--  TABELA: usuarios
+-- ──────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS usuarios (
+    id            INT AUTO_INCREMENT PRIMARY KEY,
+    nome          VARCHAR(150) NOT NULL,
+    email         VARCHAR(150) NOT NULL UNIQUE,
+    senha         VARCHAR(255) NOT NULL,
+    ativo         TINYINT(1)   NOT NULL DEFAULT 1,
+    ultimo_acesso DATETIME     NULL,
+    created_at    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+INSERT INTO usuarios (nome, email, senha, ativo, created_at) VALUES 
+('Administrador', 'admin@griffus.com.br', '$2y$10$.GPaJgDFWFbf8WuDSAaiju7BCS0uhfq28OjhBJ2r6r0lPCO0c92tq', 1, '2026-03-10 08:00:00'),
+('Usuário Teste', 'teste@griffus.com.br', '$2y$10$.GPaJgDFWFbf8WuDSAaiju7BCS0uhfq28OjhBJ2r6r0lPCO0c92tq', 1, '2026-03-10 08:05:00');

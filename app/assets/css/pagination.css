@@ -1,0 +1,130 @@
+/* ═══════════════════════════════════════════════════════════════
+   PAGINATION STYLES
+   ═══════════════════════════════════════════════════════════════ */
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin: 24px 0;
+    padding: 16px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    flex-wrap: wrap;
+}
+
+.pagination-info {
+    font-size: 0.88rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.pagination-controls {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.pagination-btn {
+    padding: 8px 14px;
+    border: 1px solid #ddd;
+    background: #fff;
+    color: #555;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background: #e91e63;
+    color: #fff;
+    border-color: #e91e63;
+}
+
+.pagination-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.pagination-btn.active {
+    background: #e91e63;
+    color: #fff;
+    border-color: #e91e63;
+}
+
+.pagination-btn i {
+    font-size: 0.75rem;
+}
+
+/* Page number buttons */
+.pagination-page-btn {
+    min-width: 36px;
+    padding: 8px 10px;
+    justify-content: center;
+}
+
+/* First/Last/Prev/Next buttons */
+.pagination-nav-btn {
+    padding: 8px 12px;
+}
+
+/* Page size selector */
+.pagination-page-size {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.88rem;
+    color: #666;
+}
+
+.pagination-page-size label {
+    font-weight: 500;
+}
+
+.pagination-page-size select {
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    color: #555;
+    background: #fff;
+    cursor: pointer;
+    outline: none;
+    font-family: inherit;
+}
+
+.pagination-page-size select:focus {
+    border-color: #e91e63;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .pagination-container {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .pagination-controls {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .pagination-info {
+        order: -1;
+    }
+}
+
+/* Empty state when no results */
+.no-results-message {
+    text-align: center;
+    padding: 40px 20px;
+    color: #888;
+    font-size: 0.95rem;
+}

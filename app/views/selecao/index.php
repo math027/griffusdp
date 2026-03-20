@@ -41,6 +41,7 @@ if (!function_exists('statusBadge')) {
     <link rel="shortcut icon" href="assets/images/icone.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/pagination.css">
     <style>
         /* ── Tabela ── */
         .selecao-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
@@ -145,6 +146,16 @@ if (!function_exists('statusBadge')) {
         }
         .save-feedback.show { opacity: 1; }
 
+        /* ── Tabs ── */
+        .tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+        .tab-btn {
+            padding: 8px 18px; border: 1px solid #e0e0e0; border-radius: 20px;
+            background: #fff; color: #666; cursor: pointer; font-size: .88rem;
+            font-weight: 600; transition: all .2s; font-family: inherit;
+        }
+        .tab-btn:hover { border-color: #e91e63; color: #e91e63; }
+        .tab-btn.active { background: #e91e63; color: #fff; border-color: #e91e63; }
+
         /* ── Filtros / cabeçalho ── */
         .filters { display: flex; gap: 14px; margin-bottom: 20px; flex-wrap: wrap; }
         .filters input, .filters select {
@@ -232,6 +243,19 @@ if (!function_exists('statusBadge')) {
         <a class="btn-primary" href="../selecao/" target="_blank">
             <i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir Formulário
         </a>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="setTab('todos')">Todos</button>
+        <button class="tab-btn" onclick="setTab('novo')">Novo</button>
+        <button class="tab-btn" onclick="setTab('em_analise')">Em Análise</button>
+        <button class="tab-btn" onclick="setTab('entrevista_agendada')">Entrevista Agendada</button>
+        <button class="tab-btn" onclick="setTab('entrevistado')">Entrevistado</button>
+        <button class="tab-btn" onclick="setTab('aprovado')">Aprovado</button>
+        <button class="tab-btn" onclick="setTab('contratado')">Contratado</button>
+        <button class="tab-btn" onclick="setTab('reprovado')">Reprovado</button>
+        <button class="tab-btn" onclick="setTab('arquivado')">Arquivado</button>
     </div>
 
     <div class="filters">
@@ -335,6 +359,7 @@ if (!function_exists('statusBadge')) {
                 <?php endforeach; ?>
                 </tbody>
             </table>
+            <div id="paginationBar"></div>
         </div>
     <?php endif; ?>
 </main>
@@ -352,6 +377,7 @@ if (!function_exists('statusBadge')) {
     Emitidos como objeto JS — zero duplo escape, zero problema de encoding.
     json_encode com JSON_HEX_TAG e JSON_HEX_AMP protege contra XSS inline.
 -->
+<script src="assets/js/pagination.js"></script>
 <script>
 const FICHAS = <?= json_encode(
     array_column($fichas ?? [], null, 'id'),
@@ -619,7 +645,9 @@ function alterarStatus(id, status) {
 }
 
 /* ═══════════════ FILTRO CLIENT-SIDE ═══════════════ */
+var pagerSel;
 function filtrar() {
+    if (pagerSel) pagerSel.reset();
     var texto   = document.getElementById('filtroTexto').value.toLowerCase().trim();
     var empresa = document.getElementById('filtroEmpresa').value;
     var status  = document.getElementById('filtroStatus').value;
@@ -632,6 +660,21 @@ function filtrar() {
 
         tr.style.display = ok ? '' : 'none';
     });
+    if (pagerSel) pagerSel.apply();
+}
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('tabelaFichas')) {
+        pagerSel = new TablePaginator({ tableId: 'tabelaFichas', containerId: 'paginationBar' });
+        pagerSel.apply();
+    }
+});
+
+/* ── Tabs ── */
+function setTab(val) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    document.getElementById('filtroStatus').value = val === 'todos' ? '' : val;
+    filtrar();
 }
 </script>
 </body>
